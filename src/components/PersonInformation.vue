@@ -121,6 +121,7 @@
 						return
 				}
 				 var that = this
+				 let regPhone = /^(13[0-9]|14[0-9]|15[0-9]|166|17[0-9]|18[0-9]|19[8|9])\d{8}$/;
 				 if(this.uname && this.wechatName  && this.address && this.file){
 					    // if(this.code!==this.callbackcode){
 							// 	 // 验证码错误
@@ -128,7 +129,9 @@
 							// 		that.showTips()
 							// 	 return
 							// }
-							console.log(that.userId)
+
+							if(regPhone.test(this.referrerPhone)){
+								console.log(that.userId)
 								var param = new FormData()
 								param.append("file",that.file)
 								param.append("name",that.uname)
@@ -157,9 +160,15 @@
 											that.tips = "提交失败，请重新提交"
 											that.showTips()
 									}
-								}).catch((err)=>{
+								}
+								).catch((err)=>{
 									console.log("err",err)
 								})
+							}else{
+								this.tips = "请填写合法手机号"
+								this.showTips()
+							}
+							
 				 }else{
 						this.tips = "请将内容填写完整"
 						this.showTips()
