@@ -122,14 +122,19 @@
 				}
 				 var that = this
 				 let regPhone = /^(13[0-9]|14[0-9]|15[0-9]|166|17[0-9]|18[0-9]|19[8|9])\d{8}$/;
-				 if(this.uname && this.wechatName  && this.address && this.file){
+				let regAddress = /^0X\d{40}$/
+				if(this.uname && this.wechatName  && this.address && this.file){
 					    // if(this.code!==this.callbackcode){
 							// 	 // 验证码错误
 							// 	 	that.tips = "验证码错误"
 							// 		that.showTips()
 							// 	 return
 							// }
-
+						if(!regAddress.test(this.address)){
+							this.tips = "请填写合法钱包地址"
+							this.showTips()
+							return false
+						}
 							if(regPhone.test(this.referrerPhone)){
 								console.log(that.userId)
 								var param = new FormData()
@@ -157,7 +162,7 @@
 											})
 
 									}else{
-											that.tips = "提交失败，请重新提交"
+											that.tips = res.data.message
 											that.showTips()
 									}
 								}
