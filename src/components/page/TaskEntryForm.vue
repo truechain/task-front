@@ -32,15 +32,25 @@
       <el-button @click="goback">返回</el-button>
     </div>
     <el-dialog title="审核"   :visible.sync="dialogAuditing" >
-      <el-form :model="form" class="dialog-wrapper" label-width="120px">
-        <el-form-item label="产品：">
-          沈家
+      <el-form :model="form" class="dialog-wrapper" label-width="120px" >
+        <el-form-item label="任务名：">
+          {{this.taskName}}
         </el-form-item>
+        <el-form-item label="默认奖励数：">
+          {{this.rewardNum}}
+        </el-form-item>
+        <el-form-item label="用户姓名：">
+          {{this.personName}}
+        </el-form-item>
+        <el-form-item label="用户钱包地址：">
+          {{this.pushAddress}}
+        </el-form-item>
+           
         <el-form-item label="奖励数：">
-          <el-input v-model="form.num" auto-complete="off"></el-input>
+          <el-input v-model.number="form.num" auto-complete="off" ></el-input>
         </el-form-item>
         <el-form-item label="推荐人奖励数：" >
-          <el-input v-model="form.reNum" auto-complete="off"></el-input>
+          <el-input v-model.number="form.reNum" auto-complete="off" ></el-input>
         </el-form-item>
 
       </el-form>
@@ -68,7 +78,10 @@
           reNum:'',
           num:'',
         },
-
+        taskName:'',//任务名
+        rewardNum:'',//默认奖励数
+        personName:'',//用户姓名
+        pushAddress:'',//用户钱包地址
         tableData: []
       }
     },
@@ -83,8 +96,17 @@
             		"Content-Type": "application/json"
           		}
 		  	}).then((res)=>{
-		  		console.log(res)
-		  	 this.dialogAuditing=true	
+          console.log(res,'审核')
+          if(res.list){
+              var list=res.result
+          this.taskName=list.taskName
+          this.rewardNum=list.rewardNum
+          this.personName=list.personName
+          this.pushAddress=list.pushAddress
+          }
+        
+         this.dialogAuditing=true	
+         
 		  	})
     	},
       goback() {
@@ -93,7 +115,12 @@
       dialogAudit(){
         this.dialogAuditing=false  
         let url="http://www.phptrain.cn/admin/task/rewardEntryFromUser?taskUserId="+this.taskUserId
-        this.$http.post(url,{
+        
+        var param={
+          userReward:this.form.reNum,
+          recommendUserReward:this.form.num
+        }
+        this.$http.post(url,param,{
 		  		headers: {
             		"Content-Type": "application/json"
           		}
@@ -119,13 +146,14 @@
       getTaskEntryForm(){
         let taskId =  this.$route.query.taskId
 
-		  	let url="http://www.phptrain.cn/admin/task/getEntryFormInfo?taskId="+taskId
+        let url="http://www.phptrain.cn/admin/task/getEntryFormInfo?taskId="+taskId
+  
 		  	this.$http.post(url, {
 		  		headers: {
             		"Content-Type": "application/json"
           		}
 		  	}).then((res)=>{
-		  		console.log(res.data.result,'000000000')
+		  		console.log(res,'000000000报名表')
 		  		if(res.data.message=='成功'){
 		  			if (res.data.result) {
 		  				var result=res.data.result
