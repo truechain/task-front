@@ -129,13 +129,22 @@
 							// 	 	that.tips = "验证码错误"
 							// 		that.showTips()
 							// 	 return
-							// }
-						if(!regAddress.test(this.address)){
+              // }
+              // debugger;
+						if(this.address.length !== 42){
 							this.tips = "请填写合法钱包地址"
 							this.showTips()
 							return false
-						}
-							if(regPhone.test(this.referrerPhone)){
+            }
+            if(this.referrerPhone.trim()) {
+              if(!regPhone.test(this.referrerPhone)){
+                  this.tips = "请填写合法手机号"
+                  this.showTips()
+                  return false
+              }
+            }
+
+
 								console.log(that.userId)
 								var param = new FormData()
 								param.append("file",that.file)
@@ -169,11 +178,6 @@
 								).catch((err)=>{
 									console.log("err",err)
 								})
-							}else{
-								this.tips = "请填写合法手机号"
-								this.showTips()
-							}
-							
 				 }else{
 						this.tips = "请将内容填写完整"
 						this.showTips()
@@ -230,145 +234,144 @@
 	}
 </script>
 <style scoped lang="less">
-.regist{
-	.top{
-			text-align: center;
-			position: relative;
-			height: 45px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			border-bottom: 1px solid #E0E4E5;
-		 .return{
-				font-family:'Courier New', Courier, monospace;
-				font-size:20px;
-				color:#00AAEE;
-				position:absolute;
-				left:20px;
-				top:10px;
-		 }
-		 .zhuce{
-			 font-size: 20px;
-		 }
-	}
-	.form-part{
-		.form{
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			.inp{
-				width:90%;
-				height: 40px;
-				font-size:15px;
-				background-color: #FAFAFA;
-				border:1px solid #E7E7E7;
-				border-radius: 5px;
-				margin-top:20px;
-				padding-left: 10px;
-				box-sizing: border-box;
-			}
-			.inpx{
-				margin-top:20px;
-				width:90%;
-				height: 40px;
-				font-size:15px;
-				display: flex;
-				.inpx-l{
-						width:70%;
-						background-color: #FAFAFA;
-						border:1px solid #E7E7E7;
-						border-top-left-radius: 5px;
-						border-bottom-left-radius: 5px;
-						height: 100%;
-						box-sizing: border-box;
-						padding-left: 10px;
-							font-size:15px;
-				}
-				.inpx-r{
-					 	width:30%;
-						background-color: #FFAE0F;
-						border:1px solid #FFAE0F;
-						height: 100%;
-						font-size:15px;
-						border-top-right-radius: 5px;
-						border-bottom-right-radius: 5px;
-						color:white;
-				}
-			}
-			.inp-file{
-				height: 100px;
-				width: 90%;
-				background-color: #FAFAFA;
-				margin-top:20px;
-				border-radius: 5px;
-				position: relative;
-				border:1px solid #E7E7E7;
-				 .file{
-					 position: absolute;
-					 width:100%;
-					 height: 100%;
-					 opacity: 0;
-					 top:0;
-					 left:0;
-				 }
-				 .file-uplaod{
-					 width:100%;
-					 height: 100%;
-					 display: flex;
-					 color:#A1ACB4;
-					 font-size: 13px;
-					 align-items: center;
-					 justify-content: center;
-					 flex-direction: column;
-					 .add{
-							width:20px;
-							height: 20px;
-							margin-bottom: 10px;
-							img{
-								 width:100%;
-								 height: 100%;
-							}
-					 }
-				 }
-			}
-			.tip{
-					width:90%;
-					text-align: left;
-					font-size:15px;
-					margin-top:20px;
-					color:#A1ACB4;
-					.checkbox{
-						width: 15px;
-						height: 15px;
-						-webkit-appearance:checkbox;
-					}
-			}
-			.submit{
-				 width:90%;
-				 background-color: #00AAEE;
-				 font-size: 15px;
-				 color:white;
-				 border-radius: 5px;
-				 height: 40px;
-				 margin-top:20px;
-				 border:1px solid #00AAEE;
-			}
-		}
-	}
-	.tips{
-		 position: absolute;
-		  background-color: #00AAEE;
-		 color:white;
-		 text-align: center;
-		 width:200px;
-		 height: 50px;
-		 line-height: 50px;
-		 left:50%;
-		 top:50%;
-		 margin-left: -100px;
-		 margin-top: -60px;
-		 border-radius: 5px;
-	}
+.regist {
+  .top {
+    text-align: center;
+    position: relative;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #e0e4e5;
+    .return {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 20px;
+      color: #00aaee;
+      position: absolute;
+      left: 20px;
+      top: 10px;
+    }
+    .zhuce {
+      font-size: 20px;
+    }
+  }
+  .form-part {
+    .form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .inp {
+        width: 90%;
+        height: 40px;
+        font-size: 15px;
+        background-color: #fafafa;
+        border: 1px solid #e7e7e7;
+        border-radius: 5px;
+        margin-top: 20px;
+        padding-left: 10px;
+        box-sizing: border-box;
+      }
+      .inpx {
+        margin-top: 20px;
+        width: 90%;
+        height: 40px;
+        font-size: 15px;
+        display: flex;
+        .inpx-l {
+          width: 70%;
+          background-color: #fafafa;
+          border: 1px solid #e7e7e7;
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+          height: 100%;
+          box-sizing: border-box;
+          padding-left: 10px;
+          font-size: 15px;
+        }
+        .inpx-r {
+          width: 30%;
+          background-color: #ffae0f;
+          border: 1px solid #ffae0f;
+          height: 100%;
+          font-size: 15px;
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+          color: white;
+        }
+      }
+      .inp-file {
+        height: 100px;
+        width: 90%;
+        background-color: #fafafa;
+        margin-top: 20px;
+        border-radius: 5px;
+        position: relative;
+        border: 1px solid #e7e7e7;
+        .file {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          opacity: 0;
+          top: 0;
+          left: 0;
+        }
+        .file-uplaod {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          color: #a1acb4;
+          font-size: 13px;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          .add {
+            width: 20px;
+            height: 20px;
+            margin-bottom: 10px;
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+      }
+      .tip {
+        width: 90%;
+        text-align: left;
+        font-size: 15px;
+        margin-top: 20px;
+        color: #a1acb4;
+        .checkbox {
+          width: 15px;
+          height: 15px;
+          -webkit-appearance: checkbox;
+        }
+      }
+      .submit {
+        width: 90%;
+        background-color: #00aaee;
+        font-size: 15px;
+        color: white;
+        border-radius: 5px;
+        height: 40px;
+        margin-top: 20px;
+        border: 1px solid #00aaee;
+      }
+    }
+  }
+  .tips {
+    position: absolute;
+    background-color: #00aaee;
+    color: white;
+    text-align: center;
+    width: 200px;
+    height: 50px;
+    line-height: 50px;
+    left: 50%;
+    top: 50%;
+    margin-left: -100px;
+    margin-top: -60px;
+    border-radius: 5px;
+  }
 }
-
 </style>
