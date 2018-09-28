@@ -180,10 +180,10 @@
         this.getTaskInfo()
       },
       buttonClick(item) {
-        
+
         let id = item.id
         let rewardType = item.rewardType
-        
+
         this.$router.push({
           name: "TaskDetail",
           params: {
@@ -212,6 +212,12 @@
 
           grade = "C"
           this.taskType = "C"
+          this.taskCategory = 2
+
+        }else if(type === "S级") {
+
+          grade = "S"
+          this.taskType = "S"
           this.taskCategory = 2
 
         } else if(type === "个人") {
@@ -305,124 +311,124 @@
 </script>
 
 <style lang="less" scoped>
-  .list {
-    background: #fff;
-  }
-  
-  .header-top {
-    height: 50px;
-    line-height: 50px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    .header-wrapper {
-      text-align: center;
-      .img-wrapper {
-        position: absolute;
-        width: 30px;
-        left: 0;
-        right: 0;
-        img {
-          width: 24px;
-        }
-      }
-    }
-  }
-  
-  .space {
-    background: #eee;
-    height: 10px;
-  }
-  
-  .no-data {
+.list {
+  background: #fff;
+}
+
+.header-top {
+  height: 50px;
+  line-height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  .header-wrapper {
     text-align: center;
-    margin: 10px 0;
-    font-size: 14px;
-  }
-  
-  .wrapper {
-    position: absolute;
-    top: 60px;
-    left: 0;
-    right: 0;
-    bottom: 60px;
-    overflow: hidden;
-    .item {
-      padding: 10px 15px;
-      /*flex-direction: row;
-      flex-wrap: nowrap;*/
-      .teamMark:after {
-        content: '\56E2\961F';
-        position: absolute;
-        left: 46px;
-        top: 2px;
-        color: #fff;
-        background: #EF5A50;
-        border-radius: 15px;
-        font-size: 12px;
-        padding: 2px 5px;
-      }
-      .top {
-        display: flex;
-        justify-content: flex-start;
-        align-items: stretch;
-        flex-grow: 1;
-        .task-rank {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          min-width: 0;
-          margin-left: 10px;
-          overflow: hidden;
-          .name-wrapper {
-            display: flex;
-            font-size: 16px;
-            color: #2E353B;
-            .name {
-              margin-top: 6px;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-            }
-          }
-          .rank {
-            display: flex;
-            font-size: 13px;
-            color: #A1ACB4;
-          }
-        }
-        .tackImg {
-          width: 50px;
-          height: 50px;
-          vertical-align: top;
-          border: 1px solid #eee;
-        }
-      }
-      .bottom {
-        padding-left: 60px;
-        display: flex;
-        align-items: center;
-      }
-      .center {
-        color: #FC8936;
-        font-size: 13px;
-        flex: 1;
-      }
-      .right {
-        padding: 7px 12px;
-        background: #FFAE0F;
-        color: #fff;
-        font-size: 12px;
-        border-radius: 5px;
+    .img-wrapper {
+      position: absolute;
+      width: 30px;
+      left: 0;
+      right: 0;
+      img {
+        width: 24px;
       }
     }
   }
-  
-  .loading-container {
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
+}
+
+.space {
+  background: #eee;
+  height: 10px;
+}
+
+.no-data {
+  text-align: center;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.wrapper {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 60px;
+  overflow: hidden;
+  .item {
+    padding: 10px 15px;
+    /*flex-direction: row;
+      flex-wrap: nowrap;*/
+    .teamMark:after {
+      content: '\56E2\961F';
+      position: absolute;
+      left: 46px;
+      top: 2px;
+      color: #fff;
+      background: #ef5a50;
+      border-radius: 15px;
+      font-size: 12px;
+      padding: 2px 5px;
+    }
+    .top {
+      display: flex;
+      justify-content: flex-start;
+      align-items: stretch;
+      flex-grow: 1;
+      .task-rank {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-width: 0;
+        margin-left: 10px;
+        overflow: hidden;
+        .name-wrapper {
+          display: flex;
+          font-size: 16px;
+          color: #2e353b;
+          .name {
+            margin-top: 6px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+        .rank {
+          display: flex;
+          font-size: 13px;
+          color: #a1acb4;
+        }
+      }
+      .tackImg {
+        width: 50px;
+        height: 50px;
+        vertical-align: top;
+        border: 1px solid #eee;
+      }
+    }
+    .bottom {
+      padding-left: 60px;
+      display: flex;
+      align-items: center;
+    }
+    .center {
+      color: #fc8936;
+      font-size: 13px;
+      flex: 1;
+    }
+    .right {
+      padding: 7px 12px;
+      background: #ffae0f;
+      color: #fff;
+      font-size: 12px;
+      border-radius: 5px;
+    }
   }
+}
+
+.loading-container {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
 </style>
