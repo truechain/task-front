@@ -31,9 +31,10 @@
 						<el-option label="A" value="a"></el-option>
 						<el-option label="B" value="b"></el-option>
 						<el-option label="C" value="c"></el-option>
+						<el-option label="S" value="s"></el-option>
 					</el-select>
 				</el-form-item>
-				
+
 				<el-form-item class="btn-wrap">
 					<el-button type="primary" @click="getUserPage" >查询</el-button>
 					<el-button @click="reset">重置</el-button>
@@ -69,14 +70,14 @@
                     <el-select v-model="dialogForm.level" >
                         <el-option label="A" value="A"></el-option>
                         <el-option label="B" value="B"></el-option>
-                        <el-option label="C" value="C"></el-option>						
+                        <el-option label="C" value="C"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item v-if='isAudit' label="红包金额：" >
                     <el-select  v-model="dialogForm.rewardNum" >
                         <el-option label="30" value="30"></el-option>
                         <el-option label="40" value="40"></el-option>
-                        <el-option label="50" value="50"></el-option>						
+                        <el-option label="50" value="50"></el-option>
                     </el-select>
                 </el-form-item>
             </el-form>
@@ -128,13 +129,13 @@ import qs from 'qs'
 				this.userId = scope.row.id
 				if(type=='1'){
 					this.isAudit = true
-					this.dialogForm.level = scope.row.level || ''	
+					this.dialogForm.level = scope.row.level || ''
 				} else {
 					this.isAudit = false
 				}
 				this.dialogVis = true
 			},
-			typeCommit(){				
+			typeCommit(){
 				let url
 				let param= {
 					userId:this.userId,
@@ -151,7 +152,7 @@ import qs from 'qs'
 						if (res.data.message === "成功") {
 							this.tips = '操作成功';
 							this.showTips();
-							this.getUserPage()							
+							this.getUserPage()
 							this.dialogVis = false
 						} else {
 							this.tips = res.data.message;
@@ -185,7 +186,7 @@ import qs from 'qs'
 										list.auditStatusName='已审核'
 									}
 								})
-								this.tableData = res.data.result.content;								
+								this.tableData = res.data.result.content;
 								this.total=res.data.result.totalElements;
 							}
 						} else {
@@ -229,61 +230,62 @@ import qs from 'qs'
 	}
 </script>
 <style>
-	
-	.tips {
-		position: absolute;
-		background-color: #00aaee;
-		color: white;
-		text-align: left;
-		width: 200px;
-		padding: 20px 20px;
-		word-break:break-all;
-		left: 50%;
-		top: 50%;
-		margin-left: -100px;
-		margin-top: -120px;
-		border-radius: 5px;
-		}
-	.task-content .el-form-item__label {
-		text-align: left;
-		padding-right: 0;
-	}
-	
-	.task-content .el-form-item {
-		margin-bottom: 7px;
-	}
-	.task-content .el-table .cell, .el-table th>div{padding: 0 0 0 10px;}
-	.btn-wrap .el-form-item__content {
-		margin-left: 7px!important;
-	}
-	
-	.btn-wrap .el-button+.el-button {
-		margin-left: 2px;
-	}
-	
-	.task-content .line {
-		text-align: center;
-	}
-	.task-content .page{
-	display: flex;
-    -ms-flex-pack: center;
-    justify-content: center;
-    margin-top: 20px;
-	}
-	.position {
-		font-size: 15px;
-		margin-bottom: 10px;
-	}
-	
-	.el-form-item {
-		display: inline-block;
-		overflow: hidden;
-	}
-	
-	.block .name {
-		line-height: 36px;
-		display: inline-block;
-		font-size: 15px;
-	}
-	
+.tips {
+  position: absolute;
+  background-color: #00aaee;
+  color: white;
+  text-align: left;
+  width: 200px;
+  padding: 20px 20px;
+  word-break: break-all;
+  left: 50%;
+  top: 50%;
+  margin-left: -100px;
+  margin-top: -120px;
+  border-radius: 5px;
+}
+.task-content .el-form-item__label {
+  text-align: left;
+  padding-right: 0;
+}
+
+.task-content .el-form-item {
+  margin-bottom: 7px;
+}
+.task-content .el-table .cell,
+.el-table th > div {
+  padding: 0 0 0 10px;
+}
+.btn-wrap .el-form-item__content {
+  margin-left: 7px !important;
+}
+
+.btn-wrap .el-button + .el-button {
+  margin-left: 2px;
+}
+
+.task-content .line {
+  text-align: center;
+}
+.task-content .page {
+  display: flex;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+.position {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.el-form-item {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.block .name {
+  line-height: 36px;
+  display: inline-block;
+  font-size: 15px;
+}
 </style>
