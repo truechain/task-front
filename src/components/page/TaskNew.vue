@@ -4,8 +4,8 @@
     	 <div class="fr">
        <el-button type="primary" @click="save">保存</el-button>
        <el-button @click="goback">取消</el-button>
-      
-       
+
+
     </div>
       <div class="details-content">
 			  <div class="title">任务详情</div>
@@ -21,7 +21,7 @@
 			  		</div>
           	<input type="file" class="file" @change="uploadChange"/>
 			  	</div>
-          
+
       </el-form-item><br />
         <el-form-item label="任务名称：">
 					<span class="red">*</span><el-input v-model="form.name"></el-input>
@@ -55,7 +55,7 @@
 						<el-date-picker type="date" placeholder="选择日期" v-model="form.endDateTime" style="width: 100%;" value-format="yyyy-MM-dd" format="yyyy-MM-dd"></el-date-picker>
 					</el-col>
 				</el-form-item>
-				
+
 				<el-form-item label="奖励类型：">
 					<span class="red">*</span><el-select v-model="form.rewardType" placeholder="全部">
 						<el-option label="True" value="1"></el-option>
@@ -72,7 +72,7 @@
         <el-form-item label="任务描述：" style="display:block">
 					<el-input type="textarea" v-model="form.description"></el-input>
 				</el-form-item>
-			
+
 			</el-form>
 		</div>
       </div>
@@ -92,7 +92,7 @@
         	</tr>
         </table>
       </div>
-      
+
     </div>
   </div>
 </template>
@@ -117,9 +117,9 @@ export default{
 					level:'',
 					name:'',
 					peopleNum:'',
-					pushAddress:'',	
+					pushAddress:'',
 					rewardNum:'',
-					rewardType:'',	
+					rewardType:'',
 					startDateTime:'',
 					taskStatus:''
 				},
@@ -131,29 +131,29 @@ export default{
       },
   		save(){
   			var url="http://www.phptrain.cn/admin/task/addTask"
-			var param=	{
-			  task: {
-			    category: this.form.category,
-			    description: this.form.description,
-			    endDateTime:this.form.endDateTime, 
-			    iconPath:this.imgUrl, 
-			    level: this.form.level,
-			    name:this.form.name, 
-			    peopleNum: this.form.peopleNum,
-			    pushAddress: this.form.pushAddress,
-			    rewardNum: this.form.rewardNum,
-			    rewardType: this.form.rewardType,
-			    startDateTime: this.form.startDateTime,
-			    taskStatus: this.form.taskStatus,
-			  },
-			  taskDetailList: [
-			    {
-			      peopleNum: this.peopleNum,
-			      rewardNum: this.rewardNum,
-			      station:this.station
-			    }
-			  ]
-			}
+        var param=	{
+          task: {
+            category: this.form.category,
+            description: this.form.description,
+            endDateTime:this.form.endDateTime,
+            iconPath:this.imgUrl,
+            level: this.form.level,
+            name:this.form.name,
+            peopleNum: this.form.peopleNum,
+            pushAddress: this.form.pushAddress,
+            rewardNum: this.form.rewardNum,
+            rewardType: this.form.rewardType,
+            startDateTime: this.form.startDateTime,
+            taskStatus: this.form.taskStatus,
+          },
+          taskDetailList: [
+            {
+              peopleNum: this.peopleNum,
+              rewardNum: this.rewardNum,
+              station:this.station
+            }
+          ]
+        }
   			this.$http.post(url,param,{
 		      headers:{"Content-Type": "application/json"}
 		    }).then((res)=>{
@@ -169,98 +169,121 @@ export default{
 		          message: msg,
 		          type: 'warning'
 		        });
-		      	
+
 		      	}
 		    })
   		},
       goback(){
         this.$router.go(-1)
       },
-      uploadChange(event){    
-            let reader =new FileReader();  
+      uploadChange(event){
+            let reader =new FileReader();
             let img1=event.target.files[0];
             this.file=img1
-            
-            let type=img1.type;//文件的类型，判断是否是图片  
-            let size=img1.size;//文件的大小，判断图片的大小  
-            if(this.imgData.accept.indexOf(type) == -1){  
+
+            let type=img1.type;//文件的类型，判断是否是图片
+            let size=img1.size;//文件的大小，判断图片的大小
+            if(this.imgData.accept.indexOf(type) == -1){
                 this.$message({
 					          message: '请选择正确的图片格式！',
 					          type: 'warning'
 		        		});
-                return false;  
-            }  
-            if(size>3145728){  
+                return false;
+            }
+            if(size>3145728){
                  this.$message({
 					          message: '请选择3M以内的图片！',
 					          type: 'warning'
 		        		});
-                return false;  
-            }  
-           
-            let form = new FormData();   
-       
-            form.append('file',img1);  
-            this.$http.post('http://www.phptrain.cn/admin/task/uploadTaskIcon',form,{  
-                headers:{'Content-Type':'multipart/form-data'}  
-            }).then(res => {  
- console.log(res.data,'88888888')  
-//              this.imgUrl = res.data.result  
-                reader.readAsDataURL(img1);  
-                var that=this;  
-                reader.onloadend=function(){  
+                return false;
+            }
+
+            let form = new FormData();
+
+            form.append('file',img1);
+            this.$http.post('http://www.phptrain.cn/admin/task/uploadTaskIcon',form,{
+                headers:{'Content-Type':'multipart/form-data'}
+            }).then(res => {
+ console.log(res.data,'88888888')
+//              this.imgUrl = res.data.result
+                reader.readAsDataURL(img1);
+                var that=this;
+                reader.onloadend=function(){
                     console.log(this.result)
                     that.imgUrl = res.data.result.showPath
-                }  
-                
-            }).catch(error => {  
-                alert('上传图片出错！');  
-            })      
+                }
+
+            }).catch(error => {
+                alert('上传图片出错！');
+            })
 },
- 
+
 
     }
 }
 </script>
 
 <style scoped>
-.red{
-	position: absolute;
-		left: -88px;
-		color: red;
+.red {
+  position: absolute;
+  left: -88px;
+  color: red;
 }
-	.file-wrapper{
-		position: relative;
-		width: 130px;
-		height: 130px;
-		cursor: pointer;
-	}
-	.file-wrapper .file{width: 100%;position:absolute;left: 0;top: 0;bottom: 0;opacity: 0;}
-	.file-wrapper img{width:100%;    height: 130px;}
-	.table{width: 100%; border-collapse: collapse;table-layout: fixed;    border: 1px solid #dfe6ec;
-    border-spacing: 0;}
-	.table th{
-    text-align: left;
-	}
-	.table td, .table th {
-    border-right: 1px solid #dfe6ec;
-    padding: 0 18px;
+.file-wrapper {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  cursor: pointer;
 }
-	.table td, .table th {
-	      border-width: 0 0 1px;
-    height: 40px;
-    min-width: 0;
-    text-overflow: ellipsis;
-    vertical-align: middle;
-    border-style: solid;
-    border-color: #e6e6e6;
+.file-wrapper .file {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0;
 }
-.el-table__row{
-      background-color: #fff;
+.file-wrapper img {
+  width: 100%;
+  height: 130px;
 }
- .table td{padding: 5px 10px;    position: relative;}   
-  .table td .red{left: 0;top: 18px;}
- .table tr input{
-   width: 240px;
- }
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border: 1px solid #dfe6ec;
+  border-spacing: 0;
+}
+.table th {
+  text-align: left;
+}
+.table td,
+.table th {
+  border-right: 1px solid #dfe6ec;
+  padding: 0 18px;
+}
+.table td,
+.table th {
+  border-width: 0 0 1px;
+  height: 40px;
+  min-width: 0;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  border-style: solid;
+  border-color: #e6e6e6;
+}
+.el-table__row {
+  background-color: #fff;
+}
+.table td {
+  padding: 5px 10px;
+  position: relative;
+}
+.table td .red {
+  left: 0;
+  top: 18px;
+}
+.table tr input {
+  width: 240px;
+}
 </style>

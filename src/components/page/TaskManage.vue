@@ -32,6 +32,7 @@
 						<el-option label="A" value="A"></el-option>
 						<el-option label="B" value="B"></el-option>
 						<el-option label="C" value="C"></el-option>
+						<el-option label="S" value="S"></el-option>
 					</el-select>
 				</el-form-item>
 				<el-form-item label="审核状态：">
@@ -106,7 +107,7 @@
 				pageIndex:1,
 				pageSize:20,
 				total:1,
-				
+
 			}
 		},
 		methods:{
@@ -201,14 +202,14 @@
 		      				list.category='团队'
 		      			}
 		      		})
-		      		
-		      		
+
+
 					this.total=result.totalElements
 		      	}
 		      }
 		    })
 		  },
-	
+
 		},
 		mounted(){
 		  this.getTaskInfo()
@@ -216,14 +217,16 @@
 	}
 </script>
 <style>
-  .el-select .el-input__inner{width: 200px;}
+.el-select .el-input__inner {
+  width: 200px;
+}
 </style>
 <style scoped>
-	/*.task-content .el-form-item__label {
+/*.task-content .el-form-item__label {
 		text-align: left;
 		padding-right: 0;
 	}
-	
+
 	.task-content .el-form-item {
 		margin-bottom: 7px;
 	}
@@ -231,11 +234,11 @@
 	.btn-wrap .el-form-item__content {
 		margin-left: 7px!important;
 	}
-	
+
 	.btn-wrap .el-button+.el-button {
 		margin-left: 2px;
 	}
-	
+
 	.task-content .line {
 		text-align: center;
 	}
@@ -249,9 +252,9 @@
 		font-size: 15px;
 		margin-bottom: 10px;
 	}
-	
-	
-	
+
+
+
 	.block .name {
 		line-height: 36px;
 		display: inline-block;
