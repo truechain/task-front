@@ -10,7 +10,7 @@
 						<el-button type="primary" @click="getResourcePage" >查询</el-button>
 						<el-button type="warning" @click="clearRole" >重置</el-button>
 					</div>
-					<el-button type="success" style="width:100px" @click="addQuanXianPanel = true">新增按钮</el-button>
+					<el-button type="success" style="width:100px" @click="addQuanXianPanel = true">新增用户</el-button>
 				</div>
 				<div class="quanxian-table">
 						<el-table
@@ -25,7 +25,7 @@
 								<template slot-scope="scope">
 										<el-button size="small"
 											@click="handleEdit(scope.$index, scope.row)" type="primary">查看详情</el-button>
-										<el-button size="small"	
+										<el-button size="small"
 											@click="handleEdit(scope.$index, scope.row)">修改</el-button>
 										<el-button size="small"
 											type="danger"
@@ -37,18 +37,18 @@
 							<el-pagination v-show="roleTotal || roleTotal>0"	@current-change="rolePageChange" :current-page.sync="rolePageIndex"
 							:page-size="pageSize" :total="roleTotal"  background layout="total,prev, pager, next" >	</el-pagination>
 						</div>
-				
+
 				</div>
 				<el-dialog title="新增" :visible.sync="addQuanXianPanel">
 						<div class="flexd">
 							权限编码： <el-input placeholder="请输入内容" style="width:60%;"></el-input>
-						</div> 
+						</div>
 						<div class="flexd">
 							权限名称： <el-input placeholder="请输入内容" style="width:60%;"></el-input>
-						</div> 
+						</div>
 						<div class="flexd">
 							描 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	述： <el-input type="textarea" :rows="2"  placeholder="请输入内容" style="width:60%;"></el-input>
-						</div> 
+						</div>
 						<div class="flexd">
 							隶属模块： 	<el-tree
 									:data="models"
@@ -59,8 +59,8 @@
 									highlight-current
 									style="width:60%;">
 								</el-tree>
-						</div> 
-							
+						</div>
+
 						</el-form-item>
 						<div slot="footer" class="dialog-footer">
 							<el-button @click="addQuanXianPanel = false">取 消</el-button>
@@ -87,7 +87,7 @@
 								<el-button type="primary">查询</el-button>
 								<el-button type="warning">重置</el-button>
 							</div>
-							<el-button type="success" style="width:100px">新增按钮</el-button>
+							<el-button type="success" style="width:100px">新增用户</el-button>
 					</div>
 					<div class="quanxian-table">
 							<el-table
@@ -102,7 +102,7 @@
 										<template slot-scope="scope">
 												<el-button size="small"
 													@click="handleEdit(scope.$index, scope.row)" type="primary">查看详情</el-button>
-												<el-button size="small"	
+												<el-button size="small"
 													@click="handleEdit(scope.$index, scope.row)">修改</el-button>
 												<el-button size="small"
 													type="danger"
@@ -131,7 +131,7 @@
 								<el-button type="primary">查询</el-button>
 								<el-button type="warning">重置</el-button>
 							</div>
-							<el-button type="success" style="width:100px">新增按钮</el-button>
+							<el-button type="success" style="width:100px">新增用户</el-button>
 					</div>
 					<div class="quanxian-table">
 							<el-table
@@ -147,7 +147,7 @@
 										<template slot-scope="scope">
 												<el-button size="small"
 													@click="handleEdit(scope.$index, scope.row)" type="primary">查看详情</el-button>
-												<el-button size="small"	
+												<el-button size="small"
 													@click="handleEdit(scope.$index, scope.row)">修改</el-button>
 												<el-button size="small"
 													type="danger"
@@ -158,7 +158,7 @@
 							<div class="page">
 									<el-pagination background layout="prev, pager, next"	:total="1000">	</el-pagination>
 							</div>
-					
+
 					</div>
 			</el-tab-pane>
 
@@ -183,7 +183,7 @@
 								<el-button type="primary">查询</el-button>
 								<el-button type="warning">重置</el-button>
 							</div>
-							<el-button type="success" style="width:100px">新增按钮</el-button>
+							<el-button type="success" style="width:100px">新增用户</el-button>
 					</div>
 					<div class="quanxian-table">
 							<el-table
@@ -195,7 +195,7 @@
 								<el-table-column	prop="address"	label="更新者"></el-table-column>
 								<el-table-column	label="操作">
 										<template slot-scope="scope">
-												<el-button size="small"	
+												<el-button size="small"
 													@click="handleEdit(scope.$index, scope.row)">修改</el-button>
 												<el-button size="small"
 													type="danger"
@@ -206,7 +206,7 @@
 							<div class="page">
 									<el-pagination background layout="prev, pager, next"	:total="1000">	</el-pagination>
 							</div>
-					
+
 					</div>
 			</el-tab-pane> -->
 		</el-tabs>
@@ -223,7 +223,7 @@ export default {
 			roleTotal:'',
 			formLabelWidth:"120px",
 			activeName: 'first',
-			roleName:'',   
+			roleName:'',
 			tableData: [],
 			form:{},
 			options: [{
@@ -274,7 +274,7 @@ export default {
 			this.$http.post(getResourcePageAPI,qs.stringify(param)).then(res => {
 				if (res.data.message === "成功") {
 					if(res.data.result) {
-						this.tableData = res.data.result.content;								
+						this.tableData = res.data.result.content;
 						this.roleTotal=res.data.result.totalElements;
 					}
 				} else {
@@ -322,35 +322,35 @@ export default {
 		this.getResourcePage(1)
 	}
  }
-</script>	
+</script>
 <style lang="less" scoped>
-.quanxian{
-	 display: flex;
-	 height: 36px;
-	 align-content: center;
-	 justify-content: space-between;
-	
+.quanxian {
+  display: flex;
+  height: 36px;
+  align-content: center;
+  justify-content: space-between;
 }
-.quanxian-table{
-	margin-top: 20px;
-	.page{
-			display: flex;
-			justify-content: center;
-			margin-top: 20px;
-	}
+.quanxian-table {
+  margin-top: 20px;
+  .page {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
 }
-.jiaose,.yonghu,.rizhi{
-	 display: flex;
-	 height: 36px;
-	 align-content: center;
-	 justify-content: space-between;
+.jiaose,
+.yonghu,
+.rizhi {
+  display: flex;
+  height: 36px;
+  align-content: center;
+  justify-content: space-between;
 }
-.flexd{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-bottom: 10px;
+.flexd {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
 }
-
 </style>
 

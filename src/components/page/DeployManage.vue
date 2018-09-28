@@ -20,7 +20,7 @@
 									<el-button type="primary">查询</el-button>
 									<el-button type="warning">重置</el-button>
 								</div>
-								<el-button type="success" style="width:100px">新增按钮</el-button>
+								<el-button type="success" style="width:100px">新增用户</el-button>
 						</div>
 						<div class="quanxian-table">
 							  <el-table
@@ -32,9 +32,9 @@
 									<el-table-column	prop="address"	label="更新者"></el-table-column>
 									<el-table-column	label="操作">
 										    <template slot-scope="scope">
-													<el-button size="mini"	
+													<el-button size="mini"
 														@click="handleEdit(scope.$index, scope.row)">查看详情</el-button>
-													<el-button size="mini"	
+													<el-button size="mini"
 														@click="handleEdit(scope.$index, scope.row)">修改</el-button>
 													<el-button size="mini"
 														type="danger"
@@ -45,7 +45,7 @@
 								<div class="page">
 										<el-pagination background layout="prev, pager, next"	:total="1000">	</el-pagination>
 								</div>
-						
+
 						</div> -->
  </div>
 </template>
@@ -68,23 +68,22 @@
 			}
 		}
  }
-</script>	
+</script>
 <style scoped lang="less">
-.deploy{
-	.rizhi{
-	 display: flex;
-	 height: 36px;
-	 align-content: center;
-	 justify-content: space-between;
-	}
-	.quanxian-table{
-		margin-top: 20px;
-		.page{
-				display: flex;
-				justify-content: center;
-				margin-top: 20px;
-		}
-	}
+.deploy {
+  .rizhi {
+    display: flex;
+    height: 36px;
+    align-content: center;
+    justify-content: space-between;
+  }
+  .quanxian-table {
+    margin-top: 20px;
+    .page {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+  }
 }
-
 </style>

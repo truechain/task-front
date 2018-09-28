@@ -12,7 +12,7 @@
             <el-button type="primary">查询</el-button>
             <el-button type="warning">重置</el-button>
         </div>
-        <el-button type="success" style="width:100px">新增按钮</el-button>
+        <el-button type="success" style="width:100px">新增用户</el-button>
     </div>
     <div class="quanxian-table">
             <el-table
@@ -28,7 +28,7 @@
                         <template slot-scope="scope">
                                 <el-button size="small"
                                     @click="handleEdit(scope.$index, scope.row)" type="primary">查看详情</el-button>
-                                <el-button size="small"	
+                                <el-button size="small"
                                     @click="handleEdit(scope.$index, scope.row)">修改</el-button>
                                 <el-button size="small"
                                     type="danger"
@@ -39,15 +39,14 @@
             <div class="page">
                     <el-pagination background layout="prev, pager, next"	:total="1000">	</el-pagination>
             </div>
-    
+
     </div>
 </template>
 <script>
 import qs from 'qs'
 export default {
-	data(){
-		return {
-        }
-    }
-}     
+	data() {
+		return {}
+	},
+}
 </script>

@@ -19,7 +19,7 @@
 				<el-form-item>
 					<el-button type="primary" @click="getUserPage" >查询</el-button>
 					<el-button type="warning" @click="clearRole" >重置</el-button>
-					<el-button type="success"  @click="addUserDialog = true">新增按钮</el-button>
+					<el-button type="success"  @click="addUserDialog = true">新增用户</el-button>
 				</el-form-item>
 			</el-form>
 			<div class="quanxian-table">
@@ -145,7 +145,7 @@ export default {
 				callback();
 			}
       	};
-		
+
 		return {
 			rolePageIndex:1,
 			rolePageSize:10,
@@ -166,7 +166,7 @@ export default {
 				username:'',
 				comfirmPassword:''
 			},
-			roleName:'',   
+			roleName:'',
 			tableData: [],
 			form:{},
 			addUserDialog:false,
@@ -225,11 +225,11 @@ export default {
 			this.$http.post(getUserPageAPI,qs.stringify(param)).then(res => {
 				if (res.data.message === "成功") {
 					if(res.data.result) {
-						this.tableData = res.data.result.content;								
+						this.tableData = res.data.result.content;
 						this.roleTotal=res.data.result.totalElements;
 					}
 				} else {
-					
+
 				}
 			})
 		},
@@ -238,10 +238,10 @@ export default {
 			this.$http.post(getRoleListAPI).then(res => {
 				if (res.data.message === "成功") {
 					if(res.data.result) {
-						this.roleList = res.data.result;								
+						this.roleList = res.data.result;
 					}
 				} else {
-					
+
 				}
 			})
 		},
@@ -257,7 +257,7 @@ export default {
 			this.rolePageIndex = value
 			this.getUserPage()
 		},
-		
+
 		//新增角色
 		addUser(addForm){
 			 this.$refs[addForm].validate((valid) => {
@@ -284,7 +284,7 @@ export default {
 							this.addUserDialog=false
 							this.getUserPage()
 						} else {
-							
+
 						}
 					})
 				} else {
@@ -292,7 +292,7 @@ export default {
 					return false;
 				}
 			});
-				
+
 
 		},
 		//编辑角色
@@ -322,7 +322,7 @@ export default {
 							this.editDialog=false
 							this.getUserPage()
 						} else {
-							
+
 						}
 					})
 				} else {
@@ -343,7 +343,7 @@ export default {
 					});
 					this.getUserPage()
 				} else {
-					
+
 				}
 			})
 		},
@@ -355,9 +355,9 @@ export default {
 				this.isSee = false
 			}
 			this.id=row.id
-			this.getUserInfo(row.id)				
-			
-			
+			this.getUserInfo(row.id)
+
+
 		},
 		//获取系统用户信息
 		getUserInfo(id){
@@ -369,47 +369,47 @@ export default {
 					this.editForm=res.data.result
 					this.editDialog = true
 				} else {
-					
+
 				}
 			})
 
 		}
-	
+
 	},
 	created() {
 		this.getUserPage()
 		this.getRoleList()
 	}
  }
-</script>	
+</script>
 <style lang="less" scoped>
-.quanxian{
-	 display: flex;
-	 height: 36px;
-	 align-content: center;
-	 justify-content: space-between;
-	
+.quanxian {
+  display: flex;
+  height: 36px;
+  align-content: center;
+  justify-content: space-between;
 }
-.quanxian-table{
-	margin-top: 20px;
-	.page{
-		display: flex;
-		justify-content: center;
-		margin-top: 20px;
-	}
+.quanxian-table {
+  margin-top: 20px;
+  .page {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
 }
-.jiaose,.yonghu,.rizhi{
-	 display: flex;
-	 height: 36px;
-	 align-content: center;
-	 justify-content: space-between;
+.jiaose,
+.yonghu,
+.rizhi {
+  display: flex;
+  height: 36px;
+  align-content: center;
+  justify-content: space-between;
 }
-.flexd{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin-bottom: 10px;
+.flexd {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
 }
-
 </style>
 
