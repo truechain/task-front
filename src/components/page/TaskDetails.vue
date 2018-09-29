@@ -3,27 +3,30 @@
 		<div class="position">我的位置：任务管理>查看详情</div>
 		<div class="fr">
 			 <el-button  @click="goback">返回</el-button>
-		
+
 			   <el-button type="primary" @click="TaskEntryForm">报名表</el-button>
-			
-       
+
+
 		</div>
-          
-       
+
+
 		<div class="details-content">
 			<div class="title">任务详情</div>
 			<ul>
 			  <li style="width: 100%;">任务logo：<span><div class="logo-img"><img :src="iconPath" /></div></span></li>
-				<li>任务名称：<span>{{name}}</span></li>
-				<li>任务等级：<span>{{level}}</span></li>
-				<li>状态：<span>{{taskStatus}}</span></li>
-				<li>任务类别：<span>{{category}}</span></li>
-				<li>发布者：<span>{{createUser}}</span></li>
-				<li>发布时间：<span>{{createTime}}</span></li>
-				<li>时间范围：<span>{{startDateTime}}至{{endDateTime}}</span></li>
-				<li>奖励：<span>{{rewardNum}}</span></li>
-				<li style="width: 100%;">提交地址：<span>{{pushAddress}}</span></li>
-				<li style="width: 100%;">任务描述：<span>{{description}}</span></li>
+				<li>任务名称：<span>{{task.name}}</span></li>
+				<li>任务等级：<span>{{task.level}}</span></li>
+				<li>状态：<span>{{status[task.taskStatus]}}</span></li>
+				<li>任务类别：<span>{{task.category == 0 ? '个人' : '团队' }}</span></li>
+				<li>发布者：<span>{{task.createUser}}</span></li>
+				<li>发布时间：<span>{{task.createTime}}</span></li>
+				<li>时间范围：<span>{{task.startDateTime.split('T')[0]}}至{{task.endDateTime.split('T')[0]}}</span></li>
+				<li>奖励：<span>{{task.rewardNum}}</span></li>
+				<li style="width: 100%;">提交地址：<span>{{task.pushAddress}}</span></li>
+				<li style="width: 100%;">任务描述：<span>{{task.description}}</span></li>
+        <li>推荐人微信昵称：<span>{{task.refererWXName}}</span></li>
+				<li>推荐人手机号：<span>{{task.refererPhone}}</span></li>
+				<li>推荐人钱包地址：<span>{{task.refererAddress}}</span></li>
 			</ul>
 		</div>
 		<div class="details-content">
@@ -46,8 +49,9 @@
 	export default {
 		name:'TaskDetails',
 		data() {
-			
+
 			return {
+        task: {},
 				tableData: [],
 				name:'',
 				level:'',
@@ -60,7 +64,12 @@
 				rewardNum:'',
 				pushAddress:'',
 				description:'',
-				iconPath:''
+        iconPath:'',
+        status: {
+          '0': '禁用',
+          '1': '启用',
+          '2': '关闭'
+        }
 			}
 		},
 		methods:{
@@ -69,7 +78,7 @@
 		  },
 		  //报名表
 		  TaskEntryForm(){
-			 
+
 			  let taskId =  this.$route.query.taskId
 			  console.log(taskId,'woshitaskid')
 			 	this.$router.push({
@@ -78,7 +87,7 @@
 						taskId: taskId,
 					}
 				})
-				 
+
 		  },
 		  getTaskDetails(){
 		  	let id =  this.$route.query.taskId
@@ -92,34 +101,7 @@
 		  			if (res.data.result) {
 		  				const result= res.data.result
 		  				this.tableData=result.taskDetailList
-		  				const task=result.task
-		  				this.name=task.name
-		  				this.level=task.level
-		  				if(task.taskStatus==0){
-		      				task.taskStatus='禁用'
-		      			}
-		      			if(task.taskStatus==1){
-		      				task.taskStatus='启用'
-		      			}
-		      			if(task.taskStatus==2){
-		      				task.taskStatus='关闭'
-		      			}
-		      			if(task.category==0){
-		      				task.category='个人'
-		      			}
-		      			if(task.category==1){
-		      				task.category='团队'
-		      			}
-		  				this.taskStatus=task.taskStatus
-		  				this.category=task.category
-		  				this.startDateTime=task.startDateTime.split('T')[0]
-						  
-		  				this.endDateTime=task.endDateTime.split('T')[0]
-		  				this.rewardNum=task.rewardNum
-		  				this.pushAddress=task.pushAddress
-		  				this.description=task.description
-		  				this.iconPath=task.iconPath
-
+		  				this.task=result.task
 		  			}
 		  		}
 		  	})
@@ -132,36 +114,43 @@
 </script>
 
 <style scoped>
-  .fr{
-    float: right;
-    margin-bottom: 20px;
-  }
-  .logo-img{
-  	display: inline-block;
-  	width: 50px;
-  	height: 50px;border: 1px solid #777;
-  }
-   .logo-img img{width: 100%;vertical-align: middle;    height: 50px;}
-.details-content{
-	border: 1px solid #dfe6ec;
-	margin-bottom: 20px;
-	font-size: 15px;
-	clear: both;
+.fr {
+  float: right;
+  margin-bottom: 20px;
 }
-.table-wrapper{padding: 2%;} 
-.title{
- font-size: 16px;
- padding-left: 5px;
- border-left: 4px solid rgba(255, 69, 0, 0.68);
+.logo-img {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #777;
 }
-.details-content ul{
-	overflow: hidden;
-	padding: 10px 20px 20px;
+.logo-img img {
+  width: 100%;
+  vertical-align: middle;
+  height: 50px;
 }
-.details-content li{
- width: 24.7%;
- float: left;
- font-size: 14px;
- line-height: 30px;
+.details-content {
+  border: 1px solid #dfe6ec;
+  margin-bottom: 20px;
+  font-size: 15px;
+  clear: both;
+}
+.table-wrapper {
+  padding: 2%;
+}
+.title {
+  font-size: 16px;
+  padding-left: 5px;
+  border-left: 4px solid rgba(255, 69, 0, 0.68);
+}
+.details-content ul {
+  overflow: hidden;
+  padding: 10px 20px 20px;
+}
+.details-content li {
+  width: 24.7%;
+  float: left;
+  font-size: 14px;
+  line-height: 30px;
 }
 </style>

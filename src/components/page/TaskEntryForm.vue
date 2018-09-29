@@ -45,7 +45,7 @@
         <el-form-item label="用户钱包地址：">
           {{this.pushAddress}}
         </el-form-item>
-           
+
         <el-form-item label="奖励数：">
           <el-input v-model.number="form.num" auto-complete="off" ></el-input>
         </el-form-item>
@@ -97,6 +97,13 @@
           		}
 		  	}).then((res)=>{
           console.log(res,'审核')
+          if(res.data.code === 500) {
+            this.$message({
+              message: res.data.message,
+              type: 'warning'
+            });
+            return false;
+          }
           if(res.list){
               var list=res.result
           this.taskName=list.taskName
@@ -104,18 +111,18 @@
           this.personName=list.personName
           this.pushAddress=list.pushAddress
           }
-        
-         this.dialogAuditing=true	
-         
+
+         this.dialogAuditing=true
+
 		  	})
     	},
       goback() {
         this.$router.go(-1)
       },
       dialogAudit(){
-        this.dialogAuditing=false  
+        this.dialogAuditing=false
         let url="http://www.phptrain.cn/admin/task/rewardEntryFromUser?taskUserId="+this.taskUserId
-        
+
         var param={
           userReward:this.form.reNum,
           recommendUserReward:this.form.num
@@ -141,13 +148,13 @@
 		  	}
 
 		  	})
-       
+
       },
       getTaskEntryForm(){
         let taskId =  this.$route.query.taskId
 
         let url="http://www.phptrain.cn/admin/task/getEntryFormInfo?taskId="+taskId
-  
+
 		  	this.$http.post(url, {
 		  		headers: {
             		"Content-Type": "application/json"
@@ -165,7 +172,7 @@
 		  				if(result.totalAuditStatus==1){
 		  				  result.totalAuditStatus='已审核'
 		  				}
-		  
+
 		  				this.totalAuditStatus=result.totalAuditStatus
 		  			  result.taskEntryFromInfoList.forEach(function(list){
 		  			    console.log(list.auditStatus)
@@ -181,9 +188,9 @@
                     list.auditStatus='已奖励'
                     list.isShow=false
                   }
-               
+
 		  			  })
-              		
+
 		  			}
 		  		}
 		  	})
@@ -191,30 +198,34 @@
     },
     mounted(){
     	this.getTaskEntryForm()
-   
+
     }
   }
 </script>
 
 <style type="text/css">
-	.el-message{
-    top: 200px!important;
-  }
+.el-message {
+  top: 200px !important;
+}
 </style>
 <style scoped>
-  .el-dialog--small.el-dialog{width: 30%;} 
-  .dialog-wrapper .el-form-item{display: block;}
-  .btn-center {
-    text-align: center;
-    margin: 10px 0;
-  }
-  
-  .status {
-    font-size: 14px;
-    margin-bottom: 15px;
-  }
-  
-  .status span {
-    margin-right: 20px;
-  }
+.el-dialog--small.el-dialog {
+  width: 30%;
+}
+.dialog-wrapper .el-form-item {
+  display: block;
+}
+.btn-center {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.status {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.status span {
+  margin-right: 20px;
+}
 </style>
