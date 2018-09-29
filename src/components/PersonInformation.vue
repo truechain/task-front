@@ -184,9 +184,21 @@
 				 }
 			},
 			fileSelected(){
-
-				this.file = document.getElementById('fileToUpload').files[0];
-				console.log(this.file)
+        this.file = document.getElementById('fileToUpload').files[0];
+        const MB10 = 1024 * 1024 * 10;
+        const postfix = this.file.name.match(/\w+$/g)[0];
+        const legalPostfix = ['pdf', 'word', 'doct', 'doc', 'txt'];
+        if(!legalPostfix.includes(postfix)) {
+          this.tips = '文件不合法';
+          this.file = null;
+          this.showTips()
+          return false;
+        }
+				if(this.file.size > MB10) {
+          this.tips = "上传文件不能大于10MB"
+          this.showTips()
+          return false;
+        }
 				if(this.file === undefined){
 						this.fileName = '';
 						this.fileSize = '';
