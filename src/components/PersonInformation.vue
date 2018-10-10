@@ -24,7 +24,7 @@
             <div class="add">
               <img src="../assets/img/upload_file.png" alt="">
             </div>
-            <span>上传个人简历(需小于500M)</span>
+            <span>上传个人简历(最大上传pdf、doc、docx、xls文档)</span>
           </div>
           <div class="file-uplaod" v-else>
             <div class="add">
@@ -125,7 +125,7 @@
         var that = this
         let regPhone = /^(13[0-9]|14[0-9]|15[0-9]|166|17[0-9]|18[0-9]|19[8|9])\d{8}$/;
         let regAddress = /^0X\d{40}$/
-        if (this.uname && this.wechatName && this.address && this.file) {
+        if (this.uname && this.wechatName && this.file) {
           // if(this.code!==this.callbackcode){
           // 	 // 验证码错误
           // 	 	that.tips = "验证码错误"
@@ -133,11 +133,19 @@
           // 	 return
           // }
           // debugger;
-          if (this.address.length !== 42) {
-            this.tips = "请填写合法钱包地址"
-            this.showTips()
-            return false
+          if (this.address) {
+            if (this.address.length !== 42 || this.address.substr(0,2).toLocaleLowerCase() !== '0x') {
+              this.tips = "请填写合法钱包地址"
+              this.showTips()
+              return false
+            }
+            // if (this.address.substr(0,2).toLocaleLowerCase() !== '0x') {
+            //   this.tips = "请填写合法钱包地址"
+            //   this.showTips()
+            //   return false
+            // }
           }
+
           if (this.referrerPhone.trim()) {
             if (!regPhone.test(this.referrerPhone)) {
               this.tips = "请填写合法手机号"
