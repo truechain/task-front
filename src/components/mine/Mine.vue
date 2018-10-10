@@ -12,9 +12,10 @@
         <div class="left">
           <img src="../../assets/img/user.png" alt="" class="userImg" />
           <div class="userRank">
-
-             <p class="name"><span  v-text="mobile"></span><span class="identity">（游客）</span></p>
-
+             <p class="name">
+               <span  v-text="mobile"></span>
+               <span class="identity">（游客）</span>
+             </p>
            <router-link :to="{path :'/personInformation',query: {userid: userId}}">
             <p class="addInfo">完善个人信息</p>
              </router-link>
@@ -40,7 +41,9 @@
       <div v-if="!unComplete"  >
         <ul class="navBar">
           <li class="item border-right" @click="tabs(index)" v-for="(item,index) of navs" :class="{active:active==index}">
-            <span class="num" v-text="item.num"><span class="unit">个</span></span>
+            <span class="num" v-text="item.num">
+              <span class="unit">个</span>
+            </span>
             <p class="name">{{item.name}}</p>
           </li>
         </ul>
@@ -62,7 +65,7 @@
       </div>
     </div>
     <router-link to="Login">
-      <div v-show="this.token===null" class="login-text">
+      <div v-show="this.token === null" class="login-text">
         请先登录
       </div>
     </router-link>
@@ -227,176 +230,177 @@
 </script>
 
 <style scoped lang="less">
-
-  .space {
-    background: #eee;
-    height: 10px;
-  }
-   .login-text{
-    text-decoration: underline;
-    color: #02ABEE;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 60px;
-    right: 0;
-    font-size: 16px;
-  }
-  .space_ {
-    position: fixed;
-    top: 174px;
-    left: 0;
-    right: 0;
-  }
-  .identity{font-size: 14px;}
-  .header-top {
-    height: 50px;
-    line-height: 50px;
-    .header-wrapper {
-      text-align: center;
-      .img-wrapper {
-        position: absolute;
-        width: 30px;
-        left: 0;
-        right: 0;
-        img {
-          width: 24px;
-        }
+.space {
+  background: #eee;
+  height: 10px;
+}
+.login-text {
+  text-decoration: underline;
+  color: #02abee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 60px;
+  right: 0;
+  font-size: 16px;
+}
+.space_ {
+  position: fixed;
+  top: 174px;
+  left: 0;
+  right: 0;
+}
+.identity {
+  font-size: 14px;
+}
+.header-top {
+  height: 50px;
+  line-height: 50px;
+  .header-wrapper {
+    text-align: center;
+    .img-wrapper {
+      position: absolute;
+      width: 30px;
+      left: 0;
+      right: 0;
+      img {
+        width: 24px;
       }
     }
   }
+}
 
-  .tabCon {
-    overflow: hidden;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 60px;
-    top: 200px;
-    .tabConWrapper {
-      display: flex;
-      padding: 0 15px;
-      height: 60px;
-      align-items: center;
-      .contLeft {
-        flex: 1;
-        .type {
-          font-size: 15px;
-          color: #2E353B;
-        }
-        .date {
-          color: #A1ACB4;
-          font-size: 12px;
-          padding-top: 8px;
-        }
+.tabCon {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 60px;
+  top: 200px;
+  .tabConWrapper {
+    display: flex;
+    padding: 0 15px;
+    height: 60px;
+    align-items: center;
+    .contLeft {
+      flex: 1;
+      .type {
+        font-size: 15px;
+        color: #2e353b;
       }
-      .contRight {
-        color: #2E353B;
+      .date {
+        color: #a1acb4;
+        font-size: 12px;
+        padding-top: 8px;
+      }
+    }
+    .contRight {
+      color: #2e353b;
+      font-size: 14px;
+    }
+  }
+}
+
+.space {
+  background: #eee;
+  height: 10px;
+}
+
+.header {
+  display: flex;
+  padding: 12px 18px 12px 14px;
+  align-items: center;
+  .left {
+    flex: 1;
+    .userImg {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      vertical-align: bottom;
+    }
+    .userRank {
+      margin-left: 11px;
+      display: inline-block;
+      .name {
+        color: #2e353b;
+        font-size: 18px;
+        margin-top: -55px;
+      }
+      .addInfo {
+        color: #a1acb4;
         font-size: 14px;
       }
-    }
-  }
-
-  .space {
-    background: #eee;
-    height: 10px;
-  }
-
-  .header {
-    display: flex;
-    padding: 12px 18px 12px 14px;
-    align-items: center;
-    .left {
-      flex: 1;
-      .userImg {
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        vertical-align: bottom;
-      }
-      .userRank {
-        margin-left: 11px;
-        display: inline-block;
-        .name {
-          color: #2E353B;
-          font-size: 18px;
-          margin-top: -55px;
-        }
-        .addInfo {
-          color: #A1ACB4;
-          font-size: 14px;
-        }
-        .rank {
-          color: #A1ACB4;
-          font-size: 14px;
-          margin-top: 4px;
-          span {
-            color: #FC8936;
-            border: 2px solid #FC8936;
-            padding: 2px;
-            border-radius: 50%;
-            width: 12px;
-            height: 12px;
-            display: inline-block;
-            text-align: center;
-            line-height: 12px;
-          }
+      .rank {
+        color: #a1acb4;
+        font-size: 14px;
+        margin-top: 4px;
+        span {
+          color: #fc8936;
+          border: 2px solid #fc8936;
+          padding: 2px;
+          border-radius: 50%;
+          width: 12px;
+          height: 12px;
+          display: inline-block;
+          text-align: center;
+          line-height: 12px;
         }
       }
     }
-    .right {
-      .name {
-        color: #02ABEE;
-        font-size: 18px;
-        .unit {
-          font-size: 12px;
-        }
-      }
-      .info {
-        color: #A1ACB4;
+  }
+  .right {
+    .name {
+      color: #02abee;
+      font-size: 18px;
+      .unit {
         font-size: 12px;
       }
     }
+    .info {
+      color: #a1acb4;
+      font-size: 12px;
+    }
   }
+}
 
-  .navBar {
-    height: 76px;
-    display: flex;
-    text-align: center;
-    background: #fff;
-    .item {
-      flex: 1;
+.navBar {
+  height: 76px;
+  display: flex;
+  text-align: center;
+  background: #fff;
+  .item {
+    flex: 1;
+    .num {
+      color: #2e353b;
+      font-size: 18px;
+      padding-top: 20px;
+      display: inline-block;
+      .unit {
+        font-size: 12px;
+      }
+    }
+    &.active {
       .num {
-        color: #2E353B;
-        font-size: 18px;
-        padding-top: 20px;
-        display: inline-block;
-        .unit {
-          font-size: 12px;
-        }
-      }
-      &.active {
-        .num {
-          color: #02ABEE;
-        }
-      }
-      &.active:after {
-        content: '';
-        border-bottom: 2px solid #02ABEE;
-        width: 100%;
-        height: 2px;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-      }
-      .name {
-        color: #A1ACB4;
-        font-size: 12px;
-        margin-top: 2px;
+        color: #02abee;
       }
     }
+    &.active:after {
+      content: '';
+      border-bottom: 2px solid #02abee;
+      width: 100%;
+      height: 2px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+    .name {
+      color: #a1acb4;
+      font-size: 12px;
+      margin-top: 2px;
+    }
   }
+}
 </style>

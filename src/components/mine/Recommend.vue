@@ -7,9 +7,9 @@
       </div>
       <div class="space"></div>
     </div>
-    <div class="recommendCon"  ref="wrapper">
+    <div class="recommendCon" ref="wrapper">
         <div>
-             <div class="tabConWrapper border-bottom" v-for='(itemCon,index) in recommendCons'>
+            <div class="tabConWrapper border-bottom" v-for="(itemCon,index) in recommendCons">
             <div class="contLeft">
               <p class="type">{{itemCon.personName}}</p>
               <p class="date">{{itemCon.createTime}}</p>
@@ -59,72 +59,72 @@ import Loading from '../../base/loading/Loading'
        setTimeout(()=>{
            this.getRecommendInfo()
       },1000)
-       
+
        this.scroll = new Bscroll(this.$refs.wrapper)
-      
+
       }
   }
 </script>
 
 <style lang="less" scoped>
 .space {
-    background: #eee;
-    height: 10px;
-  }
- .header-top{
-   height: 50px;
-   line-height: 50px;
-   position: fixed;
-   top: 0;
-   left: 0;
-   right: 0;
-   .header-wrapper{
-     text-align: center;
-     .img-wrapper{
-       position: absolute;
-       width: 30px;
-       left: 0;
-       right: 0;
-       img{
-         width: 24px;
-       }
-     }
-   }
- }
-  .recommendCon {
-    overflow: hidden;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 60px;
-    .tabConWrapper {
-      display: flex;
-      padding: 0 15px;
-      height: 60px;
-      align-items: center;
-      .contLeft {
-        flex: 1;
-        .type {
-          font-size: 15px;
-          color: #2E353B;
-        }
-        .date {
-          color: #A1ACB4;
-          font-size: 12px;
-          padding-top: 8px;
-        }
-      }
-      .contRight {
-        color: #2E353B;
-        font-size: 14px;
+  background: #eee;
+  height: 10px;
+}
+.header-top {
+  height: 50px;
+  line-height: 50px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  .header-wrapper {
+    text-align: center;
+    .img-wrapper {
+      position: absolute;
+      width: 30px;
+      left: 0;
+      right: 0;
+      img {
+        width: 24px;
       }
     }
   }
-   .loading-container{
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
+}
+.recommendCon {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 60px;
+  .tabConWrapper {
+    display: flex;
+    padding: 0 15px;
+    height: 60px;
+    align-items: center;
+    .contLeft {
+      flex: 1;
+      .type {
+        font-size: 15px;
+        color: #2e353b;
+      }
+      .date {
+        color: #a1acb4;
+        font-size: 12px;
+        padding-top: 8px;
+      }
+    }
+    .contRight {
+      color: #2e353b;
+      font-size: 14px;
+    }
   }
+}
+.loading-container {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
 </style>
