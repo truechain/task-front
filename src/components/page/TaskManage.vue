@@ -35,11 +35,11 @@
 						<el-option label="S" value="S"></el-option>
 					</el-select>
 				</el-form-item>
-				<el-form-item label="审核状态：">
+				<el-form-item label="任务完成状态：">
           <el-select v-model="form.auditStatus" placeholder="全部">
 			<el-option label="全部" value=""></el-option>
-            <el-option label="已审核" value="1"></el-option>
-            <el-option label="未审核" value="0"></el-option>
+            <el-option label="已完成" value="1"></el-option>
+            <el-option label="未完成" value="0"></el-option>
           </el-select>
         </el-form-item>
 				<el-form-item label="任务类别：">
@@ -71,7 +71,7 @@
 			</el-table-column>
 			<el-table-column prop="createUser" label="发布者" width="100px">
 			</el-table-column>
-			<el-table-column prop="auditStatus" label="审核状态" width="100px">
+			<el-table-column prop="auditStatus" label="任务完成状态" width="100px">
 			</el-table-column>
 			<el-table-column prop="createTime" label="发布时间" >
 			</el-table-column>
@@ -190,10 +190,10 @@
 		      				list.taskStatus='关闭'
 		      			}
 		      			if(list.auditStatus==0){
-		      				list.auditStatus='未审核'
+		      				list.auditStatus='未完成'
 		      			}
 		      			if(list.auditStatus==1){
-		      				list.auditStatus='已审核'
+		      				list.auditStatus='已完成'
 		      			}
 		      			if(list.category==0){
 		      				list.category='个人'

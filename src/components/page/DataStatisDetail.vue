@@ -1,6 +1,6 @@
 <template>
  <div class="datastatis">
-	 
+
 	 		<div class="form-wrap">
 			<el-form ref="form"  :inline="true"  class="demo-form-inline">
 				<el-form-item label="姓名：" >
@@ -44,9 +44,9 @@
 				<el-table-column	prop="recommendCount"	label="用户推荐数"  width="120"></el-table-column>
 				<el-table-column	label="操作"   >
 							<template slot-scope="scope">
-								<el-button size="mini"	
+								<el-button size="mini"
 									@click="handleTaskList(scope.row)">任务列表</el-button>
-								<el-button size="mini"	
+								<el-button size="mini"
 									@click="handleRecommend(scope.row)">推荐列表</el-button>
 								<el-button size="mini"
 									@click="handleReword(scope.row)">奖励列表</el-button>
@@ -70,7 +70,7 @@
 					auditStatus:'',
 					endDate:'',
 					startDate:'',
-					
+
 					form: {
 							wxNickName:'',
           		name:'',
@@ -106,14 +106,14 @@
 					query:{
 						id:scope.id
 					}
-				})	
+				})
 			},
 			goback() {
         this.$router.go(-1)
       },
 			//导出
 			exportTable(){
-	
+
 				let url='http://www.phptrain.cn/admin/report/export'
 				this.$http.get(url,{params:{
 					auditStatus:this.auditStatus,
@@ -130,7 +130,7 @@
 	    	console.log(res)
 		      if(res.data.message=='成功'){
 		      	if (res.data.result) {
-		      		
+
 		      	}
 		      }
 		    })
@@ -176,7 +176,7 @@
 			this.getProfile()
 		}
  }
-</script>	
+</script>
 <style scoped lang="less">
 .datastatis{
   .top{

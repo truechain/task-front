@@ -29,7 +29,7 @@
 			</el-table-column>
 			<el-table-column prop="taskCount" label="任务总量" width="90px">
 			</el-table-column>
-			<el-table-column prop="taskDoneCount" label="完成任务数" width="70px">
+			<el-table-column prop="taskDoneCount" label="已审核任务数" width="70px">
 			</el-table-column>
 			<el-table-column prop="taskDoingCount" label="进行中任务数" width="90px">
 			</el-table-column>
@@ -59,9 +59,9 @@
 				tableData:[]
 			}
 		},
-	
+
 		methods:{
-			getTime(date){
+		getTime(date){
           this.startDate = date;
           console.log(this.startDate,'22222');
        },
@@ -74,7 +74,7 @@
 						startDate:scope.startDate,
 						endDate:scope.endDate
 					}
-				})	
+				})
 			},
 			getStaticsInfo(){
 			let param={
@@ -90,7 +90,7 @@
 		      	if (res.data.result) {
 		      		this.tableData=res.data.result
 		      		console.log(this.tableData)
-						
+
 		      	}
 		      }
 		    })
@@ -101,35 +101,35 @@
 				this.getStaticsInfo()
 			},
 			thisMouth(){
-				var now = new Date(); //当前日期 
-				var nowDayOfWeek = now.getDay(); //今天本周的第几天 
-				var nowDay = now.getDate(); //当前日 
-				var nowMonth = now.getMonth(); //当前月 
-				var nowYear = now.getYear(); //当前年 
+				var now = new Date(); //当前日期
+				var nowDayOfWeek = now.getDay(); //今天本周的第几天
+				var nowDay = now.getDate(); //当前日
+				var nowMonth = now.getMonth(); //当前月
+				var nowYear = now.getYear(); //当前年
 				nowYear += (nowYear < 2000) ? 1900 : 0; //
-				function formatDate(date) { 
-				var myyear = date.getFullYear(); 
-				var mymonth = date.getMonth()+1; 
-				var myweekday = date.getDate(); 
-				
-				if(mymonth < 10){ 
-				mymonth = "0" + mymonth; 
-				} 
-				if(myweekday < 10){ 
-				myweekday = "0" + myweekday; 
-				} 
-				return (myyear+"-"+mymonth + "-" + myweekday); 
-				} 
-				function getMonthDays(myMonth){ 
-				var monthStartDate = new Date(nowYear, myMonth, 1); 
-				var monthEndDate = new Date(nowYear, myMonth + 1, 1); 
-				var days = (monthEndDate - monthStartDate)/(1000 * 60 * 60 * 24); 
-				return days; 
-				} 
-				var monthStartDate = new Date(nowYear, nowMonth, 1); 
+				function formatDate(date) {
+				var myyear = date.getFullYear();
+				var mymonth = date.getMonth()+1;
+				var myweekday = date.getDate();
 
-				var monthEndDate = new Date(nowYear, nowMonth, getMonthDays(nowMonth)); 
-       
+				if(mymonth < 10){
+				mymonth = "0" + mymonth;
+				}
+				if(myweekday < 10){
+				myweekday = "0" + myweekday;
+				}
+				return (myyear+"-"+mymonth + "-" + myweekday);
+				}
+				function getMonthDays(myMonth){
+				var monthStartDate = new Date(nowYear, myMonth, 1);
+				var monthEndDate = new Date(nowYear, myMonth + 1, 1);
+				var days = (monthEndDate - monthStartDate)/(1000 * 60 * 60 * 24);
+				return days;
+				}
+				var monthStartDate = new Date(nowYear, nowMonth, 1);
+
+				var monthEndDate = new Date(nowYear, nowMonth, getMonthDays(nowMonth));
+
       let param={
 				startDate:formatDate(monthStartDate),
 				endDate:formatDate(monthEndDate),
@@ -143,35 +143,35 @@
 		      	if (res.data.result) {
 		      		this.tableData=res.data.result
 		      		console.log(this.tableData)
-						
+
 		      	}
 		      }
 		    })
-			}, 
+			},
 			thisWeek(){
-				 var now = new Date(); //当前日期 
-				var nowDayOfWeek = now.getDay(); //今天本周的第几天 
-				var nowDay = now.getDate(); //当前日 
-				var nowMonth = now.getMonth(); //当前月 
-				var nowYear = now.getYear(); //当前年 
+				 var now = new Date(); //当前日期
+				var nowDayOfWeek = now.getDay(); //今天本周的第几天
+				var nowDay = now.getDate(); //当前日
+				var nowMonth = now.getMonth(); //当前月
+				var nowYear = now.getYear(); //当前年
 				nowYear += (nowYear < 2000) ? 1900 : 0; //
-				function formatDate(date) { 
-				var myyear = date.getFullYear(); 
-				var mymonth = date.getMonth()+1; 
-				var myweekday = date.getDate(); 
-				
-				if(mymonth < 10){ 
-				mymonth = "0" + mymonth; 
-				} 
-				if(myweekday < 10){ 
-				myweekday = "0" + myweekday; 
-				} 
-				return (myyear+"-"+mymonth + "-" + myweekday); 
-				} 
-				var weekStartDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek); 
-	
-				var weekEndDate = new Date(nowYear, nowMonth, nowDay + (6 - nowDayOfWeek)); 
-			
+				function formatDate(date) {
+				var myyear = date.getFullYear();
+				var mymonth = date.getMonth()+1;
+				var myweekday = date.getDate();
+
+				if(mymonth < 10){
+				mymonth = "0" + mymonth;
+				}
+				if(myweekday < 10){
+				myweekday = "0" + myweekday;
+				}
+				return (myyear+"-"+mymonth + "-" + myweekday);
+				}
+				var weekStartDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek);
+
+				var weekEndDate = new Date(nowYear, nowMonth, nowDay + (6 - nowDayOfWeek));
+
 				let param={
 				startDate:formatDate(weekStartDate),
 				endDate:formatDate(weekEndDate),
@@ -185,11 +185,11 @@
 		      	if (res.data.result) {
 		      		this.tableData=res.data.result
 		      		console.log(this.tableData)
-						
+
 		      	}
 		      }
 		    })
-			}, 
+			},
 			today(){
 				var date=new Date()
 				var year =  date.getFullYear();
@@ -216,7 +216,7 @@
 		      	if (res.data.result) {
 		      		this.tableData=res.data.result
 		      		console.log(this.tableData)
-						
+
 		      	}
 		      }
 		    })
@@ -232,7 +232,7 @@
 		mounted(){
 			this.getStaticsInfo()
 		},
-		
+
 	}
 </script>
 

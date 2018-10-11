@@ -4,23 +4,23 @@
 		<div class="fr">
 			 <el-button  @click="goback">返回</el-button>
 		</div>
-          
-       
+
+
 		<div class="details-content">
 			<div class="title">基本信息</div>
 			<ul>
-				<li>姓名：<span> {{tableData.personName}}</span></li>
-				<li>微信昵称：<span> {{tableData.wxNickName}}</span></li>
-				<!-- <li>微信号：<span> {{tableData.wxNum}}</span></li> -->
-				<li>审核状态：<span> {{tableData.auditStatusName}}</span></li>
-				<li>联系方式：<span> {{tableData.mobile}}</span></li>
-				<li>等级：<span> {{tableData.level}}</span></li>
-				<li>提交时间：<span> {{tableData.updateTime}}</span></li>
+				<li>姓名：<span> {{tableData.sysUser.personName}}</span></li>
+				<li>微信昵称：<span> {{tableData.sysUser.wxNickName}}</span></li>
+				<!-- <li>微信号：<span> {{tableData.sysUser.wxNum}}</span></li> -->
+				<li>审核状态：<span> {{tableData.sysUser.auditStatusName}}</span></li>
+				<li>联系方式：<span> {{tableData.sysUser.mobile}}</span></li>
+				<li>等级：<span> {{tableData.sysUser.level}}</span></li>
+				<li>提交时间：<span> {{tableData.sysUser.updateTime}}</span></li>
+        <li style="width: 500px;">钱包地址：<span> {{tableData.sysUser.trueChainAddress}}</span></li>
+        <li>推荐人微信昵称：<span>{{tableData.refererWXName}}</span></li>
+				<li>推荐人手机号：<span>{{tableData.refererPhone}}</span></li>
+				<li style="width: 500px;">推荐人钱包地址：<span>{{tableData.refererAddress}}</span></li>
 			</ul>
-			<div style="marginLeft:20px">
-				<p>钱包地址：<span> {{tableData.trueChainAddress}}</span></p>
-				
-			</div>
 		</div>
 		<div class="details-content" style="height:120px">
 			<div class="title">附件信息</div>
@@ -37,8 +37,8 @@
 			<pdf v-if="dialogVis" :src="resumeFilePath"></pdf>
 			<!-- <canvas v-for="page in pages" :id="'the-canvas'+page" :key="page"></canvas> -->
 		</div>
-       
-         
+
+
 	</div>
 </template>
 
@@ -52,7 +52,7 @@
 			pdf
 		},
 		data() {
-			
+
 			return {
 				tableData: [],
                 isAudit:'',
@@ -87,9 +87,9 @@
 							if(this.tableData.auditStatus==1){
 								this.tableData.auditStatusName='已审核'
 							}
-					
+
 						}
-					
+
 					} else {
 						this.tips = res.data.message;
 						this.showTips();
@@ -153,45 +153,46 @@
 </script>
 
 <style >
-.fr{
-    float: right;
-    margin-bottom: 20px;
+.fr {
+  float: right;
+  margin-bottom: 20px;
 }
 .pic-left {
-	 width: 60px;
-    float: left;
-	margin-left: 10px;
+  width: 60px;
+  float: left;
+  margin-left: 10px;
 }
 .cont-right {
-	float: left;
-	margin-left: 20px;
-
+  float: left;
+  margin-left: 20px;
 }
 .cont-right p {
-	margin-bottom: 10px
+  margin-bottom: 10px;
 }
-.details-content{
-	border: 1px solid #dfe6ec;
-	padding-bottom: 30px;
-	margin-bottom: 20px;
-	font-size: 15px;
-	clear: both;
+.details-content {
+  border: 1px solid #dfe6ec;
+  padding-bottom: 30px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  clear: both;
 }
-.table-wrapper{padding: 2%;} 
-.title{
-	margin: 15px 0 20px 0;
-	font-size: 16px;
-	padding-left: 5px;
-	border-left: 4px solid rgba(255, 69, 0, 0.68);
+.table-wrapper {
+  padding: 2%;
 }
-.details-content ul{
-	overflow: hidden;
-	padding: 10px 20px 20px;
+.title {
+  margin: 15px 0 20px 0;
+  font-size: 16px;
+  padding-left: 5px;
+  border-left: 4px solid rgba(255, 69, 0, 0.68);
 }
-.details-content li{
- width: 24.7%;
- float: left;
- font-size: 14px;
- line-height: 30px;
+.details-content ul {
+  overflow: hidden;
+  padding: 10px 20px 20px;
+}
+.details-content li {
+  width: 24.7%;
+  float: left;
+  font-size: 14px;
+  line-height: 30px;
 }
 </style>

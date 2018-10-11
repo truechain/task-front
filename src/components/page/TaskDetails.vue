@@ -13,7 +13,7 @@
 		<div class="details-content">
 			<div class="title">任务详情</div>
 			<ul>
-			  <li style="width: 100%;">任务logo：<span><div class="logo-img"><img :src="iconPath" /></div></span></li>
+			  <li style="width: 100%;">任务logo：<span><div class="logo-img"><img :src="task.iconPath" /></div></span></li>
 				<li>任务名称：<span>{{task.name}}</span></li>
 				<li>任务等级：<span>{{task.level}}</span></li>
 				<li>状态：<span>{{status[task.taskStatus]}}</span></li>
@@ -24,9 +24,6 @@
 				<li>奖励：<span>{{task.rewardNum}}</span></li>
 				<li style="width: 100%;">提交地址：<span>{{task.pushAddress}}</span></li>
 				<li style="width: 100%;">任务描述：<span>{{task.description}}</span></li>
-        <li>推荐人微信昵称：<span>{{task.refererWXName}}</span></li>
-				<li>推荐人手机号：<span>{{task.refererPhone}}</span></li>
-				<li>推荐人钱包地址：<span>{{task.refererAddress}}</span></li>
 			</ul>
 		</div>
 		<div class="details-content">

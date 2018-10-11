@@ -31,32 +31,32 @@
     <div class="btn-center">
       <el-button @click="goback">返回</el-button>
     </div>
-    <el-dialog title="审核"   :visible.sync="dialogAuditing" >
-      <el-form :model="form" class="dialog-wrapper" label-width="120px" >
+    <el-dialog title="审核" :visible.sync="dialogAuditing">
+      <el-form :model="form" class="dialog-wrapper" label-width="120px">
         <el-form-item label="任务名：">
-          {{this.taskName}}
+          {{taskName}}
         </el-form-item>
         <el-form-item label="默认奖励数：">
-          {{this.rewardNum}}
+          {{formTable.rewardNum || '0'}}
         </el-form-item>
         <el-form-item label="用户姓名：">
-          {{this.personName}}
+          {{formTable.personName}}
         </el-form-item>
         <el-form-item label="用户钱包地址：">
-          {{this.pushAddress}}
+          {{formTable.pushAddress || '暂无'}}
         </el-form-item>
 
         <el-form-item label="奖励数：">
-          <el-input v-model.number="form.num" auto-complete="off" ></el-input>
+          <el-input v-model.number="form.num" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="推荐人奖励数：" >
-          <el-input v-model.number="form.reNum" auto-complete="off" ></el-input>
+        <el-form-item label="推荐人奖励数：">
+          <el-input v-model.number="form.reNum" auto-complete="off"></el-input>
         </el-form-item>
 
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAuditing = false">取 消</el-button>
-        <el-button type="primary" @click="dialogAudit" :plain="true" >发放奖励</el-button>
+        <el-button type="primary" @click="dialogAudit" :plain="true">发放奖励</el-button>
       </div>
     </el-dialog>
   </div>
@@ -67,16 +67,19 @@
     name: 'TaskEntryForm',
     data() {
       return {
-      	taskName:'',
-      	totalAuditStatus:'',
+      	taskName: '',
+      	totalAuditStatus: '',
         dialogAuditing: false,
         centerDialogVisible: true,
-        buttonText:'',
-        taskUserId:'',
+        buttonText: '',
+        taskUserId: '',
         isShow:false,
         form: {
           reNum:'',
           num:'',
+        },
+        formTable: {
+
         },
         taskName:'',//任务名
         rewardNum:'',//默认奖励数
@@ -88,9 +91,12 @@
     methods: {
     	/*审核报名表*/
     	shDialog(scope){
-    		this.taskUserId=scope.taskUserId
-    		let id =  scope.taskUserId
-		  	let url="http://www.phptrain.cn/admin/task/auditEntryFormUser?taskUserId="+id
+        // debugger;
+        this.formTable = scope;
+
+    		this.taskUserId = scope.taskUserId
+
+		  	let url="http://www.phptrain.cn/admin/task/auditEntryFormUser?taskUserId="+this.taskUserId
 		  	this.$http.post(url, {
 		  		headers: {
             		"Content-Type": "application/json"
@@ -105,25 +111,20 @@
             return false;
           }
           if(res.list){
-              var list=res.result
-          this.taskName=list.taskName
-          this.rewardNum=list.rewardNum
-          this.personName=list.personName
-          this.pushAddress=list.pushAddress
+              var list     = res.result
           }
-
-         this.dialogAuditing=true
-
+          this.dialogAuditing = true
 		  	})
     	},
       goback() {
         this.$router.go(-1)
       },
       dialogAudit(){
+        // debugger
         this.dialogAuditing=false
         let url="http://www.phptrain.cn/admin/task/rewardEntryFromUser?taskUserId="+this.taskUserId
 
-        var param={
+        var param = {
           userReward:this.form.reNum,
           recommendUserReward:this.form.num
         }
@@ -132,29 +133,25 @@
             		"Content-Type": "application/json"
           		}
 		  	}).then((res)=>{
-		  	if(res.data.code==200){
-		  	this.getTaskEntryForm()
-		  		  this.$message({
-          message: '奖励已发送',
-          type: 'success'
-        });
-		  	}
-		  	else{
-		  		var msg=res.data.message
-		  		  this.$message({
-          message: msg,
-          type: 'warning'
-        });
-		  	}
-
+          if(res.data.code == 200){
+            this.getTaskEntryForm()
+              this.$message({
+                message: '奖励已发送',
+                type: 'success'
+              });
+          } else {
+            var msg = res.data.message
+            this.$message({
+              message: msg,
+              type: 'warning'
+            });
+          }
 		  	})
 
       },
       getTaskEntryForm(){
         let taskId =  this.$route.query.taskId
-
         let url="http://www.phptrain.cn/admin/task/getEntryFormInfo?taskId="+taskId
-
 		  	this.$http.post(url, {
 		  		headers: {
             		"Content-Type": "application/json"
@@ -198,7 +195,6 @@
     },
     mounted(){
     	this.getTaskEntryForm()
-
     }
   }
 </script>
@@ -212,9 +208,11 @@
 .el-dialog--small.el-dialog {
   width: 30%;
 }
+
 .dialog-wrapper .el-form-item {
   display: block;
 }
+
 .btn-center {
   text-align: center;
   margin: 10px 0;

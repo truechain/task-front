@@ -23,75 +23,72 @@ Vue.use(Router)
 
 export default new Router({
   //mode:'history',
-  base:__dirname,
-  routes: [
-    {
-      path: '/home',
-      component: Home,
-      children:[
-        {
-          path:'',
-          component:Index
-        },{
-          path:'/Index',
-          component:Index
-        },{
-          path:'/systemManage',
-          component:SystemManage
-        },{
-          path:'/RegistManage',
-          component:RegistManage
-        },{
-          path:'/RegistDetail',
-          component:RegistDetail
-        },{
-          path:'/TaskManage',
-          component:TaskManage
-        },{
-        	 path:'/DataStatics',
-          component:DataStatics
-        },
-        {
-        	 path:'/DataDetailsTaskList',
-          component:DataDetailsTaskList
-        	
-        },{
-        	path:'/DataDetailsRecommendList',
-        	component:DataDetailsRecommendList
-        	
-        },
-        {
-        	path:'/DataDetailsRewardList',
-        	component:DataDetailsRewardList
-        	
-        },
-        {
-          path:'/DataStatisDetail',
-          component:DataStatisDetail
-        },{
-          path:'/DeployManage',
-          component:DeployManage
-        },{
-          path:'/TaskDetails',
-          component:TaskDetails
-        },{
-          path:'/TaskNew',
-          component:TaskNew
-        },{
-          path:'/TaskEdit',
-          component:TaskEdit
-        },
-        {
-          path:'/TaskEntryForm',
-          component:TaskEntryForm
-        }
-      ]
-    },{
-			path:"/",
-			component:Login
-		},{
-			path:"/login",
-			component:Login
-		}
-  ]
+  base: __dirname,
+  routes: [{
+    path: '/home',
+    component: Home,
+    children: [{
+        path: '',
+        component: Index
+      }, {
+        path: '/Index',
+        component: Index
+      }, {
+        path: '/systemManage',
+        component: SystemManage
+      }, {
+        path: '/RegistManage',
+        component: RegistManage
+      }, {
+        path: '/RegistDetail',
+        component: RegistDetail
+      }, {
+        path: '/TaskManage',
+        component: TaskManage
+      }, {
+        path: '/DataStatics',
+        component: DataStatics
+      },
+      {
+        path: '/DataDetailsTaskList',
+        component: DataDetailsTaskList
+
+      }, {
+        path: '/DataDetailsRecommendList',
+        component: DataDetailsRecommendList
+
+      },
+      {
+        path: '/DataDetailsRewardList',
+        component: DataDetailsRewardList
+
+      },
+      {
+        path: '/DataStatisDetail',
+        component: DataStatisDetail
+      }, {
+        path: '/DeployManage',
+        component: DeployManage
+      }, {
+        path: '/TaskDetails',
+        component: TaskDetails
+      }, {
+        path: '/TaskNew',
+        component: TaskNew
+      }, {
+        path: '/TaskEdit',
+        component: TaskEdit
+      },
+      {
+        path: '/TaskEntryForm',
+        component: TaskEntryForm
+      }
+    ]
+  }, {
+    path: "/",
+    component: Login
+  }, {
+    path: "/login",
+    component: Login
+  }]
 })

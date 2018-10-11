@@ -9,9 +9,9 @@
             <el-col :xs="12" :sm="12" :md="12" :lg="6">
                 <el-card class="box-card">
                    <el-row :gutter="6">
-                   
+
                     <el-col :xs="24" :sm="11" :md="12" :lg="12">
-                        <div class="cart-string"> 
+                        <div class="cart-string">
                         <span>兼职总人数</span>
                         <span><h2>{{result}}</h2></span>
                         </div>
@@ -29,7 +29,7 @@
                 <el-card class="box-card">
                    <el-row :gutter="6">
                     <el-col :xs="24" :sm="11" :md="12" :lg="12">
-                        <div class="cart-string"> 
+                        <div class="cart-string">
                         <span>任务数</span>
                         <span><h2>{{TotalTask}}</h2></span>
                         </div>
@@ -46,9 +46,9 @@
             <el-col :xs="12" :sm="12" :md="12" :lg="6">
                 <el-card class="box-card">
                    <el-row :gutter="6">
-                   
+
                     <el-col :xs="24" :sm="11" :md="12" :lg="12">
-                        <div class="cart-string"> 
+                        <div class="cart-string">
                         <span>完成任务数</span>
                         <span><h2>{{ComplateTask}}</h2></span>
                         </div>
@@ -65,7 +65,7 @@
 
 
 
-        
+
 
 
 
@@ -96,14 +96,14 @@
 					countTotalTask(){
 						var url='http://www.phptrain.cn/admin/home/countTotalTask'
 						this.$http.get(url).then((res)=>{
-							
+
 							this.TotalTask=res.data.result
 						})
 					},
 					countComplateTask(){
 						var url='http://www.phptrain.cn/admin/home/countComplateTask'
 						this.$http.get(url).then((res)=>{
-							
+
 							this.ComplateTask=res.data.result
 						})
 					}
@@ -127,12 +127,12 @@
     }
     .box-card{
         height:110px;
-    } 
+    }
     .cart-string{
         height:100px;
         padding-top:10px;
         font-size:1.1rem;
-        
+
     }
     .cart-string span{font-size:20px}
     .box-chart{
