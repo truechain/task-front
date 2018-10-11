@@ -28,7 +28,7 @@
         <div class="cont-title">人数限制</div>
         <p>{{data.task.peopleNum}}人</p>
         <div class="cont-title">任务描述</div>
-        <div class="cont-detail">{{data.task.description}}</div>
+        <div class="cont-detail">{{decodeURIComponent(decodeURIComponent(data.task.description))}}</div>
         <div class="cont-title">提交地址</div>
         <p>{{data.task.pushAddress}}</p>
       </div>
@@ -167,6 +167,7 @@
             }
           })
           .then(res => {
+            // debugger
             if (res.data.message === "成功") {
               if (res.data.result) {
                 this.data = res.data.result;
@@ -308,7 +309,7 @@
             wx.ready(function () {
               wx.onMenuShareAppMessage({
                 title: that.data.task.name, // 分享标题
-                desc: that.data.task.description,
+                desc: decodeURIComponent(that.data.task.description),
                 link: us, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                 imgUrl: that.data.task.iconPath, // 分享图标
                 success: function () {
@@ -322,7 +323,7 @@
               });
               wx.onMenuShareQQ({
                 title: that.data.task.name, // 分享标题
-                desc: that.data.task.description,
+                desc: decodeURIComponent(that.data.task.description),
                 link: us, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                 imgUrl: that.data.task.iconPath, // 分享图标
                 success: function () {
