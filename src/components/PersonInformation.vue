@@ -6,37 +6,51 @@
 			</div> -->
     <div class="form-part">
       <form class="form">
-        <input class="inp" type="text" placeholder="姓名" v-model="uname">
-        <input class="inp" type="text" placeholder="微信昵称" v-model="wechatName">
+        <div>
+          <span class="red">*&nbsp;&nbsp;</span>
+          <input class="inp" type="text" placeholder="姓名" v-model="uname">
+        </div>
+        <div>
+          <span class="red">*&nbsp;&nbsp;</span>
+          <input class="inp" type="text" placeholder="微信昵称" v-model="wechatName">
+        </div>
 
         <!-- <input class="inp" type="text" placeholder="微信号" v-model="wechatId"> -->
         <!-- <input class="inpx-r" type="button" value="获取" @click="getWeChatId"> -->
-
-        <input class="inp" type="text" placeholder="钱包地址" v-model="address">
-        <input class="inp" type="text" placeholder="推荐人手机号" v-model="referrerPhone">
+        <div>
+          <span class="red">&nbsp;&nbsp;&nbsp;</span>
+          <input class="inp" type="text" placeholder="钱包地址" v-model="address">
+        </div>
+        <div>
+          <span class="red">&nbsp;&nbsp;&nbsp;</span>
+          <input class="inp" type="text" placeholder="推荐人手机号" v-model="referrerPhone">
+        </div>
         <!-- <input class="inp" type="number" placeholder="联系电话" v-model="phone">
 						  <div class="inpx">
 								<input class="inpx-l" type="text" placeholder="验证码" v-model="code">
 								<input class="inpx-r" type="button" value="获取验证码" @click="clock" ref="clock" :style="clockStyle">
 							</div> -->
-        <div class="inp-file">
+        <div>
+          <span class="red">*&nbsp;&nbsp;</span>
+          <div class="inp-file">
           <div class="file-uplaod" v-if="!file">
             <div class="add">
               <img src="../assets/img/upload_file.png" alt="">
             </div>
-            <span>上传个人简历(最大上传pdf、doc、docx、xls文档)</span>
+            <span>上传个人简历(最大上传5M, pdf、doc、docx、xls文档)</span>
           </div>
           <div class="file-uplaod" v-else>
             <div class="add">
               <img src="../assets/img/file.png" alt="">
             </div>
-            <span>{{fileName}}---{{fileSize}}</span>
+              <span>{{fileName}}---{{fileSize}}</span>
+            </div>
+            <input type="file" class="file" @change="fileSelected" id="fileToUpload" />
           </div>
-          <input type="file" class="file" @change="fileSelected" id="fileToUpload" />
         </div>
         <div class="tip">
           <input type="checkbox" class="checkbox" v-model="checked" />
-          <span>我已阅读</span><span style="color:#00AAEE" @click="optiondetail">《使用说明》</span>
+          <span>&nbsp;我已阅读</span><span style="color:#00AAEE" @click="optiondetail">《使用说明》</span>
         </div>
         <input type="button" value="提交" class="submit" @click="regist">
       </form>
@@ -181,7 +195,6 @@
                   path: "/mine"
                 })
               })
-
             } else {
               that.tips = res.data.message
               that.showTips()
@@ -198,7 +211,7 @@
         this.file = document.getElementById('fileToUpload').files[0];
         const MB10 = 1024 * 1024 * 10;
         const postfix = this.file.name.match(/\w+$/g)[0];
-        const legalPostfix = ['pdf', 'word', 'doct', 'doc', 'txt'];
+        const legalPostfix = ['pdf', 'docx', 'doc', 'xls'];
         if (!legalPostfix.includes(postfix)) {
           this.tips = '文件不合法';
           this.file = null;
@@ -257,6 +270,9 @@
 
 </script>
 <style scoped lang="less">
+.red {
+  color: red;
+}
 .regist {
   .top {
     text-align: center;
@@ -286,17 +302,22 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-
-      .inp {
-        width: 90%;
-        height: 40px;
-        font-size: 15px;
-        background-color: #fafafa;
-        border: 1px solid #e7e7e7;
-        border-radius: 5px;
-        margin-top: 20px;
-        padding-left: 10px;
-        box-sizing: border-box;
+      div {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        align-items: center;
+        .inp {
+          width: 90%;
+          height: 40px;
+          font-size: 15px;
+          background-color: #fafafa;
+          border: 1px solid #e7e7e7;
+          border-radius: 5px;
+          margin-top: 20px;
+          padding-left: 10px;
+          box-sizing: border-box;
+        }
       }
 
       .inpx {
