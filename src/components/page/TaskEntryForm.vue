@@ -122,17 +122,19 @@
       dialogAudit(){
         // debugger
         this.dialogAuditing=false
-        let url="http://www.phptrain.cn/admin/task/rewardEntryFromUser?taskUserId="+this.taskUserId
 
-        var param = {
-          userReward:this.form.reNum,
-          recommendUserReward:this.form.num
+
+        var data = {
+          userReward:this.form.num,
+          recommendUserReward:this.form.reNum
         }
-        this.$http.post(url,param,{
+        let url=`http://www.phptrain.cn/admin/task/rewardEntryFromUser?taskUserId=${this.taskUserId}&userReward=${this.form.num}&recommendUserReward=${this.form.reNum}`
+        this.$http.post(url,data,{
 		  		headers: {
             		"Content-Type": "application/json"
           		}
 		  	}).then((res)=>{
+          // debugger;
           if(res.data.code == 200){
             this.getTaskEntryForm()
               this.$message({
