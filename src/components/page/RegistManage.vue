@@ -77,6 +77,8 @@
                 <el-form-item v-if='isAudit' label="红包金额：" >
                     <el-select  v-model="dialogForm.rewardNum" >
                         <el-option label="0" value="0"></el-option>
+                        <el-option label="10" value="10"></el-option>
+                        <el-option label="20" value="20"></el-option>
                         <el-option label="30" value="30"></el-option>
                         <el-option label="40" value="40"></el-option>
                         <el-option label="50" value="50"></el-option>
