@@ -38,7 +38,7 @@
     },
     mounted() {
       setTimeout(() => {
-        this.getTaskInfo()
+        // this.getTaskInfo()
       }, 1000)
       console.log(this.$router)
     },
