@@ -39,12 +39,12 @@
     <div class="robTask" v-if=" type ==='robTask' || type== undefined ">
       <div class="cont-title">报名情况</div>
       <!-- 任务个人 -->
-      <div v-for='item of data.taskDetailList' v-if="data.task.category=='0'">
+      <div v-for='item of data.taskDetailList' v-if="data.task.category=='0'" :key="item.toString()">
         <div class="taskPer">需要{{item.peopleNum}}人，已报<span class="red">{{item.hasPeople}}</span>人</div>
 
       </div>
       <!-- 任务-团队 -->
-      <div class="robTask-flex" v-for='item of data.taskDetailList' v-if="data.task.category=='1'">
+      <div class="robTask-flex" v-for='item of data.taskDetailList' v-if="data.task.category=='1'" :key="item.toString()">
         <div class="one">{{item.station}}</div>
         <div class="two">（需要{{item.peopleNum}}人，已报<span class="red">{{item.hasPeople}}</span>人）</div>
         <div class="three">{{item.rewardNum}}

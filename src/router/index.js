@@ -10,6 +10,9 @@ import Task from '@/components/task/Task'
 import Mine from '@/components/mine/Mine'
 import Recommend from '@/components/mine/Recommend'
 import TaskDetail from '@/components/taskDetail/taskDetail'
+import InviteReg from '@/components/invite/invite-reg'
+import InviteRegSuccess from '@/components/invite/invite-reg-success'
+
 
 Vue.use(Router)
 
@@ -91,6 +94,22 @@ export default new Router({
       component: TaskDetail,
       meta: {
         title: "任务详情"
+      }
+    },
+    {
+      path: "/invite-reg",
+      name: "InviteReg",
+      component: InviteReg,
+      meta: {
+        title: "邀请注册"
+      }
+    },
+    {
+      path: "/invite-reg-success",
+      name: "InviteRegSuccess",
+      component: InviteRegSuccess,
+      meta: {
+        title: "注册成功"
       }
     }
   ]

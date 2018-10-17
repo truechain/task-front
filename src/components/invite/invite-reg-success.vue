@@ -7,7 +7,6 @@
       </div>
       <div class="space"></div>
     </div> -->
-    <list-header @change="hanleSelectTack" @fetch="handleFetch"></list-header>
 
     <scroll class="wrapper" ref="wrapper" :data="tempTaskList" :totalSize="totalPages" :pageIndex="pageIndex" :last="Islast" :pulldown="pulldown" :pullup="pullup" @pulldown="getTaskInfo" @scrollToEnd="loadMore">
       <div class="list" ref="list">
@@ -42,15 +41,13 @@
 </template>
 <script>
   import Bscroll from 'better-scroll'
-  import ListHeader from './Header'
   import Tabs from '../tab/Tab'
   import Scroll from '../scroll/Scroll'
   import Loading from '../../base/loading/Loading'
   export default {
-    name: 'List',
+    name: 'InviteRegSuccess',
     inject: ['reload'],
     components: {
-      ListHeader,
       Tabs,
       Loading,
       Scroll

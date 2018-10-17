@@ -16,7 +16,7 @@
     </div>
     <scroll class="search-content" ref="wrapper" :data="tempTaskList" :totalSize="totalPages" :pageIndex="pageIndex" :last="Islast" :pulldown="pulldown" :pullup="pullup" @pulldown="getTaskInfo" @scrollToEnd="loadMore" v-show="keyword">
       <div class="list">
-        <div class="item  border-bottom" v-for="item of tempTaskList">
+        <div class="item  border-bottom" v-for="item of tempTaskList" :key="item.name.toString()">
           <div class="left">
             <img :src="item.iconPath" alt="" class="tackImg" />
             <div class="task-rank">
