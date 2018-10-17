@@ -1,65 +1,44 @@
 <template>
-  <div>
-    <!-- <div class="header-top">
-      <div class="header-wrapper">
-        <div class="img-wrapper"  @click="goback"><img src="../../assets/img/back.png" alt="" /></div>
-       <div>任务列表</div>
-      </div>
-      <div class="space"></div>
-    </div> -->
-
-    <scroll class="wrapper" ref="wrapper" :data="tempTaskList" :totalSize="totalPages" :pageIndex="pageIndex" :last="Islast" :pulldown="pulldown" :pullup="pullup" @pulldown="getTaskInfo" @scrollToEnd="loadMore">
-      <div class="list" ref="list">
-        <div class="item  border-bottom" v-for="item of tempTaskList" :key="item.name.toString()">
-          <div class="top" :class="{teamMark:item.isTeam}">
-            <img :src="item.iconPath" alt="" class="tackImg" />
-            <div class="task-rank">
-              <div class="name-wrapper">
-                <p class="name">{{item.name}}</p>
-              </div>
-
-              <p class="rank">难度：<span>{{item.level}}级</span></p>
-            </div>
-          </div>
-          <div class="bottom">
-            <div class="center">{{item.rewardNum}}True</div>
-            <div class="right" @click="buttonClick(item)">抢任务</div>
-          </div>
+  <div class="invite-reg-success">
+    <div class="con">
+      <div class="con-box">
+        <div class="sign-img">
+          <img src="../../assets/img/user.png" >
         </div>
-
+        <div class="descr">
+          <p>恭喜您注册成功！</p>
+          <p class="line2">快扫下面的公众号二维码抢开发任务吧！</p>
+        </div>
+        <div class="qr-con">
+          <img src="../../assets/img/user.png" class="qr">
+          <p class="text1">
+            关注公众号， 点击初链开发者平台，
+          </p>
+          <p class="text1">
+            完善个人信息就可以抢任务啦！
+          </p>
+        </div>
       </div>
-      <div class="no-data" v-show="hasData">没有找到符合条件的任务</div>
-      <div style="height: 50px;"></div>
-
-    </scroll>
-
-    <div class="loading-container" v-show="hasCode">
-      <loading></loading>
     </div>
-    <tabs @clickTab="clickTab"></tabs>
   </div>
 </template>
 <script>
   import Bscroll from 'better-scroll'
-  import Tabs from '../tab/Tab'
-  import Scroll from '../scroll/Scroll'
-  import Loading from '../../base/loading/Loading'
   export default {
     name: 'InviteRegSuccess',
     inject: ['reload'],
-    components: {
-      Tabs,
-      Loading,
-      Scroll
-    },
+    components: {},
     created() {
-      console.log(2345)
       console.log(this.$router)
-      this.listenScroll = true
+    },
+    mounted() {
+      setTimeout(() => {
+      }, 1000)
+      this.userUid=this.$router.history.current.params.userUid
     },
     data() {
       return {
-        userUid:'',
+        userId:'',
         taskType: '',
         taskList: [], //原始列表
         tempTaskList: [], //临时列表
@@ -81,351 +60,63 @@
     },
 
     methods: {
-      clickTab() {
-        this.reload()
-      },
-      //重新筛选完回到顶部
-      scrollTo() {
-        this.$refs.wrapper.scrollTo(0, 0, 10, 'bounce')
-      },
       goback() {
         this.$router.go(-1)
       },
-      getTaskInfo() {
-        let url = "http://www.phptrain.cn/api/unauth/task/getTaskPage"
-        var param = new FormData()
-        this.pageIndex = 1
-        this.totalPages = 1
-        this.pullup = true
-        if(this.taskCategory !== 2) {
-          param.append("category", this.taskCategory)
-        }
-        if(this.taskType !== '') {
-
-          param.append("level", this.taskType)
-        }
-        if(this.taskSort !== '') {
-          param.append("reward", this.ListSort)
-        }
-
-        param.append("pageIndex", this.pageIndex)
-        param.append("pageSize", this.pageSize)
-
-        this.$http.post(url, param).then((res) => {
-          if(res.data.code && res.data) {
-            if(res.data.code) {
-              this.hasCode = false
-            }
-            const data = res.data.result
-            data.content.forEach(function(list) {
-              if(list.category == 1) {
-                list.isTeam = true
-              }
-
-            })
-            this.taskList = data.content
-
-            this.tempTaskList = data.content
-            this.totalPages = data.totalPages
-            if(this.pageIndex == this.totalPages && data.last) {
-              this.pullup = false
-              this.$nextTick(() => {
-                this.hasCode = false;
-              })
-            }
-
-          }
-        })
-      },
-      loadMore() {
-        let url = "http://www.phptrain.cn/api/unauth/task/getTaskPage"
-        if(this.pageIndex < this.totalPages) {
-          this.pageIndex++
-        } else {
-          this.pageIndex = this.totalPages
-        }
-        var param = new FormData()
-        param.append("pageIndex", this.pageIndex)
-        param.append("pageSize", this.pageSize)
-
-        if(this.ListSort !== '') {
-          param.append("reward", this.ListSort)
-        }
-
-        if(this.pullup) {
-          this.$http.post(url, param, {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }).then((res) => {
-            const data = res.data.result
-            var result = data.content
-            this.tempTaskList = this.tempTaskList.concat(result)
-            if(this.pageIndex == this.totalPages && data.last) {
-              this.pullup = false
-              this.$nextTick(() => {
-                this.hasCode = false;
-              })
-            }
-          })
-        }
-
-      },
-
-      handleFetch() {
-        this.hasData = false
-        this.getTaskInfo()
-      },
-      buttonClick(item) {
-
-        let id = item.id
-        let rewardType = item.rewardType
-
-        this.$router.push({
-          name: "TaskDetail",
-          params: {
-            id: id,
-            type: 'robTask',
-            rewardType: rewardType,
-            userUid:this.userUid
-          }
-        })
-      },
-      hanleSelectTack(type) {
-        let grade = '';
-        var category = 2; //默认不限
-        var reward = 2 //奖励默认不限
-        if(type === "A级") {
-          grade = "A"
-          this.taskType = "A"
-          this.taskCategory = 2
-        } else if(type === "B级") {
-
-          grade = "B"
-          this.taskType = "B"
-          this.taskCategory = 2
-
-        } else if(type === "C级") {
-
-          grade = "C"
-          this.taskType = "C"
-          this.taskCategory = 2
-
-        }else if(type === "S级") {
-
-          grade = "S"
-          this.taskType = "S"
-          this.taskCategory = 2
-
-        } else if(type === "个人") {
-          category = 0
-          this.taskCategory = 0
-          this.taskType = ''
-        } else if(type === "团队") {
-          category = 1
-          this.taskCategory = 1
-          this.taskType = ''
-
-        } else if(type === "奖励升序") {
-          reward = 1
-          this.ListSort = 1
-          this.taskSort = 1
-        } else if(type === "奖励降序") {
-          reward = 0
-          this.ListSort = 0
-          this.taskSort = 0
-        } else {
-          grade = '';
-          category = 2;
-          reward = 2
-          this.ListSort = 2
-          this.taskCategory = 2
-          this.taskType = ''
-          this.taskSort = ''
-        }
-
-        // 发送请求
-        this.scrollTo()
-        this.pullup = true
-        let url = "http://www.phptrain.cn/api/unauth/task/getTaskPage"
-        var param = new FormData()
-        this.pageIndex = 1
-        this.totalPages = 1
-        param.append("pageIndex", this.pageIndex)
-        param.append("pageSize", this.pageSize)
-        if(category !== 2) {
-          param.append("category", category)
-        }
-        if(grade !== "") {
-          param.append("level", grade)
-        }
-        if(reward !== 2) {
-          param.append("reward", reward)
-        }
-        this.$http.post(url, param, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then((res) => {
-          const data = res.data.result
-          if(res.data.code && res.data) {
-            this.hasData = false
-            data.content.forEach(function(list) {
-              if(list.category == 1) {
-                list.isTeam = true
-              }
-
-            })
-            this.taskList = data.content
-
-            this.totalPages = data.totalPages
-            this.tempTaskList = data.content
-
-            if(this.tempTaskList.length && data.last) {
-              this.pullup = false
-              this.$nextTick(() => {
-                this.hasCode = false;
-              })
-            }
-          }
-          if(data.content == '') {
-            this.hasData = true
-          }
-        })
-
-      }
-    },
-    mounted() {
-      setTimeout(() => {
-        this.getTaskInfo()
-      }, 1000)
-      this.userUid=this.$router.history.current.params.userUid
-    },
-    created() {
-
     }
   }
 </script>
 
 <style lang="less" scoped>
-.list {
-  background: #fff;
+.invite-reg-success {
+  background-color: #02abee;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
 }
 
-.header-top {
-  height: 50px;
-  line-height: 50px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  .header-wrapper {
-    text-align: center;
-    .img-wrapper {
-      position: absolute;
-      width: 30px;
-      left: 0;
-      right: 0;
-      img {
-        width: 24px;
-      }
+.con {
+  width: 100%;
+  padding: 0px 30px;
+  box-sizing: border-box;
+  .con-box {
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px 15px;
+    .sign-img {
+      text-align: center;
+      padding: 10px 0px 20px;
+      margin-top: -50px;
+    }
+    .descr{
+      text-align: center;
+      color: #2e353b;
+      font-size: 13px;
+      line-height: 20px;
+      padding: 0px 0px 20px;
+      border-bottom: 1px solid #ddd;
+    }
+    .qr-con {
+      padding: 15px 20px 10px;
+      text-align: center;
     }
   }
 }
-
-.space {
-  background: #eee;
-  height: 10px;
+.qr{
+  margin: 10px 10px 20px;
 }
-
+.text1{
+  font-size: 13px;
+  color: #2e353b;
+  line-height: 20px;
+}
 .no-data {
   text-align: center;
   margin: 10px 0;
   font-size: 14px;
-}
-
-.wrapper {
-  position: absolute;
-  top: 60px;
-  left: 0;
-  right: 0;
-  bottom: 60px;
-  overflow: hidden;
-  .item {
-    padding: 10px 15px;
-    /*flex-direction: row;
-      flex-wrap: nowrap;*/
-    .teamMark:after {
-      content: '\56E2\961F';
-      position: absolute;
-      left: 46px;
-      top: 2px;
-      color: #fff;
-      background: #ef5a50;
-      border-radius: 15px;
-      font-size: 12px;
-      padding: 2px 5px;
-    }
-    .top {
-      display: flex;
-      justify-content: flex-start;
-      align-items: stretch;
-      flex-grow: 1;
-      .task-rank {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-width: 0;
-        margin-left: 10px;
-        overflow: hidden;
-        .name-wrapper {
-          display: flex;
-          font-size: 16px;
-          color: #2e353b;
-          .name {
-            margin-top: 6px;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
-        }
-        .rank {
-          display: flex;
-          font-size: 13px;
-          color: #a1acb4;
-        }
-      }
-      .tackImg {
-        width: 50px;
-        height: 50px;
-        vertical-align: top;
-        border: 1px solid #eee;
-      }
-    }
-    .bottom {
-      padding-left: 60px;
-      display: flex;
-      align-items: center;
-    }
-    .center {
-      color: #fc8936;
-      font-size: 13px;
-      flex: 1;
-    }
-    .right {
-      padding: 7px 12px;
-      background: #ffae0f;
-      color: #fff;
-      font-size: 12px;
-      border-radius: 5px;
-    }
-  }
-}
-
-.loading-container {
-  position: absolute;
-  width: 100%;
-  top: 50%;
-  transform: translateY(-50%);
+  line-height: 22px;
 }
 </style>
