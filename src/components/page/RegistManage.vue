@@ -31,6 +31,7 @@
 						<el-option label="A" value="a"></el-option>
 						<el-option label="B" value="b"></el-option>
 						<el-option label="C" value="c"></el-option>
+						<el-option label="D" value="d"></el-option>
 						<el-option label="S" value="s"></el-option>
 					</el-select>
 				</el-form-item>
