@@ -97,7 +97,7 @@ export default new Router({
       }
     },
     {
-      path: "/invite-reg",
+      path: "/invite-reg/:yqm",
       name: "InviteReg",
       component: InviteReg,
       meta: {

@@ -40,7 +40,8 @@
       setTimeout(() => {
         // this.getTaskInfo()
       }, 1000)
-      console.log(this.$router)
+      console.log(this.$router) //路由插件
+      console.log(this.$route)  //当前路由参数 this.$route.params.yqm
     },
     methods: {
       
@@ -65,7 +66,7 @@
   text-align: center;
   width: 100%;
   color:white;
-  padding: 0px 30px;
+  padding: 30px 30px 0px;
   box-sizing: border-box;
   .title {
     font-size: 18px;
