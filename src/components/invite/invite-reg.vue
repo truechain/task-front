@@ -57,6 +57,9 @@
   align-items: center;
   justify-content: flex-start;
   min-height: 100%;
+  background-image: url(../../assets/img/bg001.png);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
 }
 .top {
   text-align: center;

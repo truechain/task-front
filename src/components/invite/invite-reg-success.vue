@@ -3,14 +3,14 @@
     <div class="con">
       <div class="con-box">
         <div class="sign-img">
-          <img src="../../assets/img/user.png" >
+          <img src="../../assets/img/success01.png" style="width:75px;height:auto;" >
         </div>
         <div class="descr">
           <p>恭喜您注册成功！</p>
           <p class="line2">快扫下面的公众号二维码抢开发任务吧！</p>
         </div>
         <div class="qr-con">
-          <img src="../../assets/img/user.png" class="qr">
+          <img src="../../assets/img/qr.png" class="qr">
           <p class="text1">
             关注公众号， 点击初链开发者平台，
           </p>
@@ -26,7 +26,6 @@
   import Bscroll from 'better-scroll'
   export default {
     name: 'InviteRegSuccess',
-    inject: ['reload'],
     components: {},
     created() {
       console.log(this.$router)
@@ -76,6 +75,9 @@
   align-items: center;
   justify-content: center;
   min-height: 100%;
+  background-image: url(../../assets/img/bg001.png);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
 }
 
 .con {
@@ -106,7 +108,9 @@
   }
 }
 .qr{
-  margin: 10px 10px 20px;
+  margin: 5px auto 10px;
+  width: 170px;
+  height: auto;
 }
 .text1{
   font-size: 13px;
