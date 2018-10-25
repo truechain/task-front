@@ -73,7 +73,7 @@
         TotalTask: 0,
         ComplateTask: 0
       }
-  },
+    },
     methods: {
       countPartTimeTotalPeople () {
         var url = 'http://www.phptrain.cn/admin/home/countPartTimeTotalPeople'
@@ -93,12 +93,12 @@
           this.ComplateTask = res.data.result
         })
       }
-  },
+    },
     mounted () {
       this.countPartTimeTotalPeople()
       this.countTotalTask()
       this.countComplateTask()
-  }
+    }
   }
 </script>
 

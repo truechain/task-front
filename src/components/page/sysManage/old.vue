@@ -253,10 +253,10 @@
           }]
         }]
       }
-  },
+    },
     methods: {
       handleClick (tab, event) {
-        if (tab.label == '角色管理') {
+        if (tab.label === '角色管理') {
           // 发送角色管理请求
           this.getRolePage()
         }
@@ -303,10 +303,7 @@
         //  console.log(this.$refs.tree.getCheckedNodes());
         this.addResourceAPI()
       },
-      getRolePage (pageIndex, pageSize) {
-        if (!pageSize) {
-          var pageSize = 10
-        }
+      getRolePage (pageIndex, pageSize = 10) {
         let params = new FormData()
         params.append('pageIndex', pageIndex)
         params.append('pageSize', pageSize)
@@ -314,10 +311,10 @@
           console.log(res)
         })
       }
-  },
+    },
     created () {
       this.getResourcePage(1)
-  }
+    }
   }
 </script>
 <style lang="less" scoped>

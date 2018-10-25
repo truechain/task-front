@@ -64,7 +64,7 @@
           '2': '关闭'
         }
       }
-  },
+    },
     methods: {
       goback () {
         this.$router.go(-1)
@@ -88,7 +88,7 @@
             'Content-Type': 'application/json'
           }
         }).then((res) => {
-          if (res.data.message == '成功') {
+          if (res.data.message === '成功') {
             if (res.data.result) {
               const result = res.data.result
               this.tableData = result.taskDetailList
@@ -97,10 +97,10 @@
           }
         })
       }
-  },
+    },
     mounted () {
       this.getTaskDetails()
-  }
+    }
   }
 </script>
 

@@ -41,7 +41,7 @@
 
         }).then(res => {
           console.log(res)
-          if (res.data.message == '成功') {
+          if (res.data.message === '成功') {
             let token = JSON.stringify(res.data.result)
             localStorage.setItem('token', token)
             // 跳转到首页
@@ -53,7 +53,7 @@
           }
         })
       }
-  }
+    }
   }
 </script>
 <style lang="less" scoped>

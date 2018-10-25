@@ -17,6 +17,6 @@ export default {
     components: {
       vHead,
       vSidebar
-  }
+    }
   }
 </script>

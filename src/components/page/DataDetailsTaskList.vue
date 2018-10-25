@@ -79,14 +79,12 @@
           name: ''
         }
       }
-  },
+    },
     methods: {
       goback () {
         this.$router.go(-1)
       },
       getStaticsInfo () {
-        //				this.id =  this.$route.query.id
-
         let url = 'http://www.phptrain.cn/admin/report/getTaskStats'
         var param = {
           userId: this.$route.query.userId,
@@ -104,22 +102,21 @@
             'Content-Type': 'application/json'
           }
         }).then((res) => {
-  				// console.log(res, '777777')
-          if (res.data.message == '成功') {
+          if (res.data.message === '成功') {
             if (res.data.result) {
               var result = res.data.result
 
               result.forEach(function (list) {
-                if (list.taskState == 0) {
+                if ((+list.taskState) === 0) {
                   list.taskState = '任务中'
                 }
-                if (list.taskState == 1) {
+                if ((+list.taskState) === 1) {
                   list.taskState = '已经完成'
                 }
-                if (list.taskCategory == 0) {
+                if ((+list.taskCategory) === 0) {
                   list.taskCategory = '个人'
                 }
-                if (list.taskCategory == 1) {
+                if ((+list.taskCategory) === 1) {
                   list.taskCategory = '团队'
                 }
               })
@@ -141,10 +138,10 @@
         }
         this.getStaticsInfo()
       }
-  },
+    },
     mounted () {
       this.getStaticsInfo()
-  }
+    }
   }
 </script>
 

@@ -133,82 +133,82 @@
 <script>
   export default {
     data () {
-  return {
-    name: 'linxin',
-    dialogs: [{
-      header: '../../static/images/b_header2.jpg',
-      content: '我有一个Style样式需要您帮忙处理以下。',
-      time: '3'
-  },
-  {
-      header: '../../static/images/b_header3.jpg',
-      content: '中午一起吃个饭吧，我请客。',
-      time: '15'
-  },
-  {
-      header: '../../static/images/b_header.jpg',
-      content: '需要处理一下POP展示的白边样式。',
-      time: '18'
-  },
-  {
-      header: '../../static/images/b_header2.jpg',
-      content: '下午3点开需求会议，准时参加。',
-      time: '24'
-  },
-  {
-      header: '../../static/images/b_header3.jpg',
-      content: '晚上我开车送你回家，你请我吃晚饭。',
-      time: '45'
-  }
-  ],
-    tasks: [{
-      id: 1,
-      rank: 1,
-      content: '完成GitHub仓库的初始化工作。',
-      overTime: '2017/3/9'
-  },
-  {
-      id: 2,
-      rank: 2,
-      content: '完成GitHub仓库的初始化工作。',
-      overTime: '2017/3/15'
-  },
-  {
-      id: 3,
-      rank: 3,
-      content: '完成GitHub仓库的初始化工作。',
-      overTime: '2017/3/20'
-  }
+      return {
+        name: 'linxin',
+        dialogs: [{
+          header: '../../static/images/b_header2.jpg',
+          content: '我有一个Style样式需要您帮忙处理以下。',
+          time: '3'
+        },
+        {
+          header: '../../static/images/b_header3.jpg',
+          content: '中午一起吃个饭吧，我请客。',
+          time: '15'
+        },
+        {
+          header: '../../static/images/b_header.jpg',
+          content: '需要处理一下POP展示的白边样式。',
+          time: '18'
+        },
+        {
+          header: '../../static/images/b_header2.jpg',
+          content: '下午3点开需求会议，准时参加。',
+          time: '24'
+        },
+        {
+          header: '../../static/images/b_header3.jpg',
+          content: '晚上我开车送你回家，你请我吃晚饭。',
+          time: '45'
+        }
+        ],
+        tasks: [{
+          id: 1,
+          rank: 1,
+          content: '完成GitHub仓库的初始化工作。',
+          overTime: '2017/3/9'
+        },
+        {
+          id: 2,
+          rank: 2,
+          content: '完成GitHub仓库的初始化工作。',
+          overTime: '2017/3/15'
+        },
+        {
+          id: 3,
+          rank: 3,
+          content: '完成GitHub仓库的初始化工作。',
+          overTime: '2017/3/20'
+        }
 
-  ],
-    dialogFormVisible: false,
-    form: {
-      name: '',
-      region: '',
-      date1: '',
-      date2: '',
-      delivery: false,
-      type: [],
-      resource: '',
-      desc: ''
-  },
-    formLabelWidth: '100px'
-}
-  },
+        ],
+        dialogFormVisible: false,
+        form: {
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        },
+        formLabelWidth: '100px'
+      }
+    },
     methods: {
       comfirm () {
         this.dialogFormVisible = false
         console.log('确认修改')
         // 发送修改请求
         console.log(localStorage.getItem('token'))
-  },
+      },
       loginout () {
         this.$router.push({
           path: 'login'
-  })
+        })
         localStorage.clear()
-  }
-  }
+      }
+    }
   }
 </script>
 <style scoped>

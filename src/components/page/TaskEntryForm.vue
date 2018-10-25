@@ -67,7 +67,6 @@ export default {
   name: 'TaskEntryForm',
   data () {
     return {
-      taskName: '',
       totalAuditStatus: '',
       dialogAuditing: false,
       centerDialogVisible: true,
@@ -110,9 +109,9 @@ export default {
           })
           return false
         }
-        if (res.list) {
-          var list = res.result
-        }
+        // if (res.list) {
+        //   var list = res.result
+        // }
         this.dialogAuditing = true
       })
     },
@@ -133,7 +132,7 @@ export default {
         }
       }).then((res) => {
 // debugger;
-        if (res.data.code == 200) {
+        if (res.data.code === 200) {
           this.getTaskEntryForm()
           this.$message({
             message: '奖励已发送',
@@ -157,30 +156,30 @@ export default {
         }
       }).then((res) => {
         console.log(res, '000000000报名表')
-        if (res.data.message == '成功') {
+        if (res.data.message === '成功') {
           if (res.data.result) {
             var result = res.data.result
             this.tableData = result.taskEntryFromInfoList
             this.taskName = result.taskName
-            if (result.totalAuditStatus == 0) {
+            if ((+result.totalAuditStatus) === 0) {
               result.totalAuditStatus = '未审核'
             }
-            if (result.totalAuditStatus == 1) {
+            if ((+result.totalAuditStatus) === 1) {
               result.totalAuditStatus = '已审核'
             }
 
             this.totalAuditStatus = result.totalAuditStatus
             result.taskEntryFromInfoList.forEach(function (list) {
               console.log(list.auditStatus)
-              if (list.auditStatus == 0) {
+              if ((+list.auditStatus) === 0) {
                 list.auditStatus = '未审核'
                 list.isShow = true
               }
-              if (list.auditStatus == 1) {
+              if ((+list.auditStatus) === 1) {
                 list.auditStatus = '已审核'
                 list.isShow = true
               }
-              if (list.auditStatus == 2) {
+              if ((+list.auditStatus) === 2) {
                 list.auditStatus = '已奖励'
                 list.isShow = false
               }

@@ -14,24 +14,24 @@ Vue.config.productionTip = false
 
 // 请求拦截
 axios.interceptors.request.use(
-	config => {
-  let token = localStorage.getItem('token')
-		// token = JSON.parse(token)
-  if (token) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
-    config.headers.Token = `${token.token}`
-    config.headers.Agent = `${token.agent}`
-  }
-		// if (config.url.indexOf(url) === -1) {
-		// 	config.url = url + config.url;/*拼接完整请求路径*/
-		// }
-  return config
-},
-	err => {
-  return Promise.reject(err)
-})
+  config => {
+    let token = localStorage.getItem('token')
+    // token = JSON.parse(token)
+    if (token) { // 判断是否存在token，如果存在的话，则每个http header都加上token
+      config.headers.Token = `${token.token}`
+      config.headers.Agent = `${token.agent}`
+    }
+    // if (config.url.indexOf(url) === -1) {
+    // 	config.url = url + config.url;/*拼接完整请求路径*/
+    // }
+    return config
+  },
+  err => {
+    return Promise.reject(err)
+  })
 
 axios.interceptors.response.use(function (response) {
-			// token 已过期，重定向到登录页面
+  // token 已过期，重定向到登录页面
   if (response.data.code == 403) {
     localStorage.clear()
     router.replace({
@@ -40,7 +40,7 @@ axios.interceptors.response.use(function (response) {
   }
   return response
 }, function (error) {
-			// Do something with response error
+  // Do something with response error
   return Promise.reject(error)
 })
 
@@ -51,7 +51,9 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App },
+  components: {
+    App
+  },
   beforeCreate: function () {
     console.log('beforeCreated.....')
   }

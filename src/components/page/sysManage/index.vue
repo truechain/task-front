@@ -30,7 +30,7 @@
     getRolePageAPI,
     addResourceAPI
   } from '@/api/GaoAPI'
-  import customerManage from './customerManage'
+  // // import customerManage from './customerManage'
   import qs from 'qs'
   export default {
     data () {
@@ -73,13 +73,13 @@
           }]
         }]
       }
-  },
+    },
     methods: {
       handleClick (tab, event) {
-        if (tab.label == '角色管理') {
+        if (tab.label === '角色管理') {
           // 发送角色管理请求
           this.getRolePage()
-        } else if (tab.label == '用户管理') {
+        } else if (tab.label === '用户管理') {
           this.$router.push({
             path: '/TaskDetail'
           })
@@ -127,10 +127,7 @@
         //  console.log(this.$refs.tree.getCheckedNodes());
         this.addResourceAPI()
       },
-      getRolePage (pageIndex, pageSize) {
-        if (!pageSize) {
-          var pageSize = 10
-        }
+      getRolePage (pageIndex, pageSize = 10) {
         let params = new FormData()
         params.append('pageIndex', pageIndex)
         params.append('pageSize', pageSize)
@@ -138,10 +135,10 @@
           console.log(res)
         })
       }
-  },
+    },
     created () {
       this.getResourcePage(1)
-  }
+    }
   }
 </script>
 <style lang="less" scoped>

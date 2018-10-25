@@ -110,7 +110,7 @@
         total: 1
 
       }
-  },
+    },
     methods: {
       /* 重置 */
       reset () {
@@ -177,31 +177,31 @@
           }
         }).then((res) => {
           console.log(res)
-          if (res.data.message == '成功') {
+          if (res.data.message === '成功') {
             if (res.data.result) {
               const result = res.data.result
               this.tableData = result.content
               console.log(result.content)
               result.content.forEach(function (list) {
-                if (list.taskStatus == 0) {
+                if ((+list.taskStatus) === 0) {
                   list.taskStatus = '禁用'
                 }
-                if (list.taskStatus == 1) {
+                if ((+list.taskStatus) === 1) {
                   list.taskStatus = '启用'
                 }
-                if (list.taskStatus == 2) {
+                if ((+list.taskStatus) === 2) {
                   list.taskStatus = '关闭'
                 }
-                if (list.auditStatus == 0) {
+                if ((+list.auditStatus) === 0) {
                   list.auditStatus = '未完成'
                 }
-                if (list.auditStatus == 1) {
+                if ((+list.auditStatus) === 1) {
                   list.auditStatus = '已完成'
                 }
-                if (list.category == 0) {
+                if ((+list.category) === 0) {
                   list.category = '个人'
                 }
-                if (list.category == 1) {
+                if ((+list.category) === 1) {
                   list.category = '团队'
                 }
               })
@@ -212,10 +212,10 @@
         })
       }
 
-  },
+    },
     mounted () {
       this.getTaskInfo()
-  }
+    }
   }
 </script>
 <style>

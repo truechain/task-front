@@ -124,7 +124,7 @@
           taskStatus: ''
         }
       }
-  },
+    },
     methods: {
       goback () {
         this.$router.go(-1)
@@ -158,7 +158,7 @@
           }
         }).then((res) => {
           console.log(res.data)
-          if (res.data.message == '成功') {
+          if (res.data.message === '成功') {
             this.$router.push({
               path: '/TaskManage'
             })
@@ -171,9 +171,6 @@
           }
         })
       },
-      goback () {
-        this.$router.go(-1)
-		  },
       uploadChange (event) {
         let reader = new FileReader()
         let img1 = event.target.files[0]
@@ -181,7 +178,7 @@
 
         let type = img1.type // 文件的类型，判断是否是图片
         let size = img1.size // 文件的大小，判断图片的大小
-        if (this.imgData.accept.indexOf(type) == -1) {
+        if (this.imgData.accept.indexOf(type) === -1) {
           this.$message({
             message: '请选择正确的图片格式！',
             type: 'warning'
@@ -213,11 +210,11 @@
             that.imgUrl = res.data.result.showPath
           }
         }).catch(error => {
-          alert('上传图片出错！')
+          throw new Error(error)
         })
       }
 
-  }
+    }
   }
 </script>
 

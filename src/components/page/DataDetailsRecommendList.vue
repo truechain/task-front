@@ -71,7 +71,7 @@
           wxNickName: ''
         }
       }
-  },
+    },
     methods: {
       goback () {
         this.$router.go(-1)
@@ -94,10 +94,8 @@
           }
         }).then((res) => {
           console.log(res, '999999')
-          if (res.data.message == '成功') {
+          if (res.data.message === '成功') {
             if (res.data.result) {
-              var result = res.data.result
-
               this.tableData = res.data.result
             }
           }
@@ -113,10 +111,10 @@
           name: ''
         }
       }
-  },
+    },
     mounted () {
       this.getStaticsInfo()
-  }
+    }
   }
 </script>
 

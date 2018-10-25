@@ -220,10 +220,6 @@
             message: '请输入姓名',
             trigger: 'blur'
           } ]
-          // roleIdId: [
-          // 	{ required: true, message: '请选择系统角色', trigger: 'blur' },
-          // ]
-
         },
         isSee: false,
         editDialog: false,
@@ -239,7 +235,7 @@
         id: '',
         editRules: {}
       }
-  },
+    },
     methods: {
       // 用户管理部分-------------
       getUserPage () {
@@ -377,7 +373,7 @@
       },
       // 操作 修改和查看
       handleEdit (row, type) {
-        if (type == 'see') {
+        if (type === 'see') {
           this.isSee = true
         } else {
           this.isSee = false
@@ -400,11 +396,11 @@
         })
       }
 
-  },
+    },
     created () {
       this.getUserPage()
       this.getRoleList()
-  }
+    }
   }
 </script>
 <style lang="less" scoped>

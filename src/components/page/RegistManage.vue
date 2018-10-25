@@ -125,7 +125,7 @@
         pageSize: 10,
         tableData: []
       }
-  },
+    },
     methods: {
       handleCurrentChange (value) {
         this.pageIndex = value
@@ -133,7 +133,7 @@
       },
       typeButton (scope, type) {
         this.userId = scope.row.id
-        if (type == '1') {
+        if (type === '1') {
           this.isAudit = true
           this.dialogForm.level = scope.row.level || ''
         } else {
@@ -187,10 +187,10 @@
             if (res.data.message === '成功') {
               if (res.data.result) {
                 res.data.result.content.forEach(function (list) {
-                  if (list.auditStatus == 0 || list.auditStatus == -1) {
+                  if ((+list.auditStatus) === 0 || (+list.auditStatus) === -1) {
                     list.auditStatusName = '未审核'
                   }
-                  if (list.auditStatus == 1) {
+                  if ((+list.auditStatus) === 1) {
                     list.auditStatusName = '已审核'
                   }
                 })
@@ -231,10 +231,10 @@
           wxNickName: ''
         }
       }
-  },
+    },
     mounted () {
       this.getUserPage()
-  }
+    }
   }
 </script>
 <style>

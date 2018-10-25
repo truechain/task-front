@@ -58,8 +58,7 @@
         },
         tableData: []
       }
-  },
-
+    },
     methods: {
       getTime (date) {
         this.startDate = date
@@ -88,7 +87,7 @@
           }
         }).then((res) => {
           console.log(res)
-          if (res.data.message == '成功') {
+          if (res.data.message === '成功') {
             if (res.data.result) {
               this.tableData = res.data.result
               console.log(this.tableData)
@@ -103,8 +102,8 @@
       },
       thisMouth () {
         var now = new Date() // 当前日期
-        var nowDayOfWeek = now.getDay() // 今天本周的第几天
-        var nowDay = now.getDate() // 当前日
+        // var nowDayOfWeek = now.getDay() // 今天本周的第几天
+        // var nowDay = now.getDate() // 当前日
         var nowMonth = now.getMonth() // 当前月
         var nowYear = now.getYear() // 当前年
         nowYear += (nowYear < 2000) ? 1900 : 0 //
@@ -143,7 +142,7 @@
           }
         }).then((res) => {
           console.log(res)
-          if (res.data.message == '成功') {
+          if (res.data.message === '成功') {
             if (res.data.result) {
               this.tableData = res.data.result
               console.log(this.tableData)
@@ -186,7 +185,7 @@
           }
         }).then((res) => {
           console.log(res)
-          if (res.data.message == '成功') {
+          if (res.data.message === '成功') {
             if (res.data.result) {
               this.tableData = res.data.result
               console.log(this.tableData)
@@ -218,7 +217,7 @@
           }
         }).then((res) => {
           console.log(res)
-          if (res.data.message == '成功') {
+          if (res.data.message === '成功') {
             if (res.data.result) {
               this.tableData = res.data.result
               console.log(this.tableData)
@@ -233,10 +232,10 @@
         }
         this.getStaticsInfo()
       }
-  },
+    },
     mounted () {
       this.getStaticsInfo()
-  }
+    }
 
   }
 </script>

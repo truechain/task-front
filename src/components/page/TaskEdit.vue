@@ -128,10 +128,10 @@
           taskStatus: ''
         }
       }
-  },
+    },
     mounted () {
       this.getTaskInfo()
-  },
+    },
     methods: {
       goback () {
         this.$router.go(-1)
@@ -144,11 +144,11 @@
             'Content-Type': 'application/json'
           }
         }).then((res) => {
-          if (res.data.message == '成功') {
+          if (res.data.message === '成功') {
             if (res.data.result) {
               const result = res.data.result
               const taskList = result.task
-              if (taskList.iconPath == '') {
+              if (taskList.iconPath === '') {
                 this.showDefault = true
               } else {
                 this.imgUrl = taskList.iconPath
@@ -163,28 +163,28 @@
               this.form.pushAddress = taskList.pushAddress
               this.form.description = taskList.description
 
-              if (taskList.taskStatus == 0) {
+              if ((+taskList.taskStatus) === 0) {
                 taskList.taskStatus = '禁用'
               }
-              if (taskList.taskStatus == 1) {
+              if ((+taskList.taskStatus) === 1) {
                 taskList.taskStatus = '启用'
               }
-              if (taskList.taskStatus == 2) {
+              if ((+taskList.taskStatus) === 2) {
                 taskList.taskStatus = '关闭'
               }
-              if (taskList.category == 0) {
+              if ((+taskList.category) === 0) {
                 taskList.category = '个人'
               }
-              if (taskList.category == 1) {
+              if ((+taskList.category) === 1) {
                 taskList.category = '团队'
               }
-              if (taskList.rewardType == 1) {
+              if ((+taskList.rewardType) === 1) {
                 taskList.rewardType = 'True'
               }
-              if (taskList.rewardType == 2) {
+              if ((+taskList.rewardType) === 2) {
                 taskList.rewardType = 'TTR'
               }
-              if (taskList.rewardType == 3) {
+              if ((+taskList.rewardType) === 3) {
                 taskList.rewardType = 'RMB'
               }
               this.form.taskStatus = taskList.taskStatus
@@ -198,28 +198,28 @@
       },
       save () {
         var url = 'http://www.phptrain.cn/admin/task/updateTask'
-        if (this.form.taskStatus == '禁用') {
+        if (this.form.taskStatus === '禁用') {
           this.form.taskStatus = 0
         }
-        if (this.form.taskStatus == '启用') {
+        if (this.form.taskStatus === '启用') {
           this.form.taskStatus = 1
         }
-        if (this.form.taskStatus == '关闭') {
+        if (this.form.taskStatus === '关闭') {
           this.form.taskStatus = 2
         }
-        if (this.form.category == '个人') {
+        if (this.form.category === '个人') {
           this.form.category = 0
         }
-        if (this.form.category == '团队') {
+        if (this.form.category === '团队') {
           this.form.category = 1
         }
-        if (this.form.rewardType == 'True') {
+        if (this.form.rewardType === 'True') {
           this.form.rewardType = 1
         }
-        if (this.form.rewardType == 'TTR') {
+        if (this.form.rewardType === 'TTR') {
           this.form.rewardType = 2
         }
-        if (this.form.rewardType == 'RMB') {
+        if (this.form.rewardType === 'RMB') {
           this.form.rewardType = 3
         }
 
@@ -239,13 +239,6 @@
             startDateTime: this.form.startDateTime,
             taskStatus: this.form.taskStatus
           },
-          //			  taskDetailList: [
-          //			    {
-          //			      peopleNum: this.peopleNum,
-          //			      rewardNum: this.rewardNum,
-          //			      station:this.station
-          //			    }
-          //			  ],
           taskDetailList: this.taskDetailList
         }
 
@@ -254,7 +247,7 @@
             'Content-Type': 'application/json'
           }
         }).then((res) => {
-          if (res.data.message == '成功') {
+          if (res.data.message === '成功') {
             this.$router.push({
               path: '/TaskManage'
             })
@@ -267,9 +260,6 @@
           }
         })
       },
-      goback () {
-        this.$router.go(-1)
-      },
       uploadChange (event) {
         let reader = new FileReader()
         let img1 = event.target.files[0]
@@ -277,7 +267,7 @@
 
         let type = img1.type // 文件的类型，判断是否是图片
         let size = img1.size // 文件的大小，判断图片的大小
-        if (this.imgData.accept.indexOf(type) == -1) {
+        if (this.imgData.accept.indexOf(type) === -1) {
           this.$message({
             message: '请选择正确的图片格式！',
             type: 'warning'
@@ -307,11 +297,10 @@
             that.imgUrl = res.data.result.showPath
           }
         }).catch(error => {
-          alert('上传图片出错！')
+          throw new Error(`${error}, 上传图片出错！`)
         })
       }
-
-  }
+    }
   }
 </script>
 
