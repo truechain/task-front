@@ -26,16 +26,17 @@
             <el-option label="启用" value="1"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="任务等级：">
-          <el-select v-model="form.level" placeholder="全部">
-            <el-option label="全部" value=""></el-option>
-            <el-option label="A" value="A"></el-option>
-            <el-option label="B" value="B"></el-option>
-            <el-option label="C" value="C"></el-option>
-            <el-option label="S" value="S"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="任务完成状态：">
+				<el-form-item label="任务等级：">
+					<el-select v-model="form.level" placeholder="全部">
+						<el-option label="全部" value=""></el-option>
+						<el-option label="A" value="A"></el-option>
+						<el-option label="B" value="B"></el-option>
+						<el-option label="C" value="C"></el-option>
+						<el-option label="D" value="D"></el-option>
+						<el-option label="S" value="S"></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item label="任务完成状态：">
           <el-select v-model="form.auditStatus" placeholder="全部">
             <el-option label="全部" value=""></el-option>
             <el-option label="已完成" value="1"></el-option>
