@@ -1,7 +1,7 @@
 <template>
- <div class="deploy">
-	 暂未开发
-	   <!-- <div class="rizhi">
+  <div class="deploy">
+    暂未开发
+    <!-- <div class="rizhi">
 							  <div>
 									<span style="line-height:36px;">更新时间：</span>
 									<el-date-picker
@@ -47,43 +47,45 @@
 								</div>
 
 						</div> -->
- </div>
+  </div>
 </template>
 <script>
- export default {
-	  data(){
-			return {
-				 tableData:[
-					 {
-							date: '2016-05-02',
-							name: '王小虎',
-							address: '上海市普陀区金沙江路 1518 弄'
-						},
-						 {
-							date: '2016-05-02',
-							name: '王小虎',
-							address: '上海市普陀区金沙江路 1518 弄'
-						}
-				 ]
-			}
-		}
- }
+  export default {
+    data () {
+      return {
+        tableData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }
+        ]
+      }
+  }
+  }
 </script>
 <style scoped lang="less">
-.deploy {
-  .rizhi {
-    display: flex;
-    height: 36px;
-    align-content: center;
-    justify-content: space-between;
-  }
-  .quanxian-table {
-    margin-top: 20px;
-    .page {
+  .deploy {
+    .rizhi {
       display: flex;
-      justify-content: center;
+      height: 36px;
+      align-content: center;
+      justify-content: space-between;
+    }
+
+    .quanxian-table {
       margin-top: 20px;
+
+      .page {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
     }
   }
-}
+
 </style>

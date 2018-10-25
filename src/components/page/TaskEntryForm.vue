@@ -63,169 +63,166 @@
 </template>
 
 <script>
-  export default {
-    name: 'TaskEntryForm',
-    data() {
-      return {
-      	taskName: '',
-      	totalAuditStatus: '',
-        dialogAuditing: false,
-        centerDialogVisible: true,
-        buttonText: '',
-        taskUserId: '',
-        isShow:false,
-        form: {
-          reNum:'',
-          num:'',
-        },
-        formTable: {
-
-        },
-        taskName:'',//任务名
-        rewardNum:'',//默认奖励数
-        personName:'',//用户姓名
-        pushAddress:'',//用户钱包地址
-        tableData: []
-      }
-    },
-    methods: {
-    	/*审核报名表*/
-    	shDialog(scope){
-        // debugger;
-        this.formTable = scope;
-
-    		this.taskUserId = scope.taskUserId
-
-		  	let url="http://www.phptrain.cn/admin/task/auditEntryFormUser?taskUserId="+this.taskUserId
-		  	this.$http.post(url, {
-		  		headers: {
-            		"Content-Type": "application/json"
-          		}
-		  	}).then((res)=>{
-          console.log(res,'审核')
-          if(res.data.code === 500) {
-            this.$message({
-              message: res.data.message,
-              type: 'warning'
-            });
-            return false;
-          }
-          if(res.list){
-              var list     = res.result
-          }
-          this.dialogAuditing = true
-		  	})
-    	},
-      goback() {
-        this.$router.go(-1)
+export default {
+  name: 'TaskEntryForm',
+  data () {
+    return {
+      taskName: '',
+      totalAuditStatus: '',
+      dialogAuditing: false,
+      centerDialogVisible: true,
+      buttonText: '',
+      taskUserId: '',
+      isShow: false,
+      form: {
+        reNum: '',
+        num: ''
       },
-      dialogAudit(){
-        // debugger
-        this.dialogAuditing=false
-
-
-        var data = {
-          userReward:this.form.num,
-          recommendUserReward:this.form.reNum
-        }
-        let url=`http://www.phptrain.cn/admin/task/rewardEntryFromUser?taskUserId=${this.taskUserId}&userReward=${this.form.num}&recommendUserReward=${this.form.reNum}`
-        this.$http.post(url,data,{
-		  		headers: {
-            		"Content-Type": "application/json"
-          		}
-		  	}).then((res)=>{
-          // debugger;
-          if(res.data.code == 200){
-            this.getTaskEntryForm()
-              this.$message({
-                message: '奖励已发送',
-                type: 'success'
-              });
-          } else {
-            var msg = res.data.message
-            this.$message({
-              message: msg,
-              type: 'warning'
-            });
-          }
-		  	})
+      formTable: {
 
       },
-      getTaskEntryForm(){
-        let taskId =  this.$route.query.taskId
-        let url="http://www.phptrain.cn/admin/task/getEntryFormInfo?taskId="+taskId
-		  	this.$http.post(url, {
-		  		headers: {
-            		"Content-Type": "application/json"
-          		}
-		  	}).then((res)=>{
-		  		console.log(res,'000000000报名表')
-		  		if(res.data.message=='成功'){
-		  			if (res.data.result) {
-		  				var result=res.data.result
-		  				this.tableData=result.taskEntryFromInfoList
-		  				this.taskName=result.taskName
-		  				if(result.totalAuditStatus==0){
-		  				  result.totalAuditStatus='未审核'
-		  				}
-		  				if(result.totalAuditStatus==1){
-		  				  result.totalAuditStatus='已审核'
-		  				}
-
-		  				this.totalAuditStatus=result.totalAuditStatus
-		  			  result.taskEntryFromInfoList.forEach(function(list){
-		  			    console.log(list.auditStatus)
-		  			     if(list.auditStatus==0){
-                    list.auditStatus='未审核'
-                    list.isShow=true
-                  }
-                  if(list.auditStatus==1){
-                    list.auditStatus='已审核'
-                    list.isShow=true
-                  }
-                  if(list.auditStatus==2){
-                    list.auditStatus='已奖励'
-                    list.isShow=false
-                  }
-
-		  			  })
-
-		  			}
-		  		}
-		  	})
-      }
-    },
-    mounted(){
-    	this.getTaskEntryForm()
+      taskName: '', // 任务名
+      rewardNum: '', // 默认奖励数
+      personName: '', // 用户姓名
+      pushAddress: '', // 用户钱包地址
+      tableData: []
     }
+  },
+  methods: {
+/* 审核报名表 */
+    shDialog (scope) {
+// debugger;
+      this.formTable = scope
+
+      this.taskUserId = scope.taskUserId
+
+      let url = 'http://www.phptrain.cn/admin/task/auditEntryFormUser?taskUserId=' + this.taskUserId
+      this.$http.post(url, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((res) => {
+        console.log(res, '审核')
+        if (res.data.code === 500) {
+          this.$message({
+            message: res.data.message,
+            type: 'warning'
+          })
+          return false
+        }
+        if (res.list) {
+          var list = res.result
+        }
+        this.dialogAuditing = true
+      })
+    },
+    goback () {
+      this.$router.go(-1)
+    },
+    dialogAudit () {
+// debugger
+      this.dialogAuditing = false
+      var data = {
+        userReward: this.form.num,
+        recommendUserReward: this.form.reNum
+      }
+      let url = `http://www.phptrain.cn/admin/task/rewardEntryFromUser?taskUserId=${this.taskUserId}&userReward=${this.form.num}&recommendUserReward=${this.form.reNum}`
+      this.$http.post(url, data, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((res) => {
+// debugger;
+        if (res.data.code == 200) {
+          this.getTaskEntryForm()
+          this.$message({
+            message: '奖励已发送',
+            type: 'success'
+          })
+        } else {
+          var msg = res.data.message
+          this.$message({
+            message: msg,
+            type: 'warning'
+          })
+        }
+      })
+    },
+    getTaskEntryForm () {
+      let taskId = this.$route.query.taskId
+      let url = 'http://www.phptrain.cn/admin/task/getEntryFormInfo?taskId=' + taskId
+      this.$http.post(url, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((res) => {
+        console.log(res, '000000000报名表')
+        if (res.data.message == '成功') {
+          if (res.data.result) {
+            var result = res.data.result
+            this.tableData = result.taskEntryFromInfoList
+            this.taskName = result.taskName
+            if (result.totalAuditStatus == 0) {
+              result.totalAuditStatus = '未审核'
+            }
+            if (result.totalAuditStatus == 1) {
+              result.totalAuditStatus = '已审核'
+            }
+
+            this.totalAuditStatus = result.totalAuditStatus
+            result.taskEntryFromInfoList.forEach(function (list) {
+              console.log(list.auditStatus)
+              if (list.auditStatus == 0) {
+                list.auditStatus = '未审核'
+                list.isShow = true
+              }
+              if (list.auditStatus == 1) {
+                list.auditStatus = '已审核'
+                list.isShow = true
+              }
+              if (list.auditStatus == 2) {
+                list.auditStatus = '已奖励'
+                list.isShow = false
+              }
+            })
+          }
+        }
+      })
+    }
+  },
+  mounted () {
+    this.getTaskEntryForm()
   }
+}
 </script>
 
 <style type="text/css">
-.el-message {
-  top: 200px !important;
-}
+  .el-message {
+    top: 200px !important;
+  }
+
 </style>
 <style scoped>
-.el-dialog--small.el-dialog {
-  width: 30%;
-}
+  .el-dialog--small.el-dialog {
+    width: 30%;
+  }
 
-.dialog-wrapper .el-form-item {
-  display: block;
-}
+  .dialog-wrapper .el-form-item {
+    display: block;
+  }
 
-.btn-center {
-  text-align: center;
-  margin: 10px 0;
-}
+  .btn-center {
+    text-align: center;
+    margin: 10px 0;
+  }
 
-.status {
-  font-size: 14px;
-  margin-bottom: 15px;
-}
+  .status {
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
 
-.status span {
-  margin-right: 20px;
-}
+  .status span {
+    margin-right: 20px;
+  }
+
 </style>

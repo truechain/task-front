@@ -1,5 +1,5 @@
 {
   "debug.node.autoAttach": "off",
   "git.ignoreLimitWarning": true,
-  "eslint.enable": false
+  "eslint.enable": true
 }

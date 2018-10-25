@@ -10,14 +10,14 @@
 </template>
 <script>
     export default {
-       props:['vtitle']
+      props: ['vtitle']
     }
 </script>
 <style scoped>
     .pageTitle{
         clear:both;
         height:55px;
-      
+
     }
     .pt-left{
         float:left;
