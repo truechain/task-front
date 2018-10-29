@@ -17,9 +17,8 @@
   </div>
 </template>
 <script>
-  import {
-    loginApi
-  } from '@/api/GaoAPI.js'
+  import { loginApi } from '@/api'
+  import { setStore } from '@/util'
   export default {
     data () {
       return {
@@ -28,29 +27,23 @@
       }
     },
     methods: {
-      login () {
-        if (!this.uname || !this.upassword) {
-          alert('填写完整')
-          return
+      async login () {
+        if (!this.uname.trim() || !this.upassword.trim()) {
+          return alert('填写完整')
         }
-        var formdata = new FormData()
+
+        let formdata = new FormData()
         formdata.append('userName', this.uname)
         formdata.append('password', this.upassword)
-        let url = loginApi
-        this.$http.post(url, formdata, {
 
-        }).then(res => {
-          console.log(res)
-          if (res.data.message === '成功') {
-            let token = JSON.stringify(res.data.result)
-            localStorage.setItem('token', token)
-            // 跳转到首页
-            this.$router.push({
-              path: '/home'
-            })
-          } else {
-            alert(res.data.message)
-          }
+        const { token, userUid, agent } = await loginApi(formdata)
+
+        setStore('token', token)
+        setStore('userUid', userUid)
+        setStore('agent', agent)
+
+        this.$router.push({
+          path: '/home'
         })
       }
     }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-pageTitle vtitle="总数"></v-pageTitle>
+    <!-- <v-pageTitle vtitle="总数"></v-pageTitle> -->
     <div class="clear"></div>
     <el-row :gutter="20">
       <el-col :xs="12" :sm="12" :md="12" :lg="6">
@@ -66,40 +66,32 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        result: 0,
-        TotalTask: 0,
-        ComplateTask: 0
-      }
-    },
-    methods: {
-      countPartTimeTotalPeople () {
-        var url = 'http://www.phptrain.cn/admin/home/countPartTimeTotalPeople'
-        this.$http.get(url).then((res) => {
-          this.result = res.data.result
-        })
-      },
-      countTotalTask () {
-        var url = 'http://www.phptrain.cn/admin/home/countTotalTask'
-        this.$http.get(url).then((res) => {
-          this.TotalTask = res.data.result
-        })
-      },
-      countComplateTask () {
-        var url = 'http://www.phptrain.cn/admin/home/countComplateTask'
-        this.$http.get(url).then((res) => {
-          this.ComplateTask = res.data.result
-        })
-      }
-    },
-    mounted () {
-      this.countPartTimeTotalPeople()
-      this.countTotalTask()
-      this.countComplateTask()
+import {
+  countTotalTask,
+  countComplateTask,
+  countPartTimeTotalPeople
+} from '@/api'
+export default {
+  data () {
+    return {
+      result: 0,
+      TotalTask: 0,
+      ComplateTask: 0
     }
+  },
+  mounted () {
+    Promise.all([
+      countPartTimeTotalPeople(),
+      countTotalTask(),
+      countComplateTask()
+    ])
+      .then(x => {
+        this.result = x[0]
+        this.TotalTask = x[1]
+        this.ComplateTask = x[2]
+      })
   }
+}
 </script>
 
 <style scoped>
@@ -143,7 +135,6 @@
     border-top: 1px dashed #ccc;
     margin-bottom: 5px;
     margin-top: 6px;
-
   }
 
 </style>

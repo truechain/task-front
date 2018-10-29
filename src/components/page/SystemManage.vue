@@ -120,7 +120,7 @@
     getUserInfoAPI,
     updateAuthUserAPI,
     deleteAuthUserAPI
-  } from '@/api/GaoAPI'
+  } from '@/api'
   import qs from 'qs'
   export default {
     data () {
@@ -238,7 +238,7 @@
     },
     methods: {
       // 用户管理部分-------------
-      getUserPage () {
+      async getUserPage () {
         let param = {
           pageIndex: this.rolePageIndex,
           pageSize: this.rolePageSize,
@@ -247,28 +247,14 @@
           phone: this.formInline.phone,
           roleName: this.formInline.roleName
         }
-        this.$http.post(getUserPageAPI, qs.stringify(param)).then(res => {
-          if (res.data.message === '成功') {
-            if (res.data.result) {
-              this.tableData = res.data.result.content
-              this.roleTotal = res.data.result.totalElements
-            }
-          } else {
+        const { content, totalElements } = await getUserPageAPI(qs.stringify(param))
 
-          }
-        })
+        this.tableData = content
+        this.roleTotal = totalElements
       },
       // 获取角色下拉
-      getRoleList () {
-        this.$http.post(getRoleListAPI).then(res => {
-          if (res.data.message === '成功') {
-            if (res.data.result) {
-              this.roleList = res.data.result
-            }
-          } else {
-
-          }
-        })
+      async getRoleList () {
+        this.roleList = await getRoleListAPI()
       },
       clearRole () {
         this.formInline = {
@@ -285,7 +271,7 @@
 
       // 新增角色
       addUser (addForm) {
-        this.$refs[addForm].validate((valid) => {
+        this.$refs[addForm].validate(async (valid) => {
           if (valid) {
             if (!this.addForm.roleIdId) {
               this.$message.error('请选择用户角色')
@@ -300,17 +286,12 @@
               username: this.addForm.username,
               comfirmPassword: this.addForm.comfirmPassword
             }
-            this.$http.post(addUserAPI, param).then(res => {
-              if (res.data.message === '成功') {
-                this.$message({
-                  message: '添加成功',
-                  type: 'success'
-                })
-                this.addUserDialog = false
-                this.getUserPage()
-              } else {
-
-              }
+            await addUserAPI(param, 'json')
+            this.addUserDialog = false
+            this.getUserPage()
+            this.$message({
+              message: '添加成功',
+              type: 'success'
             })
           } else {
             this.$message.error('请修改标红处的信息')
@@ -320,34 +301,25 @@
       },
       // 编辑角色
       editUser (editForm) {
-        this.$refs[editForm].validate((valid) => {
+        this.$refs[editForm].validate(async (valid) => {
           if (valid) {
             if (!this.addForm.roleIdId) {
               this.$message.error('请选择用户角色')
               return
             }
             let param = {
+              id: this.id,
               password: this.editForm.password,
               phone: this.editForm.phone,
               realName: this.editForm.realName,
               remark: this.editForm.remark,
               roleIdId: this.editForm.roleIdId,
               username: this.editForm.username,
-              comfirmPassword: this.editForm.comfirmPassword,
-              id: this.id
+              comfirmPassword: this.editForm.comfirmPassword
             }
-            this.$http.post(updateAuthUserAPI, param).then(res => {
-              if (res.data.message === '成功') {
-                this.$message({
-                  message: '修改成功',
-                  type: 'success'
-                })
-                this.editDialog = false
-                this.getUserPage()
-              } else {
-
-              }
-            })
+            await updateAuthUserAPI(param)
+            this.editDialog = false
+            this.getUserPage()
           } else {
             this.$message.error('请修改标红处的信息')
             return false
@@ -355,21 +327,12 @@
         })
       },
       // 删除
-      handleDelete (id) {
+      async handleDelete (id) {
         let param = {
           userId: id
         }
-        this.$http.post(deleteAuthUserAPI, qs.stringify(param)).then(res => {
-          if (res.data.message === '成功') {
-            this.$message({
-              message: '删除成功',
-              type: 'success'
-            })
-            this.getUserPage()
-          } else {
-
-          }
-        })
+        await deleteAuthUserAPI(qs.stringify(param))
+        this.getUserPage()
       },
       // 操作 修改和查看
       handleEdit (row, type) {
@@ -382,20 +345,13 @@
         this.getUserInfo(row.id)
       },
       // 获取系统用户信息
-      getUserInfo (id) {
+      async getUserInfo (id) {
         let param = {
           userId: id
         }
-        this.$http.post(getUserInfoAPI, qs.stringify(param)).then(res => {
-          if (res.data.message === '成功') {
-            this.editForm = res.data.result
-            this.editDialog = true
-          } else {
-
-          }
-        })
+        this.editForm = await getUserInfoAPI(qs.stringify(param))
+        this.editDialog = true
       }
-
     },
     created () {
       this.getUserPage()
