@@ -13,7 +13,8 @@ const service = axios.create({
   baseURL: apiUrl,
   timeout: 5000,
   headers: {
-    'X-Requested-With': 'XMLHttpRequest'
+    'X-Requested-With': 'XMLHttpRequest',
+    'Content-Type': 'application/json; charset=UTF-8'
   }
 })
 
@@ -48,11 +49,12 @@ service.interceptors.response.use(({ data: { code, message, result } }) => {
 })
 
 export default {
-  post (url, data = {}, type = 'x-www-form-urlencoded') {
+  post (url, data = {}, type = 'x-www-form-urlencoded', params = null) {
     return service({
       method: 'post',
       url,
       data,
+      params,
       headers: {
         'Content-Type': `application/${type}; charset=UTF-8`
       }
