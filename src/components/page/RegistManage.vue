@@ -49,7 +49,10 @@
 			</el-table-column>
 			<!-- <el-table-column prop="wxNum" align="center" label="微信号" >
 			</el-table-column> -->
-			<el-table-column prop="auditStatusName" align="center" label="审核状态" >
+			<el-table-column  align="center" label="审核状态" >
+          <template slot-scope="scope">
+            <span>{{ scope.row.auditStatus === 1 ? '已审核': '未审核' }}</span>
+          </template>
 			</el-table-column>
 			<el-table-column prop="mobile"  align="center" label="联系电话" >
 			</el-table-column>
@@ -92,7 +95,7 @@
             </div>
         </el-dialog>
 		<div class="page">
-			<el-pagination v-show="total || total>0"	@current-change="handleCurrentChange" :current-page.sync="pageIndex"
+			<el-pagination v-show="total || total > 0"	@current-change="handleCurrentChange" :current-page.sync="pageIndex"
        		 :page-size="pageSize" :total="total"  background layout="total,prev, pager, next" >	</el-pagination>
 		</div>
 		<div class="tips" v-show="showss">{{tips}}</div>
@@ -100,6 +103,11 @@
 </template>
 <script>
   import qs from 'qs'
+  import {
+    auditUser,
+    updateUser,
+    getUserPage
+  } from '@/api'
   export default {
     data () {
       return {
@@ -141,67 +149,29 @@
         }
         this.dialogVis = true
       },
-      typeCommit () {
-        let url
+      async typeCommit () {
         let param = {
           userId: this.userId,
           level: this.dialogForm.level,
           rewardNum: this.dialogForm.rewardNum
         }
         if (this.isAudit) {
-          url = 'http://www.phptrain.cn/admin/user/auditUser'
+          await auditUser(qs.stringify(param))
         } else {
-          url = 'http://www.phptrain.cn/admin/user/updateUser'
+          await updateUser(qs.stringify(param))
         }
-        this.$http.post(url, qs.stringify(param))
-          .then(res => {
-            if (res.data.message === '成功') {
-              this.tips = '操作成功'
-              this.showTips()
-              this.getUserPage()
-              this.dialogVis = false
-            } else {
-              this.tips = res.data.message
-              this.showTips()
-            }
-          })
+        this.getUserPage()
+        this.dialogVis = false
       },
-      getUserPage () {
+      async getUserPage () {
         let param = {
-          auditStatus: this.form.auditStatus,
-          endDate: this.form.endDate,
-          level: this.form.level,
-          name: this.form.name,
+          ...this.form,
           pageIndex: this.pageIndex,
-          pageSize: this.pageSize,
-          startDate: this.form.startDate,
-          wxNickName: this.form.wxNickName
+          pageSize: this.pageSize
         }
-        let url = 'http://www.phptrain.cn/admin/user/getUserPage'
-        this.$http.post(url, param, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-          .then(res => {
-            if (res.data.message === '成功') {
-              if (res.data.result) {
-                res.data.result.content.forEach(function (list) {
-                  if ((+list.auditStatus) === 0 || (+list.auditStatus) === -1) {
-                    list.auditStatusName = '未审核'
-                  }
-                  if ((+list.auditStatus) === 1) {
-                    list.auditStatusName = '已审核'
-                  }
-                })
-                this.tableData = res.data.result.content
-                this.total = res.data.result.totalElements
-              }
-            } else {
-              this.tips = res.data.message
-              this.showTips()
-            }
-          })
+        const res = await getUserPage(param, 'json')
+        this.tableData = res.content
+        this.total = res.totalElements
       },
       getDetail (scope) {
         this.$router.push({
