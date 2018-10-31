@@ -2,8 +2,8 @@
   <div class="task-entryForm-content">
     <div class="position">我的位置：任务管理>报名表</div>
     <div class="status">
-      <span>任务名称：<span>{{taskName}}</span></span>
-      <span>审核状态：<span>{{totalAuditStatus}}</span></span>
+      <span>任务名称：<span>{{ taskName }}</span></span>
+      <span>审核状态：<span>{{ totalAuditStatus === 0 ? '未审核' : '已审核' }}</span></span>
     </div>
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column prop="station" label="岗位">
@@ -11,6 +11,9 @@
       <el-table-column prop="wxNickName" label="微信昵称">
       </el-table-column>
       <el-table-column prop="auditStatus" label="奖励发放">
+        <template slot-scope="scope">
+          <span>{{auditStatusObj[scope.row.auditStatus]}}</span>
+        </template>
       </el-table-column>
       <el-table-column prop="rewardNum" label="奖励">
       </el-table-column>
@@ -24,7 +27,7 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" @click="shDialog(scope.row)" v-if="scope.row.auditStatus=='未审核'">审核</el-button>
+          <el-button size="mini" @click="shDialog(scope.row)" v-if="scope.row.auditStatus === 0">审核</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -63,136 +66,79 @@
 </template>
 
 <script>
-export default {
-  name: 'TaskEntryForm',
-  data () {
-    return {
-      totalAuditStatus: '',
-      dialogAuditing: false,
-      centerDialogVisible: true,
-      buttonText: '',
-      taskUserId: '',
-      isShow: false,
-      form: {
-        reNum: '',
-        num: ''
-      },
-      formTable: {
+  import { getEntryFormInfo, rewardEntryFromUser, auditEntryFormUser } from '@/api'
+  export default {
+    name: 'TaskEntryForm',
+    data () {
+      return {
+        totalAuditStatus: '',
+        dialogAuditing: false,
+        centerDialogVisible: true,
+        buttonText: '',
+        taskUserId: '',
+        form: {
+          reNum: '',
+          num: ''
+        },
+        formTable: {
 
-      },
-      taskName: '', // 任务名
-      rewardNum: '', // 默认奖励数
-      personName: '', // 用户姓名
-      pushAddress: '', // 用户钱包地址
-      tableData: []
-    }
-  },
-  methods: {
-/* 审核报名表 */
-    shDialog (scope) {
-// debugger;
-      this.formTable = scope
-
-      this.taskUserId = scope.taskUserId
-
-      let url = 'http://www.phptrain.cn/admin/task/auditEntryFormUser?taskUserId=' + this.taskUserId
-      this.$http.post(url, {
-        headers: {
-          'Content-Type': 'application/json'
+        },
+        taskName: '', // 任务名
+        rewardNum: '', // 默认奖励数
+        personName: '', // 用户姓名
+        pushAddress: '', // 用户钱包地址
+        tableData: [],
+        auditStatusObj: {
+          '0': '未审核',
+          '1': '已审核',
+          '2': '已奖励'
         }
-      }).then((res) => {
-        console.log(res, '审核')
-        if (res.data.code === 500) {
-          this.$message({
-            message: res.data.message,
-            type: 'warning'
-          })
-          return false
-        }
-        // if (res.list) {
-        //   var list = res.result
-        // }
-        this.dialogAuditing = true
-      })
-    },
-    goback () {
-      this.$router.go(-1)
-    },
-    dialogAudit () {
-// debugger
-      this.dialogAuditing = false
-      var data = {
-        userReward: this.form.num,
-        recommendUserReward: this.form.reNum
       }
-      let url = `http://www.phptrain.cn/admin/task/rewardEntryFromUser?taskUserId=${this.taskUserId}&userReward=${this.form.num}&recommendUserReward=${this.form.reNum}`
-      this.$http.post(url, data, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then((res) => {
-// debugger;
-        if (res.data.code === 200) {
-          this.getTaskEntryForm()
-          this.$message({
-            message: '奖励已发送',
-            type: 'success'
-          })
-        } else {
-          var msg = res.data.message
-          this.$message({
-            message: msg,
-            type: 'warning'
-          })
-        }
-      })
     },
-    getTaskEntryForm () {
-      let taskId = this.$route.query.taskId
-      let url = 'http://www.phptrain.cn/admin/task/getEntryFormInfo?taskId=' + taskId
-      this.$http.post(url, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then((res) => {
-        console.log(res, '000000000报名表')
-        if (res.data.message === '成功') {
-          if (res.data.result) {
-            var result = res.data.result
-            this.tableData = result.taskEntryFromInfoList
-            this.taskName = result.taskName
-            if ((+result.totalAuditStatus) === 0) {
-              result.totalAuditStatus = '未审核'
-            }
-            if ((+result.totalAuditStatus) === 1) {
-              result.totalAuditStatus = '已审核'
-            }
+    methods: {
+  /* 审核报名表 */
+      async shDialog (scope) {
+        this.formTable = scope
+        this.taskUserId = scope.taskUserId
+        await auditEntryFormUser(null, null, {
+          taskUserId: this.taskUserId
+        })
 
-            this.totalAuditStatus = result.totalAuditStatus
-            result.taskEntryFromInfoList.forEach(function (list) {
-              console.log(list.auditStatus)
-              if ((+list.auditStatus) === 0) {
-                list.auditStatus = '未审核'
-                list.isShow = true
-              }
-              if ((+list.auditStatus) === 1) {
-                list.auditStatus = '已审核'
-                list.isShow = true
-              }
-              if ((+list.auditStatus) === 2) {
-                list.auditStatus = '已奖励'
-                list.isShow = false
-              }
-            })
-          }
+        this.dialogAuditing = true
+      },
+      goback () {
+        this.$router.go(-1)
+      },
+      async dialogAudit () {
+        this.dialogAuditing = false
+        const data = {
+          userReward: this.form.num,
+          recommendUserReward: this.form.reNum
         }
-      })
+
+        await rewardEntryFromUser(data, 'json', {
+          taskUserId: this.taskUserId,
+          userReward: this.form.num,
+          recommendUserReward: this.form.reNum
+        })
+        await this.getTaskEntryForm()
+        this.$message({
+          message: '奖励已发送',
+          type: 'success'
+        })
+      },
+      async getTaskEntryForm () {
+        const res = await getEntryFormInfo(null, null, {
+          taskId: this.$route.query.taskId
+        })
+        this.tableData = res.taskEntryFromInfoList
+        this.taskName = res.taskName
+      }
+    },
+    mounted () {
+      this.getTaskEntryForm()
     }
-  },
-  mounted () {
-    this.getTaskEntryForm()
   }
-}
 </script>
 
 <style type="text/css">

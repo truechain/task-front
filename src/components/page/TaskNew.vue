@@ -99,6 +99,7 @@
 </template>
 
 <script>
+  import { uploadTaskIcon, addTask } from '@/api'
   export default {
     data () {
       return {
@@ -130,22 +131,11 @@
       goback () {
         this.$router.go(-1)
       },
-      save () {
-        var url = 'http://www.phptrain.cn/admin/task/addTask'
-        var param = {
+      async save () {
+        const param = {
           task: {
-            category: this.form.category,
-            description: this.form.description,
-            endDateTime: this.form.endDateTime,
             iconPath: this.imgUrl,
-            level: this.form.level,
-            name: this.form.name,
-            peopleNum: this.form.peopleNum,
-            pushAddress: this.form.pushAddress,
-            rewardNum: this.form.rewardNum,
-            rewardType: this.form.rewardType,
-            startDateTime: this.form.startDateTime,
-            taskStatus: this.form.taskStatus
+            ...this.form
           },
           taskDetailList: [{
             peopleNum: this.peopleNum,
@@ -153,30 +143,14 @@
             station: this.station
           }]
         }
-        this.$http.post(url, param, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then((res) => {
-          console.log(res.data)
-          if (res.data.message === '成功') {
-            this.$router.push({
-              path: '/TaskManage'
-            })
-          } else {
-            var msg = res.data.message
-            this.$message({
-              message: msg,
-              type: 'warning'
-            })
-          }
+        await addTask(param, 'json')
+        this.$router.push({
+          path: '/TaskManage'
         })
       },
-      uploadChange (event) {
-        let reader = new FileReader()
+      async uploadChange (event) {
         let img1 = event.target.files[0]
         this.file = img1
-
         let type = img1.type // 文件的类型，判断是否是图片
         let size = img1.size // 文件的大小，判断图片的大小
         if (this.imgData.accept.indexOf(type) === -1) {
@@ -195,24 +169,9 @@
         }
 
         let form = new FormData()
-
         form.append('file', img1)
-        this.$http.post('http://www.phptrain.cn/admin/task/uploadTaskIcon', form, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }).then(res => {
-          console.log(res.data, '88888888')
-          //              this.imgUrl = res.data.result
-          reader.readAsDataURL(img1)
-          var that = this
-          reader.onloadend = function () {
-            console.log(this.result)
-            that.imgUrl = res.data.result.showPath
-          }
-        }).catch(error => {
-          throw new Error(error)
-        })
+        const res = await uploadTaskIcon(form, 'form-data')
+        this.imgUrl = res.showPath
       }
 
     }

@@ -42,6 +42,9 @@
 import PDFJS from 'pdfjs-dist'
 import pdf from 'vue-pdf'
 import { getUserInfo } from '@/api'
+import {
+  apiUrl
+} from '@/config/index.js'
 export default {
   name: 'TaskDetails',
   components: {
@@ -83,7 +86,7 @@ export default {
         // this.loadFile(url)
     },
     downLoad () {
-      window.open('http://www.phptrain.cn/admin/user/downLoadResume?userId=' + this.$route.query.id)
+      window.open(`${apiUrl}/admin/user/downLoadResume?userId=${this.$route.query.id}`)
     },
     renderPage (num) {
       let _this = this

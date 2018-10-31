@@ -103,7 +103,7 @@
 </template>
 
 <script>
-  import { getTaskInfo, updateTask } from '@/api'
+  import { getTaskInfo, updateTask, uploadTaskIcon } from '@/api'
   export default {
     data () {
       return {
@@ -164,8 +164,7 @@
           path: '/TaskManage'
         })
       },
-      uploadChange (event) {
-        let reader = new FileReader()
+      async uploadChange (event) {
         let img1 = event.target.files[0]
         this.file = img1
 
@@ -187,21 +186,9 @@
         }
 
         let form = new FormData()
-
         form.append('file', img1)
-        this.$http.post('http://www.phptrain.cn/admin/task/uploadTaskIcon', form, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }).then(res => {
-          reader.readAsDataURL(img1)
-          var that = this
-          reader.onloadend = function () {
-            that.form.iconPath = res.data.result.showPath
-          }
-        }).catch(error => {
-          throw new Error(`${error}, 上传图片出错！`)
-        })
+        const res = await uploadTaskIcon(form, 'form-data')
+        this.imgUrl = res.showPath
       }
     }
   }
