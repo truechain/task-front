@@ -13,6 +13,7 @@ switch (process.env.NODE_ENV) {
     // apiUrl = 'http://127.0.0.1:8081'
     apiUrl = 'http://localhost:8081/api'
     // apiUrl = 'http://www.phptrain.cn'
+    // apiUrl = 'http://www.phptrain.cn'
     break
   case 'production':
     // apiUrl = 'http://45.40.243.125:8011'

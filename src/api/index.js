@@ -22,7 +22,7 @@ export const auditEntryFormUser       = (o, t, p) => (http.post('/admin/task/aud
 export const rewardEntryFromUser      = (o, t, p) => (http.post('/admin/task/rewardEntryFromUser', o, t, p))
 export const getEntryFormInfo         = (o, t, p) => (http.post('/admin/task/getEntryFormInfo', o, t, p))
 export const getTaskPage              = (o, t, p) => (http.post('/admin/task/getTaskPage', o, t, p))
-export const addTask                  = (o, t, p) => (http.get('/task/addTask', o, t, p))
+export const addTask                  = (o, t, p) => (http.post('/admin/task/addTask', o, t, p))
 
 export const statisticUserProfilePage = (o, t, p) => (http.get('/report/getUserProfilePage', o, t, p))
 export const getResourcePageAPI       = (o, t, p) => (http.get('/admin/resource/getResourcePage', o, t, p))
@@ -40,40 +40,3 @@ export const TotalPeopleAPI           = (o, t, p) => (http.get('/admin/admin/hom
 export const countComplateTaskAPI     = (o, t, p) => (http.get('/admin/admin/home/countComplateTask', o, t, p))
 export const countTotalTaskAPI        = (o, t, p) => (http.get('/admin/admin/home/countTotalTask', o, t, p))
 
-
-// 登录API
-// export const loginApi = 'http://www.phptrain.cn/admin/unauth/account/login'
-
-// ---------------------首页API开始--------------------------------------------
-// 首页兼职总人数
-// export const TotalPeopleAPI = 'http://www.phptrain.cn/admin/home/countPartTimeTotalPeople'
-
-// 完成任务统计数API
-// export const countComplateTaskAPI = 'http://www.phptrain.cn/admin/home/countComplateTask'
-
-// 获取总任务数
-// export const countTotalTaskAPI = 'http://www.phptrain.cn/admin/home/countTotalTask'
-
-// ---------------------首页API结束--------------------------------------------
-
-// --------------------- 统计页面API开始 --------------------------------------
-// export const statisticUserProfilePage = '/report/getUserProfilePage'
-// --------------------- 统计页面API结束 --------------------------------------
-
-// --------------------- 系统管理之权限管理 API开始 --------------------------------------
-// 获取权限管理内容
-// export const getResourcePageAPI = '/admin/resource/getResourcePage'
-
-// export const addResourceAPI = '/admin/resource/addResource'
-// 角色管理内容
-// export const getRolePageAPI = '/admin/role/getRolePage'
-// 用户管理
-// export const getUserPageAPI = '/admin/user/getUserPage'
-// export const getRoleListAPI = '/unperm/admin/role/getRoleList'
-// export const addUserAPI = '/admin/user/addUser'
-// export const getUserInfoAPI = '/admin/user/getUserInfo'
-// export const updateAuthUserAPI = '/admin/user/updateAuthUser'
-// export const deleteAuthUserAPI = '/admin/user/deleteAuthUser'
-
-// --------------------- 系统管理之权限管理 API结束 --------------------------------------
-// --------------------- 统计页面API开始 --------------------------------------

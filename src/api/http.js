@@ -56,7 +56,11 @@ export default {
       data,
       params,
       headers: {
-        'Content-Type': `application/${type}; charset=UTF-8`
+        'Content-Type': `${
+          type === 'form-data'
+          ? 'multipart'
+          : 'application'
+        }/${type}; charset=UTF-8`
       }
     })
   },
