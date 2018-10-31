@@ -10,7 +10,7 @@
         <li>姓名：<span> {{tableData.sysUser.personName}}</span></li>
         <li>微信昵称：<span> {{tableData.sysUser.wxNickName}}</span></li>
         <!-- <li>微信号：<span> {{tableData.sysUser.wxNum}}</span></li> -->
-        <li>审核状态：<span> {{tableData.sysUser.auditStatusName}}</span></li>
+        <li>审核状态：<span> {{tableData.sysUser.auditStatus === 1 ? '已审核' : '未审核' }}</span></li>
         <li>联系方式：<span> {{tableData.sysUser.mobile}}</span></li>
         <li>等级：<span> {{tableData.sysUser.level}}</span></li>
         <li>提交时间：<span> {{tableData.sysUser.updateTime}}</span></li>
@@ -41,8 +41,7 @@
 <script>
 import PDFJS from 'pdfjs-dist'
 import pdf from 'vue-pdf'
-// import { Base64 } from 'js-base64'
-
+import { getUserInfo } from '@/api'
 export default {
   name: 'TaskDetails',
   components: {
@@ -50,7 +49,9 @@ export default {
   },
   data () {
     return {
-      tableData: [],
+      tableData: {
+        sysUser: {}
+      },
       isAudit: '',
       dialogVis: false,
       form: {},
@@ -64,35 +65,13 @@ export default {
     this.getUserInfo()
   },
   methods: {
-    getUserInfo () {
-      let id = this.$router.history.current.query.id
-      let url = 'http://www.phptrain.cn/admin/user/getUserInfo?userId=' + id
-      var param = {
-        userId: id
-      }
-      this.$http
-          .post(url, param, {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          })
-          .then(res => {
-            if (res.data.message === '成功') {
-              if (res.data.result) {
-                this.tableData = res.data.result
-                this.resumeFilePath = res.data.result.resumeFilePath
-                if ((+this.tableData.auditStatus) === 0 || (+this.tableData.auditStatus) === -1) {
-                  this.tableData.auditStatusName = '未审核'
-                }
-                if ((+this.tableData.auditStatus) === 1) {
-                  this.tableData.auditStatusName = '已审核'
-                }
-              }
-            } else {
-              this.tips = res.data.message
-              this.showTips()
-            }
-          })
+    async getUserInfo () {
+      const res = await getUserInfo(null, null, {
+        userId: this.$route.query.id
+      })
+
+      this.tableData = res
+      this.resumeFilePath = res.sysUser.resumeFilePath
     },
     goback () {
       this.$router.go(-1)
@@ -104,9 +83,7 @@ export default {
         // this.loadFile(url)
     },
     downLoad () {
-      let id = this.$router.history.current.query.id
-      let url = 'http://www.phptrain.cn/admin/user/downLoadResume?userId=' + id
-      window.open(url)
+      window.open('http://www.phptrain.cn/admin/user/downLoadResume?userId=' + this.$route.query.id)
     },
     renderPage (num) {
       let _this = this

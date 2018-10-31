@@ -49,6 +49,7 @@
 </template>
 
 <script>
+  import { getRewardStats } from '@/api'
   export default {
     data () {
       return {
@@ -69,29 +70,14 @@
       goback () {
         this.$router.go(-1)
       },
-      getStaticsInfo () {
-        let url = 'http://www.phptrain.cn/admin/report/getRewardStats'
-        var param = {
+      async getStaticsInfo () {
+        const param = {
+          ...this.form,
           userId: this.$route.query.id,
-          endDate: this.form.endDate,
-          startDate: this.form.startDate,
-          channel: this.form.channel,
-          rewordType: this.form.rewordType,
           pageIndex: this.pageIndex,
           pageSize: this.pageSize
         }
-        this.$http.post(url, param, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then((res) => {
-          console.log(res, '999999')
-          if (res.data.message === '成功') {
-            if (res.data.result) {
-              this.tableData = res.data.result
-            }
-          }
-        })
+        this.tableData = await getRewardStats(param, 'json')
       },
       reset () {
         this.form = {

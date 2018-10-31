@@ -1,7 +1,7 @@
 <template>
 	<div class="">
 		<div class="position">我的位置：统计明细表>任务明细</div>
-		<el-form ref="form"  :inline="true"  class="demo-form-inline">
+		<el-form ref="form" :inline="true"  class="demo-form-inline">
 				<el-form-item label="时间段：">
 					<el-col :span="11">
 						<el-date-picker type="date" placeholder="选择日期" v-model="form.startDateTime" style="width: 100%;"></el-date-picker>
@@ -54,8 +54,16 @@
 				style="width: 100%">
 				<el-table-column  prop="taskName"	label="任务名称"></el-table-column>
 				<el-table-column prop="taskLevel"	label="任务等级"></el-table-column>
-				<el-table-column	prop="taskState"	label="任务状态"></el-table-column>
-				<el-table-column	prop="taskCategory"	label="任务类型" ></el-table-column>
+				<el-table-column	prop="taskState"	label="任务状态">
+          <template slot-scope="scope">
+            <span>{{scope.row.taskState === 0 ? '任务中' : '已经完成' }}</span>
+          </template>
+        </el-table-column>
+				<el-table-column	prop="taskCategory"	label="任务类型" >
+          <template slot-scope="scope">
+            <span>{{scope.row.taskCategory === 0 ? '个人' : '团队' }}</span>
+          </template>
+        </el-table-column>
 				<el-table-column	prop="taskStartTime"	label="抢任务时间"  ></el-table-column>
 			</el-table>
 			</div>
@@ -63,6 +71,7 @@
 </template>
 
 <script>
+  import { getTaskStats } from '@/api'
   export default {
     data () {
       return {
@@ -84,48 +93,13 @@
       goback () {
         this.$router.go(-1)
       },
-      getStaticsInfo () {
-        let url = 'http://www.phptrain.cn/admin/report/getTaskStats'
-        var param = {
+      async getStaticsInfo () {
+        this.tableData = await getTaskStats({
+          ...this.form,
           userId: this.$route.query.userId,
-          taskStatus: this.form.taskStatus,
-          category: this.form.category,
-          endDateTime: this.form.endDateTime,
-          startDateTime: this.form.startDateTime,
-          level: this.form.level,
-          name: this.form.name,
           pageIndex: this.pageIndex,
           pageSize: this.pageSize
-        }
-        this.$http.post(url, param, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then((res) => {
-          if (res.data.message === '成功') {
-            if (res.data.result) {
-              var result = res.data.result
-
-              result.forEach(function (list) {
-                if ((+list.taskState) === 0) {
-                  list.taskState = '任务中'
-                }
-                if ((+list.taskState) === 1) {
-                  list.taskState = '已经完成'
-                }
-                if ((+list.taskCategory) === 0) {
-                  list.taskCategory = '个人'
-                }
-                if ((+list.taskCategory) === 1) {
-                  list.taskCategory = '团队'
-                }
-              })
-
-              this.tableData = res.data.result
-              // 返回结构中{taskName:任务名称;taskState:任务状态(0-任务中,1-已经完成);taskCategory:任务类型(0-个人，1-团队)}
-            }
-          }
-        })
+        }, 'json')
       },
       reset () {
         this.form = {

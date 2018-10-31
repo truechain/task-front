@@ -56,13 +56,13 @@
 </template>
 
 <script>
+  import { getRecommendStats } from '@/api'
   export default {
     data () {
       return {
         tableData: [],
         pageIndex: 1,
         pageSize: 20,
-        id: '',
         form: {
           endDate: '',
           startDate: '',
@@ -76,30 +76,14 @@
       goback () {
         this.$router.go(-1)
       },
-      getStaticsInfo () {
-        let url = 'http://www.phptrain.cn/admin/report/getRecommendStats'
-        var param = {
+      async getStaticsInfo () {
+        const param = {
+          ...this.form,
           id: this.$route.query.id,
-          endDate: this.form.endDate,
-          startDate: this.form.startDate,
-          level: this.form.level,
-          wxNickName: this.form.wxNickName,
-          name: this.form.name,
           pageIndex: this.pageIndex,
           pageSize: this.pageSize
         }
-        this.$http.post(url, param, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then((res) => {
-          console.log(res, '999999')
-          if (res.data.message === '成功') {
-            if (res.data.result) {
-              this.tableData = res.data.result
-            }
-          }
-        })
+        this.tableData = await getRecommendStats(param, 'json')
       },
       reset () {
         this.form = {

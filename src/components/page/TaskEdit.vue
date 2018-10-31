@@ -12,11 +12,8 @@
         <el-form ref="form" label-width="90px" :label-position="labelPosition" >
           <el-form-item label="任务logo：">
             <div class="file-wrapper">
-              <div v-if="showDefault">
-                <img src="../../../static/images/add-logo.png"/>
-              </div>
               <div>
-                <img :src="imgUrl"/>
+                <img :src="form.iconPath || '../../../static/images/add-logo.png'"/>
               </div>
               <input type="file" class="file" @change="uploadChange"/>
             </div>
@@ -33,14 +30,14 @@
             </el-select>
           </el-form-item>
           <el-form-item label="状态：">
-            <el-select v-model="form.taskStatus" placeholder="全部">
+            <el-select v-model="taskStatusObj[form.taskStatus]" placeholder="全部">
               <el-option label="禁用" value="0"></el-option>
               <el-option label="启用" value="1"></el-option>
               <el-option label="关闭" value="2"></el-option>
           </el-select>
           </el-form-item>
             <el-form-item label="任务类别：">
-            <el-select v-model="form.category" placeholder="全部">
+            <el-select v-model="form.category === 0 ? '个人' : '团队'" placeholder="全部">
               <el-option label="个人" value="0"></el-option>
               <el-option label="团体" value="1"></el-option>
             </el-select>
@@ -55,8 +52,8 @@
             </el-col>
           </el-form-item>
           <el-form-item label="奖励类型：">
-            <el-select v-model="form.rewardType" placeholder="全部">
-              <el-option label="True" value="1"></el-option>
+            <el-select v-model="rewardTypeObj[form.rewardType]" placeholder="全部">
+              <el-option label="TRUE" value="1"></el-option>
               <el-option label="TTR" value="2"></el-option>
               <el-option label="RMB" value="3"></el-option>
             </el-select>
@@ -96,16 +93,26 @@
 </template>
 
 <script>
+  import { getTaskInfo } from '@/api'
   export default {
     data () {
       return {
         name: 'TaskEdit',
         file: '',
-        showDefault: false,
         imgUrl: '',
         taskDetailList: [],
         imgData: {
           accept: 'image/gif, image/jpeg, image/png, image/jpg'
+        },
+        rewardTypeObj: {
+          '1': 'TRUE',
+          '2': 'TTR',
+          '3': 'RMB'
+        },
+        taskStatusObj: {
+          '0': '禁用',
+          '1': '启用',
+          '2': '关闭'
         },
         station: '',
         peopleNum: '',
@@ -133,65 +140,11 @@
       goback () {
         this.$router.go(-1)
       },
-      getTaskInfo () {
-        let id = this.$route.query.taskId
-        let url = 'http://www.phptrain.cn/admin/task/getTaskInfo?taskId=' + id
-        this.$http.post(url, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then((res) => {
-          if (res.data.message === '成功') {
-            if (res.data.result) {
-              const result = res.data.result
-              const taskList = result.task
-              if (taskList.iconPath === '') {
-                this.showDefault = true
-              } else {
-                this.imgUrl = taskList.iconPath
-              }
-
-              this.form.level = taskList.level
-              this.form.name = taskList.name
-              this.form.category = taskList.category
-              this.form.startDateTime = taskList.startDateTime
-              this.form.endDateTime = taskList.endDateTime
-              this.form.rewardType = taskList.rewardType
-              this.form.pushAddress = taskList.pushAddress
-              this.form.description = taskList.description
-
-              if ((+taskList.taskStatus) === 0) {
-                taskList.taskStatus = '禁用'
-              }
-              if ((+taskList.taskStatus) === 1) {
-                taskList.taskStatus = '启用'
-              }
-              if ((+taskList.taskStatus) === 2) {
-                taskList.taskStatus = '关闭'
-              }
-              if ((+taskList.category) === 0) {
-                taskList.category = '个人'
-              }
-              if ((+taskList.category) === 1) {
-                taskList.category = '团队'
-              }
-              if ((+taskList.rewardType) === 1) {
-                taskList.rewardType = 'True'
-              }
-              if ((+taskList.rewardType) === 2) {
-                taskList.rewardType = 'TTR'
-              }
-              if ((+taskList.rewardType) === 3) {
-                taskList.rewardType = 'RMB'
-              }
-              this.form.taskStatus = taskList.taskStatus
-              this.form.category = taskList.category
-              this.form.rewardType = taskList.rewardType
-              this.form.rewardNum = taskList.rewardNum
-              this.taskDetailList = result.taskDetailList
-            }
-          }
+      async getTaskInfo () {
+        const res = await getTaskInfo(null, null, {
+          taskId: this.$route.query.taskId
         })
+        this.form = res.task
       },
       save () {
         var url = 'http://www.phptrain.cn/admin/task/updateTask'
@@ -223,18 +176,8 @@
         var param = {
           task: {
             id: this.$route.query.taskId,
-            category: this.form.category,
-            description: this.form.description,
-            endDateTime: this.form.endDateTime,
             iconPath: this.imgUrl,
-            level: this.form.level,
-            name: this.form.name,
-            peopleNum: this.form.peopleNum,
-            pushAddress: this.form.pushAddress,
-            rewardNum: this.form.rewardNum,
-            rewardType: this.form.rewardType,
-            startDateTime: this.form.startDateTime,
-            taskStatus: this.form.taskStatus
+            ...this.form
           },
           taskDetailList: this.taskDetailList
         }
@@ -287,11 +230,10 @@
             'Content-Type': 'multipart/form-data'
           }
         }).then(res => {
-          //              this.imgUrl = res.data.result
           reader.readAsDataURL(img1)
           var that = this
           reader.onloadend = function () {
-            that.imgUrl = res.data.result.showPath
+            that.form.iconPath = res.data.result.showPath
           }
         }).catch(error => {
           throw new Error(`${error}, 上传图片出错！`)

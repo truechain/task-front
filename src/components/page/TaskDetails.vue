@@ -40,6 +40,7 @@
 </template>
 
 <script>
+  import { getTaskInfo } from '@/api'
   export default {
     name: 'TaskDetails',
     data () {
@@ -80,22 +81,13 @@
           }
         })
       },
-      getTaskDetails () {
-        let id = this.$route.query.taskId
-        let url = 'http://www.phptrain.cn/admin/task/getTaskInfo?taskId=' + id
-        this.$http.post(url, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then((res) => {
-          if (res.data.message === '成功') {
-            if (res.data.result) {
-              const result = res.data.result
-              this.tableData = result.taskDetailList
-              this.task = result.task
-            }
-          }
+      async getTaskDetails () {
+        // getTaskInfo
+        const res = await getTaskInfo(null, null, {
+          taskId: this.$route.query.taskId
         })
+        this.tableData = res.taskDetailList
+        this.task = res.task
       }
     },
     mounted () {
