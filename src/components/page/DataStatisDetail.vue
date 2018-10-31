@@ -1,6 +1,5 @@
 <template>
  <div class="datastatis">
-
 	 		<div class="form-wrap">
 			<el-form ref="form"  :inline="true"  class="demo-form-inline">
 				<el-form-item label="姓名：" >
@@ -55,13 +54,14 @@
 				</el-table-column>
 			</el-table>
 			<div class="page">
-			<el-pagination v-show="total || total>0"	@current-change="handleCurrentChange" :current-page.sync="pageIndex"
+			<el-pagination v-show="total || total > 0"	@current-change="handleCurrentChange" :current-page.sync="pageIndex"
        		 :page-size="pageSize" :total="total"  background layout="total,prev, pager, next" >	</el-pagination>
 		</div>
   	</div>
  </div>
 </template>
 <script>
+import { getUserProfilePage, exportTable } from '@/api'
 export default {
   data () {
     return {
@@ -111,57 +111,35 @@ export default {
       this.$router.go(-1)
     },
 // 导出
-    exportTable () {
-      let url = 'http://www.phptrain.cn/admin/report/export'
-      this.$http.get(url, {params: {
-        auditStatus: this.auditStatus,
-        endDate: this.endDate,
-        name: this.form.name,
-        level: this.form.level,
-        pageIndex: this.pageIndex,
-        pageSize: this.pageSize,
-        startDate: this.startDate,
-        wxNickName: this.form.wxNickName
-      }}, {
-        headers: {'Content-Type': 'application/json'}
-      }).then((res) => {
-        console.log(res)
-        if (res.data.message === '成功') {
-          if (res.data.result) {
-
-          }
+    async exportTable () {
+      await exportTable(
+        {
+          ...this.form,
+          auditStatus: this.auditStatus,
+          endDate: this.endDate,
+          pageIndex: this.pageIndex,
+          pageSize: this.pageSize,
+          startDate: this.startDate
         }
-      })
+      )
     },
-    getProfile () {
+    async getProfile () {
       let param = {
+        ...this.form,
         pageIndex: this.pageIndex,
         pageSize: this.pageSize,
-        name: this.form.name,
-        level: this.form.level,
-        wxNickName: this.form.wxNickName,
         startDate: this.$route.query.startDate,
         endDate: this.$route.query.endDate
       }
-      let url = 'http://www.phptrain.cn/admin/report/getUserProfilePage'
-      this.$http.post(url, param, {
-        headers: {'Content-Type': 'application/json'}
-      }).then((res) => {
-        if (res.data.message === '成功') {
-          if (res.data.result) {
-            const result = res.data.result
-            console.log(result.content, '000000')
-            this.tableData = result.content
-            this.total = result.totalElements
-          }
-        }
-      })
+      const res = await getUserProfilePage(param, 'json')
+      this.tableData = res.content
+      this.total = res.totalElements
     },
     reset () {
       this.form = {
-        wxNickName: '',
         name: '',
-        level: ''
+        level: '',
+        wxNickName: ''
       }
     },
     handleCurrentChange (value) {

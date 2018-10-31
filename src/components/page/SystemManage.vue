@@ -242,10 +242,7 @@
         let param = {
           pageIndex: this.rolePageIndex,
           pageSize: this.rolePageSize,
-          userName: this.formInline.userName,
-          realName: this.formInline.realName,
-          phone: this.formInline.phone,
-          roleName: this.formInline.roleName
+          ...this.formInline
         }
         const { content, totalElements } = await getUserPageAPI(qs.stringify(param))
 
@@ -277,16 +274,7 @@
               this.$message.error('请选择用户角色')
               return
             }
-            let param = {
-              password: this.addForm.password,
-              phone: this.addForm.phone,
-              realName: this.addForm.realName,
-              remark: this.addForm.remark,
-              roleIdId: this.addForm.roleIdId,
-              username: this.addForm.username,
-              comfirmPassword: this.addForm.comfirmPassword
-            }
-            await addUserAPI(param, 'json')
+            await addUserAPI(this.addForm, 'json')
             this.addUserDialog = false
             this.getUserPage()
             this.$message({
@@ -309,13 +297,7 @@
             }
             let param = {
               id: this.id,
-              password: this.editForm.password,
-              phone: this.editForm.phone,
-              realName: this.editForm.realName,
-              remark: this.editForm.remark,
-              roleIdId: this.editForm.roleIdId,
-              username: this.editForm.username,
-              comfirmPassword: this.editForm.comfirmPassword
+              ...this.editForm
             }
             await updateAuthUserAPI(param)
             this.editDialog = false

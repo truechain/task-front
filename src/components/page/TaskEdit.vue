@@ -30,16 +30,23 @@
             </el-select>
           </el-form-item>
           <el-form-item label="状态：">
-            <el-select v-model="taskStatusObj[form.taskStatus]" placeholder="全部">
-              <el-option label="禁用" value="0"></el-option>
-              <el-option label="启用" value="1"></el-option>
-              <el-option label="关闭" value="2"></el-option>
+            <el-select v-model="form.taskStatus" placeholder="全部">
+              <el-option
+                v-for="item in taskStatusArr"
+                :key="item.id"
+                :label="item.value"
+                :value="item.id">
+              </el-option>
           </el-select>
           </el-form-item>
             <el-form-item label="任务类别：">
-            <el-select v-model="form.category === 0 ? '个人' : '团队'" placeholder="全部">
-              <el-option label="个人" value="0"></el-option>
-              <el-option label="团体" value="1"></el-option>
+            <el-select v-model="form.category" placeholder="全部">
+              <el-option
+                v-for="item in categoryArr"
+                :key="item.id"
+                :label="item.value"
+                :value="item.id">
+              </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="时间范围：">
@@ -52,10 +59,13 @@
             </el-col>
           </el-form-item>
           <el-form-item label="奖励类型：">
-            <el-select v-model="rewardTypeObj[form.rewardType]" placeholder="全部">
-              <el-option label="TRUE" value="1"></el-option>
-              <el-option label="TTR" value="2"></el-option>
-              <el-option label="RMB" value="3"></el-option>
+            <el-select v-model="form.rewardType" placeholder="全部">
+              <el-option
+                v-for="item in rewardTypeArr"
+                :key="item.id"
+                :label="item.value"
+                :value="item.id">
+              </el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="奖励数量：">
@@ -93,7 +103,7 @@
 </template>
 
 <script>
-  import { getTaskInfo } from '@/api'
+  import { getTaskInfo, updateTask } from '@/api'
   export default {
     data () {
       return {
@@ -104,16 +114,9 @@
         imgData: {
           accept: 'image/gif, image/jpeg, image/png, image/jpg'
         },
-        rewardTypeObj: {
-          '1': 'TRUE',
-          '2': 'TTR',
-          '3': 'RMB'
-        },
-        taskStatusObj: {
-          '0': '禁用',
-          '1': '启用',
-          '2': '关闭'
-        },
+        rewardTypeArr: [{id: 1, value: 'TRUE'}, {id: 2, value: 'TTR'}, {id: 3, value: 'RMB'}],
+        taskStatusArr: [{id: 0, value: '禁用'}, {id: 1, value: '启用'}, {id: 2, value: '关闭'}],
+        categoryArr: [{id: 0, value: '个人'}, {id: 1, value: '团队'}],
         station: '',
         peopleNum: '',
         rewardNum: '',
@@ -145,34 +148,9 @@
           taskId: this.$route.query.taskId
         })
         this.form = res.task
+        this.taskDetailList = res.taskDetailList
       },
-      save () {
-        var url = 'http://www.phptrain.cn/admin/task/updateTask'
-        if (this.form.taskStatus === '禁用') {
-          this.form.taskStatus = 0
-        }
-        if (this.form.taskStatus === '启用') {
-          this.form.taskStatus = 1
-        }
-        if (this.form.taskStatus === '关闭') {
-          this.form.taskStatus = 2
-        }
-        if (this.form.category === '个人') {
-          this.form.category = 0
-        }
-        if (this.form.category === '团队') {
-          this.form.category = 1
-        }
-        if (this.form.rewardType === 'True') {
-          this.form.rewardType = 1
-        }
-        if (this.form.rewardType === 'TTR') {
-          this.form.rewardType = 2
-        }
-        if (this.form.rewardType === 'RMB') {
-          this.form.rewardType = 3
-        }
-
+      async save () {
         var param = {
           task: {
             id: this.$route.query.taskId,
@@ -181,23 +159,9 @@
           },
           taskDetailList: this.taskDetailList
         }
-
-        this.$http.post(url, param, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then((res) => {
-          if (res.data.message === '成功') {
-            this.$router.push({
-              path: '/TaskManage'
-            })
-          } else {
-            var msg = res.data.message
-            this.$message({
-              message: msg,
-              type: 'warning'
-            })
-          }
+        await updateTask(param, 'json')
+        this.$router.push({
+          path: '/TaskManage'
         })
       },
       uploadChange (event) {

@@ -49,6 +49,7 @@
 </template>
 
 <script>
+  import { getStaticsInfo } from '@/api'
   export default {
     data () {
       return {
@@ -75,32 +76,17 @@
           }
         })
       },
-      getStaticsInfo () {
-        let param = {
-          startDate: this.form.startDate,
-          endDate: this.form.endDate
-        }
-        let url = 'http://www.phptrain.cn/admin/report/index'
-        this.$http.post(url, param, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then((res) => {
-          console.log(res)
-          if (res.data.message === '成功') {
-            if (res.data.result) {
-              this.tableData = res.data.result
-              console.log(this.tableData)
-            }
-          }
-        })
+      async getStaticsInfo () {
+        this.tableData = await getStaticsInfo({
+          ...this.form
+        }, 'json')
       },
       all () {
         this.form.startDate = ''
         this.form.endDate = ''
         this.getStaticsInfo()
       },
-      thisMouth () {
+      async thisMouth () {
         var now = new Date() // 当前日期
         // var nowDayOfWeek = now.getDay() // 今天本周的第几天
         // var nowDay = now.getDate() // 当前日
@@ -131,26 +117,12 @@
 
         var monthEndDate = new Date(nowYear, nowMonth, getMonthDays(nowMonth))
 
-        let param = {
+        await getStaticsInfo({
           startDate: formatDate(monthStartDate),
           endDate: formatDate(monthEndDate)
-        }
-        let url = 'http://www.phptrain.cn/admin/report/index'
-        this.$http.post(url, param, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then((res) => {
-          console.log(res)
-          if (res.data.message === '成功') {
-            if (res.data.result) {
-              this.tableData = res.data.result
-              console.log(this.tableData)
-            }
-          }
-        })
+        }, 'json')
       },
-      thisWeek () {
+      async thisWeek () {
         var now = new Date() // 当前日期
         var nowDayOfWeek = now.getDay() // 今天本周的第几天
         var nowDay = now.getDate() // 当前日
@@ -174,26 +146,12 @@
 
         var weekEndDate = new Date(nowYear, nowMonth, nowDay + (6 - nowDayOfWeek))
 
-        let param = {
+        await getStaticsInfo({
           startDate: formatDate(weekStartDate),
           endDate: formatDate(weekEndDate)
-        }
-        let url = 'http://www.phptrain.cn/admin/report/index'
-        this.$http.post(url, param, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then((res) => {
-          console.log(res)
-          if (res.data.message === '成功') {
-            if (res.data.result) {
-              this.tableData = res.data.result
-              console.log(this.tableData)
-            }
-          }
-        })
+        }, 'json')
       },
-      today () {
+      async today () {
         var date = new Date()
         var year = date.getFullYear()
         var month = date.getMonth() + 1
@@ -206,24 +164,11 @@
         }
         var nowDate = year + '-' + month + '-' + day
         this.form.startDate = nowDate
-        let param = {
+
+        await getStaticsInfo({
           startDate: nowDate,
           endDate: this.form.endDate
-        }
-        let url = 'http://www.phptrain.cn/admin/report/index'
-        this.$http.post(url, param, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then((res) => {
-          console.log(res)
-          if (res.data.message === '成功') {
-            if (res.data.result) {
-              this.tableData = res.data.result
-              console.log(this.tableData)
-            }
-          }
-        })
+        }, 'json')
       },
       reset () {
         this.form = {
@@ -239,6 +184,3 @@
 
   }
 </script>
-
-<style>
-</style>
