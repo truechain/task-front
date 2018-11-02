@@ -3,7 +3,7 @@
 import axios from 'axios'
 import {
   apiUrl
-} from '../config/index.js'
+} from '@/config/index.js'
 import {
   getStore,
   removeStore

@@ -29,7 +29,9 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://www.phptrain.cn',
+        // target: 'http://39.104.229.106:8081',
+        target: 'http://test.phptrain.cn/admin',
+        // target: 'http://test.phptrain.cn',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
