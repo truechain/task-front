@@ -44,7 +44,6 @@
       <el-col :xs="12" :sm="12" :md="12" :lg="6">
         <el-card class="box-card">
           <el-row :gutter="6">
-
             <el-col :xs="24" :sm="11" :md="12" :lg="12">
               <div class="cart-string">
                 <span>完成任务数</span>
