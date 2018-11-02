@@ -17,7 +17,7 @@
         <li>任务类别：<span>{{task.category == 0 ? '个人' : '团队' }}</span></li>
         <li>发布者：<span>{{task.createUser}}</span></li>
         <li>发布时间：<span>{{task.createTime}}</span></li>
-        <li>时间范围：<span>{{task.startDateTime.split('T')[0]}}至{{task.endDateTime.split('T')[0]}}</span></li>
+        <li>时间范围：<span>{{task.startDateTime.split(' ')[0]}}至{{task.endDateTime.split(' ')[0]}}</span></li>
         <li>奖励：<span>{{task.rewardNum}}</span></li>
         <li style="width: 100%;">提交地址：<span>{{task.pushAddress}}</span></li>
         <li style="width: 100%;">任务描述：<span>{{task.description}}</span></li>
