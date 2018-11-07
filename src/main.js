@@ -5,10 +5,20 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
+import { getStore } from '@/util'
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 
+router.beforeEach((to, from, next) => {
+  const token = getStore('token')
+  if (token || to.path === '/') {
+    next()
+  } else {
+    alert('请先登录')
+    next('/')
+  }
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

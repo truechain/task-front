@@ -30,6 +30,7 @@ import StaticDetail from '@/components/page/statistics/children/detail'
 import StaticTask from '@/components/page/statistics/children/task'
 import StaticCommend from '@/components/page/statistics/children/commend'
 import StaticAward from '@/components/page/statistics/children/award'
+import StaticBill from '@/components/page/statistics/children/Bill'
 
 Vue.use(Router)
 
@@ -103,6 +104,11 @@ export default new Router({
             path: 'award',
             name: 'award',
             component: StaticAward
+          },
+          {
+            path: 'bill',
+            name: 'bill',
+            component: StaticBill
           }
         ]
       },

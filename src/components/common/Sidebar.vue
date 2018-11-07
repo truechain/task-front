@@ -66,6 +66,11 @@
           <span class="sb-cn">数据统计</span>
         </template>
           <el-menu-item
+            index="bill"
+            :route="{ name: 'bill'}">
+            奖励清单
+          </el-menu-item>
+          <el-menu-item
             index="detail"
             :route="{ name: 'detail'}">
             统计详情
