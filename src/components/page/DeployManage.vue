@@ -6,7 +6,10 @@
       <el-tab-pane label="配置管理" name="first">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
           <el-form-item label="类型名称:">
-            <el-input v-model="formInline.userName" placeholder="输入名称"></el-input>
+            <el-input v-model="searchManageName" placeholder="输入名称"></el-input>
+          </el-form-item>
+          <el-form-item label="数据类型:">
+            <el-input v-model="searchTypeName" placeholder="输入类型"></el-input>
           </el-form-item>
           <!-- <el-form-item label="数据类型:">
             <el-input v-model="formInline.realName" placeholder="请输入名称"></el-input>
@@ -152,6 +155,8 @@
         rolePageSize: 10,
         roleTotal: 0,
         activeName: 'first',
+        searchManageName: '',
+        searchTypeName: '',
         formInline: {
           userName: '',
           realName: '',
@@ -230,9 +235,12 @@
       // 角色管理部分-------------
       async getUserPage () {
         const { content, totalElements } = await getTaskPageManage({
+          'manageName': this.searchManageName,
+          'typeName': this.searchTypeName,
           'pageIndex': 1,
           'pageSize': 20
         }, 'json')
+        console.log(content, '====')
 
         this.tableData = content
         this.roleTotal = totalElements
