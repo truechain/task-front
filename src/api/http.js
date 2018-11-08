@@ -1,5 +1,5 @@
 'use strict'
-
+import Vue from 'vue'
 import axios from 'axios'
 import {
   apiUrl
@@ -8,7 +8,7 @@ import {
   getStore,
   removeStore
 } from '@/util'
-
+const that = Vue.prototype
 const service = axios.create({
   baseURL: apiUrl,
   timeout: 5000,
@@ -30,21 +30,41 @@ service.interceptors.request.use(config => {
   }
   return config
 }, err => {
+  that.$message({
+    message: err,
+    type: 'error',
+    duration: '3000'
+  })
   return Promise.reject(err)
 })
 
 service.interceptors.response.use(({ data: { code, message, result } }) => {
   if (code === 500) {
-    alert(message)
+    that.$message({
+      message,
+      type: 'error',
+      duration: '1000'
+    })
     return Promise.reject(message)
   } else if (code === 403) {
     removeStore('token')
     removeStore('userId')
     removeStore('agent')
     location.href = '/login'
+  } else {
+    that.$message({
+      message,
+      type: 'success',
+      duration: '1000'
+    })
+    return result
   }
-  return result
 }, (err) => {
+  that.$message({
+    message: err,
+    type: 'error',
+    duration: '3000'
+  })
   return Promise.reject(err)
 })
 

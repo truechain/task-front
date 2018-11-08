@@ -30,6 +30,7 @@ export const updateAuthUserAPI        = (o, t, p) => (http.post('/user/updateAut
 export const deleteAuthUserAPI        = (o, t, p) => (http.post('/user/deleteAuthUser', o, t, p))
 export const updateUserBlank        = (o, t, p) => (http.post('/user/updateUserBlank', o, t, p))
 export const updateUserLevel        = (o, t, p) => (http.post('/user/updateUserLevel', o, t, p))
+export const checkRecommendShareCode        = (o, t, p) => (http.post('/user/checkRecommendShareCode', o, t, p))
 
 export const getTaskInfo              = (o, t, p) => (http.post('/task/getTaskInfo', o, t, p))
 export const updateTask               = (o, t, p) => (http.post('/task/updateTask', o, t, p))

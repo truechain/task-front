@@ -82,7 +82,7 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" @click="sendReward(scope.row.id)">发放奖励</el-button>
+          <el-button size="mini" @click="sendReward(scope.row)">发放奖励</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -120,10 +120,13 @@
     },
     methods: {
       /* 重置 */
-      async sendReward (id) {
-        console.log(id, '===')
-
-        const res = await rewardEntryFromUser()
+      async sendReward (row) {
+        await rewardEntryFromUser(null, null, {
+          taskUserId: row.id,
+          userReward: row.rewardNum,
+          recommendUserReward: row.rewardNum / 10
+        })
+        this.getTaskInfo()
       },
       reset () {
         this.form = {

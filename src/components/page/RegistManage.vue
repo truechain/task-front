@@ -23,6 +23,7 @@
             <el-option label="全部" value=""></el-option>
             <el-option label="未审核" value="0"></el-option>
             <el-option label="已审核" value="1"></el-option>
+            <el-option label="待审核" value="-1"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="等级：">
@@ -39,6 +40,7 @@
         <el-form-item class="btn-wrap">
           <el-button type="primary" @click="getUserPage">查询</el-button>
           <el-button @click="reset">重置</el-button>
+          <el-button type="success" @click="addUserDialog = true">新增用户</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -133,7 +135,55 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="onAuditConfirm">确 定</el-button>
+        <el-button type="primary" @click="onAuditConfirm">通过审核</el-button>
+      </div>
+    </el-dialog>
+    <el-dialog title="修改" width="20%" :visible.sync="addUserDialog">
+      <el-form ref="form" :model="addUserItem" :inline="true" class="demo-form-inline" label-width="100px">
+        <el-form-item label="姓名:">
+          <el-input v-model="addUserItem.personName" style="width: 500px" placeholder="请输入姓名"></el-input>
+        </el-form-item>
+        <el-form-item label="微信昵称:">
+          <el-input v-model="addUserItem.wxNickName" style="width: 500px" placeholder="请输入微信昵称"></el-input>
+        </el-form-item>
+        <el-form-item label="微信号:">
+          <el-input v-model="addUserItem.wxNum" style="width: 500px" placeholder="请输入微信号"></el-input>
+        </el-form-item>
+        <el-form-item label="联系方式:">
+          <el-input v-model="addUserItem.mobile" style="width: 500px" placeholder="请输入联系方式"></el-input>
+        </el-form-item>
+        <el-form-item label="钱包地址:">
+          <el-input v-model="addUserItem.trueChainAddress" style="width: 500px" placeholder="请输入钱包地址"></el-input>
+        </el-form-item>
+        <el-form-item label="上传简历:">
+          <el-upload
+            class="avatar-uploader"
+            action="http://test.phptrain.cn/admin/user/updateUser/"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload">
+            <span v-if="fileName">{{ fileName}}</span>
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+        </el-form-item>
+        <el-form-item label="用户来源：">
+          <el-select v-model="addUserItem.recommendResource">
+            <el-option label="活动" value="活动"></el-option>
+            <el-option label="官网" value="官网"></el-option>
+            <el-option label="朋友推荐" value="朋友推荐"></el-option>
+            <el-option label="朋友圈" value="朋友圈"></el-option>
+            <el-option label="微信群" value="微信群"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="推荐人推荐码:">
+          <el-input v-model="addUserItem.recommendShareCode" style="width: 300px" placeholder="请输入内容"></el-input>
+        </el-form-item>
+        <el-button @click="onCheck">检测</el-button>
+      </el-form>
+      <div>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="onChangeConfirm">确认添加</el-button>
       </div>
     </el-dialog>
     <div class="page">
@@ -147,12 +197,20 @@
   import {
     getUserPage,
     updateUserLevel,
-    auditUser
+    auditUser,
+    addUserAPI,
+    checkRecommendShareCode
   } from '@/api'
   export default {
     data () {
       return {
+        fileName: null,
+        file: null,
         showss: false,
+        addUserDialog: false,
+        addUserItem: {
+
+        },
         auditDia: false,
         auditId: null,
         auditItem: {
@@ -164,9 +222,11 @@
         userId: '',
         dialogVis: false,
         statusObj: {
+          '-2': '已拉黑',
+          '-1': '未审核',
           '0': '未完善',
-          '-1': '待审核',
-          '1': '已审核'
+          '1': '已审核',
+          '2': '已奖励'
         },
         form: {
           auditStatus: '',
@@ -187,6 +247,55 @@
       }
     },
     methods: {
+      async onCheck () {
+        await checkRecommendShareCode(null, null, {
+          recommendShareCode: this.addUserItem.recommendShareCode
+        })
+      },
+      handleAvatarSuccess (res, file) {
+        this.fileName = file.name
+      },
+      beforeAvatarUpload (file) {
+        const MB10 = 1024 * 1024 * 10
+        const postfix = file.name.match(/\w+$/g)[0]
+        const legalPostfix = ['pdf', 'docx', 'doc', 'xls']
+        if (!legalPostfix.includes(postfix)) {
+          this.$message.error('文件不合法')
+        }
+        if (file.size > MB10) {
+          this.$message.error('上传文件不能大于10MB')
+        }
+        this.file = file
+      },
+      async onChangeConfirm () {
+        console.log(this.file, 'this.file')
+        console.log(this.addUserItem, 'this.addUserItem')
+        let param = null
+        if (this.file) {
+          param = new FormData()
+          param.append('file', this.file)
+        }
+
+        let paramObj = {
+          file: this.file,
+          id: this.addUserItem.id,
+          name: this.addUserItem.personName,
+          mobile: this.addUserItem.mobile,
+          trueChainAddress: this.addUserItem.trueChainAddress,
+          wxNickName: this.addUserItem.wxNickName,
+          wxNum: this.addUserItem.wxNum,
+          recommendResource: this.addUserItem.recommendResource
+        }
+        if (this.addUserItem.recommendShareCode) {
+          paramObj.recommendShareCode = this.addUserItem.recommendShareCode
+        }
+        await addUserAPI(param, 'form-data', paramObj)
+        this.editDia = false
+        this.getUserPage()
+      },
+      async onChange () {
+        this.editDia = true
+      },
       async onAuditConfirm (id) {
         await auditUser(null, null, {
           level: this.auditItem.level,
@@ -195,6 +304,7 @@
           userId: this.auditId
         })
         this.auditDia = false
+        this.getUserPage()
       },
       onAudit (id) {
         this.auditDia = true
