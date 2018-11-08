@@ -51,7 +51,7 @@
       </el-table-column>
       <el-table-column align="center" label="审核状态">
         <template slot-scope="scope">
-          <span>{{ scope.row.auditStatus === 1 ? '已审核': '---' }}</span>
+          <span>{{ statusObj[scope.row.auditStatus] }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="recommend_resource" align="center" label="用户来源">
@@ -72,7 +72,7 @@
       <el-table-column label="操作" align="center" width="200">
         <template slot-scope="scope">
           <el-button size="small" @click="getDetail(scope)">查看详情</el-button>
-          <template v-if="scope.row.auditStatus">
+          <template v-if="scope.row.auditStatus === 1">
             <el-button size="small" @click="typeButton(scope)">修改</el-button>
           </template>
           <template v-else>
@@ -163,6 +163,11 @@
         tips: '',
         userId: '',
         dialogVis: false,
+        statusObj: {
+          '0': '未完善',
+          '-1': '待审核',
+          '1': '已审核'
+        },
         form: {
           auditStatus: '',
           endDate: '',
