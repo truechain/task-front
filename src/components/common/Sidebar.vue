@@ -21,26 +21,26 @@
           </span>
           <span class="sb-cn">系统管理</span>
         </template>
-          <el-menu-item
+          <!-- <el-menu-item
             index="limits"
             :route="{ name: 'limits'}">
             权限管理
-          </el-menu-item>
+          </el-menu-item> -->
           <el-menu-item
             index="user"
             :route="{ name: 'role'}">
             角色管理
           </el-menu-item>
-          <el-menu-item
+          <!-- <el-menu-item
             index="role"
             :route="{ name: 'user'}">
             用户管理
-          </el-menu-item>
-          <el-menu-item
+          </el-menu-item> -->
+          <!-- <el-menu-item
             index="log"
             :route="{ name: 'log'}">
             日志
-          </el-menu-item>
+          </el-menu-item> -->
       </el-submenu>
       <el-menu-item :route="{ path: '/registmanage'}" index="/registmanage">
         <span class="sb-icon">

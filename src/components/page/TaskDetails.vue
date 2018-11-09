@@ -2,6 +2,7 @@
   <div class="task-details-wrapper">
     <div class="position">我的位置：任务管理>查看详情</div>
     <div class="fr">
+      <el-button type="danger" @click="EditTask" v-if="task.category === 1">编辑</el-button>
       <el-button @click="goback">返回</el-button>
       <el-button type="primary" @click="TaskEntryForm">报名表</el-button>
     </div>
@@ -14,10 +15,11 @@
         <li>任务名称：<span>{{task.name}}</span></li>
         <li>任务等级：<span>{{task.level}}</span></li>
         <li>状态：<span>{{status[task.taskStatus]}}</span></li>
-        <li>任务类别：<span>{{task.category == 0 ? '个人' : '团队' }}</span></li>
+        <li>任务类别：<span>{{task.category === 0 ? '个人' : '团队' }}</span></li>
         <li>发布者：<span>{{task.createUser}}</span></li>
         <li>发布时间：<span>{{task.createTime}}</span></li>
-        <li>时间范围：<span>{{task.startDateTime.split(' ')[0]}}至{{task.endDateTime.split(' ')[0]}}</span></li>
+        <!-- <li>时间范围：<span>{{task.startDateTime.split(' ')[0]}}至{{task.endDateTime.split(' ')[0]}}</span></li> -->
+        <li>时间范围：<span>{{task.startDateTime}}至{{task.endDateTime}}</span></li>
         <li>奖励：<span>{{task.rewardNum}}</span></li>
         <li style="width: 100%;">提交地址：<span>{{task.pushAddress}}</span></li>
         <li style="width: 100%;">任务描述：<span>{{task.description}}</span></li>
@@ -67,6 +69,14 @@
       }
     },
     methods: {
+      EditTask () {
+        this.$router.push({
+          path: '/TaskEdit',
+          query: {
+            taskId: this.$route.query.taskId
+          }
+        })
+      },
       goback () {
         this.$router.go(-1)
       },

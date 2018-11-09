@@ -6,6 +6,9 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import { getStore } from '@/util'
+import moment from 'moment'
+
+Vue.prototype.$moment = moment
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false

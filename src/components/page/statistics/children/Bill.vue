@@ -55,7 +55,7 @@
           <el-button @click="reset">重置</el-button>
         </el-form-item>
         <el-form-item class="btn-wrap fr" style="margin-right: 0;">
-          <router-link to="taskNew">
+          <router-link to="/taskNew">
             <el-button icon="el-icon el-icon-plus">新增</el-button>
           </router-link>
         </el-form-item>

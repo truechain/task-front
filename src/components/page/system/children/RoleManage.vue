@@ -57,8 +57,8 @@
           <el-form-item label="描述:">
             <el-input v-model="addForm.remark" placeholder="请输入描述"></el-input>
           </el-form-item>
-          <el-form-item label="系统角色:" prop="roleIdId">
-            <el-radio-group v-model="addForm.roleIdId">
+          <el-form-item label="系统角色:" prop="roleId">
+            <el-radio-group v-model="addForm.roleId">
               <el-radio
                 v-for="(item, index) in roleList"
                 :key="index"
@@ -92,8 +92,8 @@
           <el-form-item label="描述:">
             <el-input v-model="editForm.remark" :disabled="this.isSee" placeholder="请输入系统角色"></el-input>
           </el-form-item>
-          <el-form-item label="系统角色:" prop="roleIdId">
-            <el-radio-group v-model="editForm.roleIdId">
+          <el-form-item label="系统角色:" prop="roleId">
+            <el-radio-group v-model="editForm.roleId">
               <el-radio
                 v-for="(item, index) in roleList"
                 :key="index"
@@ -117,8 +117,9 @@
   import {
     getUserPageAPI,
     getRoleListAPI,
-    addUserAPI,
-    getUserInfoAPI,
+
+    addUserRole,
+    getUserInfoAdmin,
     updateAuthUserAPI,
     deleteAuthUserAPI
   } from '@/api'
@@ -170,7 +171,7 @@
           phone: '',
           realName: '',
           remark: '',
-          roleIdId: '',
+          roleId: '',
           username: '',
           comfirmPassword: ''
         },
@@ -229,7 +230,7 @@
           phone: '',
           realName: '',
           remark: '',
-          roleIdId: '',
+          roleId: '',
           username: '',
           comfirmPassword: ''
         },
@@ -271,11 +272,11 @@
       addUser (addForm) {
         this.$refs[addForm].validate(async (valid) => {
           if (valid) {
-            if (!this.addForm.roleIdId) {
+            if (!this.addForm.roleId) {
               this.$message.error('请选择用户角色')
               return
             }
-            await addUserAPI(this.addForm, 'json')
+            await addUserRole(this.addForm, 'json')
             this.addUserDialog = false
             this.getUserPage()
             this.$message({
@@ -292,7 +293,7 @@
       editUser (editForm) {
         this.$refs[editForm].validate(async (valid) => {
           if (valid) {
-            if (!this.addForm.roleIdId) {
+            if (!this.addForm.roleId) {
               this.$message.error('请选择用户角色')
               return
             }
@@ -332,7 +333,7 @@
         let param = {
           userId: id
         }
-        this.editForm = await getUserInfoAPI(qs.stringify(param))
+        this.editForm = await getUserInfoAdmin(qs.stringify(param))
         this.editDialog = true
       }
     },

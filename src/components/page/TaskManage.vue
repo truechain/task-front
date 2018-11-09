@@ -89,7 +89,8 @@
         <template slot-scope="scope">
           <el-button size="mini" @click="taskDetails(scope.row)">查看详情</el-button>
           <el-button size="mini" @click="taskEntryForm(scope.row)">报名表</el-button>
-          <el-button size="mini" type="danger" @click="EditTask(scope.row)" v-if="scope.row.taskStatus!=='关闭'">编辑</el-button>
+          <el-button size="mini" @click="disableTAsk(scope.row)">{{ scope.row.taskStatus === 1 ? '禁用' : '启用'}}</el-button>
+          <!-- <el-button size="mini" type="danger" @click="EditTask(scope.row)" v-if="scope.row.taskStatus!=='关闭'">编辑</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -100,7 +101,7 @@
   </div>
 </template>
 <script>
-  import { getTaskPage } from '@/api'
+  import { getTaskPage, disableTask, enableTask } from '@/api'
   export default {
     data () {
       return {
@@ -126,6 +127,18 @@
       }
     },
     methods: {
+      async disableTAsk (row) {
+        if (row.taskStatus === 1) {
+          await disableTask(null, null, {
+            taskId: row.id
+          })
+        } else {
+          await enableTask(null, null, {
+            taskId: row.id
+          })
+        }
+        this.getTaskInfo()
+      },
       /* 重置 */
       reset () {
         this.form = {
