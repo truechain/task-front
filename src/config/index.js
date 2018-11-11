@@ -11,8 +11,8 @@ switch (process.env.NODE_ENV) {
   case 'development':
     // apiUrl = 'http://39.104.229.106:8081/api'
     // apiUrl = 'http://0.0.0.1:8081'
-    apiUrl = 'http://192.168.31.8:8081/api'
-    // apiUrl = 'http://localhost:8081/api'
+    // apiUrl = 'http://192.168.31.8:8081/api'
+    apiUrl = 'http://localhost:8081/api'
     // apiUrl = 'http://www.phptrain.cn'
     // apiUrl = 'http://www.phptrain.cn'
     break

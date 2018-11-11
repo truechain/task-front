@@ -75,7 +75,7 @@
             :route="{ name: 'detail'}">
             统计详情
           </el-menu-item>
-          <el-menu-item
+          <!-- <el-menu-item
             index="task"
             :route="{ name: 'task'}">
             任务列表
@@ -89,7 +89,7 @@
             index="award"
             :route="{ name: 'award'}">
             奖励列表
-          </el-menu-item>
+          </el-menu-item> -->
       </el-submenu>
       <el-menu-item :route="{ path: '/deploymanage'}" index="/deploymanage">
         <span class="sb-icon">

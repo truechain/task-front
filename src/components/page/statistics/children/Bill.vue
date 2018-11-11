@@ -93,7 +93,7 @@
   </div>
 </template>
 <script>
-  import { getTaskPage, getRewardList, rewardEntryFromUser } from '@/api'
+  import { getRewardList, rewardEntryFromUser, rewardUserAccountDetail } from '@/api'
   export default {
     data () {
       return {
@@ -121,10 +121,8 @@
     methods: {
       /* 重置 */
       async sendReward (row) {
-        await rewardEntryFromUser(null, null, {
-          taskUserId: row.id,
-          userReward: row.rewardNum,
-          recommendUserReward: row.rewardNum / 10
+        await rewardUserAccountDetail(null, null, {
+          UserAccountDetailId: row.id
         })
         this.getTaskInfo()
       },
@@ -179,8 +177,6 @@
         }
         // const res = await getTaskPage(param, 'json')
         const res = await getRewardList(param, 'json')
-        console.log(res, '======')
-
         this.tableData = res
         // this.total = res.totalElements
       }

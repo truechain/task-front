@@ -46,6 +46,7 @@ export const addTask                  = (o, t, p) => (http.post('/task/addTask',
 export const disableTask                  = (o, t, p) => (http.post('/task/disableTask', o, t, p))
 export const enableTask                  = (o, t, p) => (http.post('/task/enableTask', o, t, p))
 
+export const rewardUserAccountDetail      = (o, t, p) => (http.post('/report/rewardUserAccountDetail', o, t, p))
 export const statisticUserProfilePage = (o, t, p) => (http.get('/report/getUserProfilePage', o, t, p))
 export const loginApi                 = (o, t, p) => (http.post('/unauth/account/login', o, t, p))
 
