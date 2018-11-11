@@ -2,7 +2,7 @@
   <div class="task-details-wrapper">
     <div class="position">我的位置：注册用户管理 > 查看详情</div>
     <div class="fr">
-      <el-button @click="onBlock">加入黑名单</el-button>
+      <el-button @click="onBlock(tableData.auditStatus)">{{ tableData.auditStatus === -2 ? '移除黑名单' : '加入黑名单' }}</el-button>
       <el-button @click="goback">返回</el-button>
       <el-button @click="onAudit">审核</el-button>
       <el-button @click="onChange">修改</el-button>
@@ -215,10 +215,10 @@
         this.auditDia = false
         this.getUserInfo()
       },
-      async onBlock () {
+      async onBlock (status) {
         await updateUserBlank(null, null, {
           userId: this.tableData.id,
-          auditStatus: -2
+          auditStatus: status === -2 ? -1 : -2
         })
         this.getUserInfo()
       },
@@ -258,7 +258,7 @@
         })
 
         this.tableData = res
-        this.editItem = JSON.parse(JSON.stringify(res.sysUser))
+        this.editItem = JSON.parse(JSON.stringify(res))
         this.resumeFilePath = res.resumeFilePath
       },
       goback () {

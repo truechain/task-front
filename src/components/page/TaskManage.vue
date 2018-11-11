@@ -184,6 +184,12 @@
         this.getTaskInfo()
       },
       async getTaskInfo () {
+        if (this.form.startDateTime) {
+          this.form.startDateTime = this.$moment((+new Date(this.form.startDateTime))).format(
+              'YYYY-MM-DD HH:mm:ss')
+          this.form.endDateTime = this.$moment((+new Date(this.form.endDateTime))).format(
+              'YYYY-MM-DD HH:mm:ss')
+        }
         let param = {
           pageIndex: this.pageIndex,
           pageSize: this.pageSize,
