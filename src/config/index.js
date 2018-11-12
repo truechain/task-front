@@ -20,8 +20,8 @@ switch (process.env.NODE_ENV) {
   case 'production':
     // apiUrl = 'http://45.40.243.125:8011'
     // apiUrl = 'http://47.75.198.92:8011'
-    // apiUrl = 'http://www.phptrain.cn/admin'
-    apiUrl = 'http://test.phptrain.cn/admin'
+    apiUrl = 'http://www.phptrain.cn/admin'
+    // apiUrl = 'http://test.phptrain.cn/admin'
     break
 }
 

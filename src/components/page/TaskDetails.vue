@@ -83,7 +83,6 @@
       // 报名表
       TaskEntryForm () {
         let taskId = this.$route.query.taskId
-        console.log(taskId, 'woshitaskid')
         this.$router.push({
           path: '/TaskEntryForm',
           query: {

@@ -234,7 +234,6 @@
               'YYYY-MM-DD HH:mm:ss')
             this.exportItem.endDate = this.$moment((+new Date(this.exportItem.endDate))).format(
               'YYYY-MM-DD HH:mm:ss')
-            console.log('==ok')
             window.open(`
               http://${
                   process.env.NODE_ENV === 'production'

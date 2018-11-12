@@ -240,7 +240,6 @@
           'pageIndex': 1,
           'pageSize': 20
         }, 'json')
-        console.log(content, '====')
 
         this.tableData = content
         this.roleTotal = totalElements

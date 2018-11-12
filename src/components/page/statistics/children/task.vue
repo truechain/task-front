@@ -66,7 +66,6 @@
       },
       // 统计明细表
       dataDetails (scope) {
-        console.log(scope)
         this.$router.push({
           path: '/statistics/detail',
           query: {
