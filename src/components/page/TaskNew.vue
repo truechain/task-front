@@ -80,7 +80,7 @@
               <el-input v-model="form.pushAddress" style="width:200px"></el-input>
             </el-form-item>
             <el-form-item label="任务描述：" style="display:block">
-              <el-input type="textarea" v-model="form.description"></el-input>
+              <el-input type="textarea" v-model="form.description" style="width: 500px" autosize></el-input>
             </el-form-item>
           </el-form>
         </div>
