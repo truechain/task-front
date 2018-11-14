@@ -22,7 +22,7 @@
         <li>时间范围：<span>{{task.startDateTime}}至{{task.endDateTime}}</span></li>
         <li>奖励：<span>{{task.rewardNum}}</span></li>
         <li style="width: 100%;">提交地址：<span>{{task.pushAddress}}</span></li>
-        <li style="width: 100%;">任务描述：<span>{{task.description}}</span></li>
+        <li style="width: 100%;">任务描述：<div><pre>{{task.description}}</pre></div></li>
       </ul>
     </div>
     <div class="details-content">
