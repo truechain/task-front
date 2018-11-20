@@ -2,7 +2,7 @@
   <div class="task-details-wrapper">
     <div class="position">我的位置：任务管理>查看详情</div>
     <div class="fr">
-      <template v-if="task.category === 0">
+      <template v-if="task.taskStatus === 0">
         <el-button type="danger" @click="EditTask">编辑</el-button>
       </template>
       <el-button @click="goback">返回</el-button>
