@@ -22,6 +22,14 @@
       <el-table-column prop="recommendUser" label="推荐人">
       </el-table-column>
       <el-table-column prop="pushAddress" label="提交地址">
+        <template slot-scope="scope">
+          <template v-if="commitType === 0">
+            <span>{{scope.row.pushAddress}}</span>
+          </template>
+          <template v-else>
+            <el-button @click="downLoad(scope.row.pushAddress)">下载{{ commitType === 1 ? '图片' : '文件' }}</el-button>
+          </template>
+        </template>
       </el-table-column>
       <el-table-column prop="remark" label="提交说明">
       </el-table-column>
@@ -82,6 +90,9 @@
     auditEntryFormUser,
     cancelEntryFormUser
   } from '@/api'
+  import {
+    apiUrl
+  } from '@/config/index.js'
   export default {
     name: 'TaskEntryForm',
     data () {
@@ -113,7 +124,10 @@
       }
     },
     methods: {
-  /* 审核报名表 */
+      downLoad (x) {
+        window.open(`${apiUrl}/task/downLoadFiles?filePath=${x}`)
+      },
+      /* 审核报名表 */
       // async shDialog (scope) {
       //   this.formTable = scope
       //   this.taskUserId = scope.taskUserId
@@ -172,6 +186,7 @@
         })
         this.tableData = res.taskEntryFromInfoList
         this.taskName = res.taskName
+        this.commitType = res.commitType
       }
     },
     mounted () {
