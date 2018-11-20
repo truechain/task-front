@@ -10,17 +10,17 @@
     <div class="details-content">
       <div class="title">基本信息</div>
       <ul>
-        <li>姓名：<span> {{tableData.personName}}</span></li>
-        <li>微信昵称：<span> {{tableData.wxNickName}}</span></li>
-        <li>微信号：<span> {{tableData.wxNum || '暂无'}}</span></li>
-        <li>审核状态：<span> {{auditStatusObj[tableData.auditStatus]}}</span></li>
-        <li>联系方式：<span> {{tableData.mobile}}</span></li>
-        <li>等级：<span> {{tableData.level}}</span></li>
-        <li>推荐码：<span> {{tableData.recommendShareCode || '无'}}</span></li>
-        <li>提交时间：<span> {{tableData.updateTime}}</span></li>
-        <li style="width: 100%;">钱包地址：<span> {{tableData.trueChainAddress}}</span></li>
-        <li style="width: 100%;">黑名单：<span> {{ tableData.auditStatus === -2 ? '是' : '否' }}</span></li>
-        <li style="width: 100%;">用户来源：<span> {{ tableData.recommendResource }}</span></li>
+        <li>姓名：<span> {{tableData.sysUser.personName}}</span></li>
+        <li>微信昵称：<span> {{tableData.sysUser.wxNickName}}</span></li>
+        <li>微信号：<span> {{tableData.sysUser.wxNum || '暂无'}}</span></li>
+        <li>审核状态：<span> {{auditStatusObj[tableData.sysUser.auditStatus]}}</span></li>
+        <li>联系方式：<span> {{tableData.sysUser.mobile}}</span></li>
+        <li>等级：<span> {{tableData.sysUser.level}}</span></li>
+        <li>推荐码：<span> {{tableData.sysUser.recommendShareCode || '无'}}</span></li>
+        <li>提交时间：<span> {{tableData.sysUser.updateTime}}</span></li>
+        <li style="width: 100%;">钱包地址：<span> {{tableData.sysUser.trueChainAddress}}</span></li>
+        <li style="width: 100%;">黑名单：<span> {{ tableData.sysUser.auditStatus === -2 ? '是' : '否' }}</span></li>
+        <li style="width: 100%;">用户来源：<span> {{ tableData.sysUser.recommendResource }}</span></li>
         <li>推荐人微信昵称：<span>{{tableData.refererWXName || '无'}}</span></li>
         <li>推荐人手机号：<span>{{tableData.refererPhone || '无'}}</span></li>
         <li>推荐人钱包地址：<span>{{tableData.refererAddress || '无'}}</span></li>
@@ -130,7 +130,7 @@
   import PDFJS from 'pdfjs-dist'
   import pdf from 'vue-pdf'
   import {
-    getUserInfo,
+    getUserInfoAPI,
     updateUserBlank,
     auditUser,
     updateUser,
@@ -182,7 +182,7 @@
       }
     },
     mounted () {
-      this.getUserInfo()
+      this.getUserInfoAPI()
     },
     methods: {
       async onCheck () {
@@ -213,14 +213,14 @@
           userId: this.$route.query.id
         })
         this.auditDia = false
-        this.getUserInfo()
+        this.getUserInfoAPI()
       },
       async onBlock (status) {
         await updateUserBlank(null, null, {
           userId: this.tableData.id,
           auditStatus: status === -2 ? -1 : -2
         })
-        this.getUserInfo()
+        this.getUserInfoAPI()
       },
       async onChangeConfirm () {
         console.log(this.file, 'this.file')
@@ -244,7 +244,7 @@
         }
         await updateUser(param, 'form-data', paramObj)
         this.editDia = false
-        this.getUserInfo()
+        this.getUserInfoAPI()
       },
       async onAudit () {
         this.auditDia = true
@@ -252,13 +252,13 @@
       async onChange () {
         this.editDia = true
       },
-      async getUserInfo () {
-        const res = await getUserInfo(null, null, {
+      async getUserInfoAPI () {
+        const res = await getUserInfoAPI(null, null, {
           userId: this.$route.query.id
         })
 
         this.tableData = res
-        this.editItem = JSON.parse(JSON.stringify(res))
+        this.editItem = JSON.parse(JSON.stringify(Object.assign({}, res, res.sysUser)))
         this.resumeFilePath = res.resumeFilePath
       },
       goback () {
