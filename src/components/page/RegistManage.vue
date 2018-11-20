@@ -75,7 +75,7 @@
         <template slot-scope="scope">
           <el-button size="small" @click="getDetail(scope)">查看详情</el-button>
           <template v-if="scope.row.auditStatus === 1">
-            <el-button size="small" @click="typeButton(scope)">修改</el-button>
+            <el-button size="small" @click="typeEdit(scope)">修改</el-button>
           </template>
           <template v-else>
             <el-button size="small" type="danger" @click="onAudit(scope.row.id)">审核</el-button>
@@ -317,6 +317,15 @@
       typeButton (scope) {
         this.userId = scope.row.id
         this.dialogVis = true
+      },
+      typeEdit (scope) {
+        this.$router.push({
+          path: '/RegistDetail',
+          query: {
+            id: scope.row.id,
+            isEdit: true
+          }
+        })
       },
       async typeCommit () {
         await updateUserLevel(null, null, {

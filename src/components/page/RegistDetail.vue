@@ -183,6 +183,9 @@
     },
     mounted () {
       this.getUserInfoAPI()
+      if (this.$route.query.isEdit) {
+        this.onChange()
+      }
     },
     methods: {
       async onCheck () {

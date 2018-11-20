@@ -14,7 +14,7 @@
           <el-form-item>
             <el-button type="primary" @click="getUserPage">查询</el-button>
             <el-button type="warning" @click="clearRole">重置</el-button>
-            <el-button type="success" @click="addUserDialog = true">新增用户</el-button>
+            <el-button type="success" @click="addUserDialog = true">新增</el-button>
           </el-form-item>
         </el-form>
         <div class="quanxian-table">
