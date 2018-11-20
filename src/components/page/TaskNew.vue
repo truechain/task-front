@@ -76,8 +76,16 @@
               <!-- <span class="red">*</span> -->
               <el-input v-model="form.rewardNum" type="number"></el-input>
             </el-form-item>
-            <el-form-item label="提交地址：" style="display:block;">
-              <el-input v-model="form.pushAddress" style="width:200px"></el-input>
+            <el-form-item label="任务上传方式：" prop="commitType">
+              <!-- <span class="red">*</span> -->
+              <el-select v-model="form.commitType" placeholder="全部">
+                <el-option label="url地址" value="1"></el-option>
+                <el-option label="图片" value="2"></el-option>
+                <el-option label="文件" value="3"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="提交地址：">
+              <el-input v-model="form.pushAddress" ></el-input>
             </el-form-item>
             <el-form-item label="任务描述：" style="display:block">
               <el-input type="textarea" v-model="form.description" style="width: 500px" autosize></el-input>
@@ -158,6 +166,11 @@
             required: true,
             message: '请填写奖励类型',
             trigger: 'blur'
+          }],
+          commitType: [{
+            required: true,
+            message: '请填写奖励类型',
+            trigger: 'blur'
           }]
         },
         tableData: [{
@@ -186,7 +199,8 @@
           rewardNum: '',
           rewardType: '',
           startDateTime: '',
-          taskStatus: ''
+          taskStatus: '',
+          commitType: ''
         }
       }
     },

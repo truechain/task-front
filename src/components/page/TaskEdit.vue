@@ -40,7 +40,7 @@
           </el-select>
           </el-form-item>
             <el-form-item label="任务类别：">
-            <el-select v-model="form.category" placeholder="全部">
+            <el-select disabled v-model="form.category" placeholder="全部">
               <el-option
                 v-for="item in categoryArr"
                 :key="item.id"
@@ -51,11 +51,23 @@
           </el-form-item>
           <el-form-item label="时间范围：">
             <el-col :span="11">
-              <el-date-picker type="date" placeholder="选择日期" v-model="form.startDateTime" style="width: 100%;" value-format="yyyy-MM-dd" format="yyyy-MM-dd"></el-date-picker>
+              <el-date-picker
+                type="date"
+                placeholder="选择日期"
+                v-model="form.startDateTime"
+                style="width: 100%;"
+                value-format="yyyy-MM-dd"
+                format="yyyy-MM-dd" />
             </el-col>
             <el-col class="line" :span="2">-</el-col>
             <el-col :span="11">
-              <el-date-picker type="date" placeholder="选择日期" v-model="form.endDateTime" style="width: 100%;" value-format="yyyy-MM-dd" format="yyyy-MM-dd"></el-date-picker>
+              <el-date-picker
+                type="date"
+                placeholder="选择日期"
+                v-model="form.endDateTime"
+                style="width: 100%;"
+                value-format="yyyy-MM-dd"
+                format="yyyy-MM-dd" />
             </el-col>
           </el-form-item>
           <el-form-item label="奖励类型：">
@@ -71,6 +83,18 @@
           <el-form-item label="奖励数量：">
             <el-input v-model="form.rewardNum"></el-input>
           </el-form-item>
+           <el-form-item label="任务上传方式：" prop="commitType">
+              <!-- <span class="red">*</span> -->
+              <el-select
+                v-model="form.commitType"
+                placeholder="全部">
+                <el-option
+                  v-for="item in commitTypeArr"
+                  :key="item.id"
+                  :label="item.value"
+                  :value="item.id"/>
+              </el-select>
+            </el-form-item>
           <el-form-item label="提交地址：" style="display:block;">
             <el-input v-model="form.pushAddress" style="width:200px"></el-input>
           </el-form-item>
@@ -114,6 +138,7 @@
         imgData: {
           accept: 'image/gif, image/jpeg, image/png, image/jpg'
         },
+        commitTypeArr: [{id: 1, value: 'url地址'}, {id: 2, value: '图片'}, {id: 3, value: '文件'}],
         rewardTypeArr: [{id: 1, value: 'TRUE'}, {id: 2, value: 'TTR'}, {id: 3, value: 'RMB'}],
         taskStatusArr: [{id: 0, value: '禁用'}, {id: 1, value: '启用'}, {id: 2, value: '关闭'}],
         categoryArr: [{id: 0, value: '个人'}, {id: 1, value: '团队'}],
@@ -132,7 +157,8 @@
           rewardNum: '',
           rewardType: '',
           startDateTime: '',
-          taskStatus: ''
+          taskStatus: '',
+          commitType: ''
         }
       }
     },

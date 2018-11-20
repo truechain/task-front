@@ -54,11 +54,11 @@
           <el-button type="primary" @click="getTaskInfo">查询</el-button>
           <el-button @click="reset">重置</el-button>
         </el-form-item>
-        <el-form-item class="btn-wrap fr" style="margin-right: 0;">
+        <!-- <el-form-item class="btn-wrap fr" style="margin-right: 0;">
           <router-link to="/taskNew">
             <el-button icon="el-icon el-icon-plus">新增</el-button>
           </router-link>
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
     </div>
     <el-table :data="tableData" stripe style="width: 100%">
@@ -71,6 +71,8 @@
       <el-table-column prop="passTime" label="任务审核时间">
       </el-table-column>
       <el-table-column prop="tcAddress" label="钱包地址">
+      </el-table-column>
+      <el-table-column prop="taskName" label="任务名称">
       </el-table-column>
       <el-table-column prop="rewardType" label="奖励类型">
       </el-table-column>

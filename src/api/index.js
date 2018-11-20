@@ -45,6 +45,7 @@ export const getTaskPage              = (o, t, p) => (http.post('/task/getTaskPa
 export const addTask                  = (o, t, p) => (http.post('/task/addTask', o, t, p))
 export const disableTask                  = (o, t, p) => (http.post('/task/disableTask', o, t, p))
 export const enableTask                  = (o, t, p) => (http.post('/task/enableTask', o, t, p))
+export const cancelEntryFormUser                  = (o, t, p) => (http.post('/task/cancelEntryFormUser', o, t, p))
 
 export const rewardUserAccountDetail      = (o, t, p) => (http.post('/report/rewardUserAccountDetail', o, t, p))
 export const statisticUserProfilePage = (o, t, p) => (http.get('/report/getUserProfilePage', o, t, p))

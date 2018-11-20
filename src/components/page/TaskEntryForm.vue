@@ -27,7 +27,17 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" @click="shDialog(scope.row)" v-if="scope.row.auditStatus === 0">审核</el-button>
+          <template v-if="scope.row.auditStatus <= 0">
+            <div style="margin: 10px 0;">
+              <el-button size="mini" @click="shDialog(scope.row)">审核</el-button>
+            </div>
+            <div style="margin: 10px 0;">
+              <el-button size="mini" @click="shDialog(scope.row, true)">取消任务</el-button>
+            </div>
+          </template>
+          <template v-else>
+            <el-button size="mini" @click="shDialog(scope.row)">查看</el-button>
+          </template>
         </template>
       </el-table-column>
     </el-table>
@@ -66,7 +76,12 @@
 </template>
 
 <script>
-  import { getEntryFormInfo, rewardEntryFromUser, auditEntryFormUser } from '@/api'
+  import {
+    getEntryFormInfo,
+    rewardEntryFromUser,
+    auditEntryFormUser,
+    cancelEntryFormUser
+  } from '@/api'
   export default {
     name: 'TaskEntryForm',
     data () {
@@ -99,14 +114,36 @@
     },
     methods: {
   /* 审核报名表 */
-      async shDialog (scope) {
-        this.formTable = scope
-        this.taskUserId = scope.taskUserId
-        await auditEntryFormUser(null, null, {
-          taskUserId: this.taskUserId
-        })
+      // async shDialog (scope) {
+      //   this.formTable = scope
+      //   this.taskUserId = scope.taskUserId
+      //   await auditEntryFormUser(null, null, {
+      //     taskUserId: this.taskUserId
+      //   })
 
-        this.dialogAuditing = true
+      //   this.dialogAuditing = true
+      // },
+      async shDialog (scope, isCancel) {
+        if (isCancel) {
+          await cancelEntryFormUser(null, null, {
+            taskUserId: scope.taskUserId
+          })
+        } else {
+          // http://localhost:8081/#/TaskDetails?taskId=127
+          // this.$router.push({
+          //   path: '/TaskDetails',
+          //   query: {
+          //     taskUserId: scope.taskUserId
+          //   }
+          // })
+          this.formTable = scope
+          this.taskUserId = scope.taskUserId
+          await auditEntryFormUser(null, null, {
+            taskUserId: this.taskUserId
+          })
+
+          this.dialogAuditing = true
+        }
       },
       goback () {
         this.$router.go(-1)

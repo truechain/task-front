@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="position">我的位置：配置管理>参数配置</div>
+    <div class="position">我的位置：配置管理</div>
     <el-tabs v-model="activeName">
       <!-- 角色管理部分 -->
       <el-tab-pane label="配置管理" name="first">
@@ -17,7 +17,7 @@
           <el-form-item>
             <el-button type="primary" @click="getUserPage">查询</el-button>
             <el-button type="warning" @click="clearRole">重置</el-button>
-            <el-button type="success" @click="addUserDialog = true">新增用户</el-button>
+            <el-button type="success" @click="addUserDialog = true">新增配置</el-button>
           </el-form-item>
         </el-form>
         <div class="quanxian-table">
@@ -36,6 +36,11 @@
                 <template v-else>
                   {{scope.row.configData}}
                 </template> -->
+              </template>
+            </el-table-column>
+            <el-table-column prop="configType" label="数据类型">
+              <template slot-scope="scope">
+                <span>{{configTypeObj[scope.row.configType]}}</span>
               </template>
             </el-table-column>
             <el-table-column prop="datetime" label="创建时间"></el-table-column>
@@ -151,6 +156,11 @@
       } */
 
       return {
+        configTypeObj: {
+          '0': '数字',
+          '1': '字符串',
+          '2': '枚举'
+        },
         rolePageIndex: 1,
         rolePageSize: 10,
         roleTotal: 0,

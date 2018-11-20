@@ -2,7 +2,9 @@
   <div class="task-details-wrapper">
     <div class="position">我的位置：任务管理>查看详情</div>
     <div class="fr">
-      <el-button type="danger" @click="EditTask" v-if="task.category === 1">编辑</el-button>
+      <template v-if="task.category === 0">
+        <el-button type="danger" @click="EditTask">编辑</el-button>
+      </template>
       <el-button @click="goback">返回</el-button>
       <el-button type="primary" @click="TaskEntryForm">报名表</el-button>
     </div>
@@ -21,7 +23,10 @@
         <!-- <li>时间范围：<span>{{task.startDateTime.split(' ')[0]}}至{{task.endDateTime.split(' ')[0]}}</span></li> -->
         <li>时间范围：<span>{{task.startDateTime}}至{{task.endDateTime}}</span></li>
         <li>奖励：<span>{{task.rewardNum}}</span></li>
-        <li style="width: 100%;">提交地址：<span>{{task.pushAddress}}</span></li>
+        <li>任务上传方式：<span>{{commitTypeObj[task.commitType]}}</span></li>
+        <li>提交地址：<span>{{task.pushAddress}}</span></li>
+        <li></li>
+        <li></li>
         <li style="width: 100%;">任务描述：<div><pre>{{task.description}}</pre></div></li>
       </ul>
     </div>
@@ -65,6 +70,11 @@
           '0': '禁用',
           '1': '启用',
           '2': '关闭'
+        },
+        commitTypeObj: {
+          '1': 'url地址',
+          '2': '图片',
+          '3': '文件'
         }
       }
     },

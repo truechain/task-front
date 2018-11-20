@@ -196,11 +196,11 @@
             required: true,
             message: '请输入确认密码',
             trigger: 'blur'
-          },
-          {
-            validator: comfirmPassword,
-            trigger: 'blur'
           }
+          // {
+          //   validator: comfirmPassword,
+          //   trigger: 'blur'
+          // }
           ],
           phone: [{
             required: true,
@@ -293,15 +293,11 @@
       editUser (editForm) {
         this.$refs[editForm].validate(async (valid) => {
           if (valid) {
-            if (!this.addForm.roleId) {
-              this.$message.error('请选择用户角色')
-              return
-            }
             let param = {
               id: this.id,
               ...this.editForm
             }
-            await updateAuthUserAPI(param)
+            await updateAuthUserAPI(param, 'json')
             this.editDialog = false
             this.getUserPage()
           } else {
@@ -319,14 +315,14 @@
         this.getUserPage()
       },
       // 操作 修改和查看
-      handleEdit (row, type) {
+      async handleEdit (row, type) {
         if (type === 'see') {
           this.isSee = true
         } else {
           this.isSee = false
         }
         this.id = row.id
-        this.getUserInfo(row.id)
+        await this.getUserInfo(row.id)
       },
       // 获取系统用户信息
       async getUserInfo (id) {
