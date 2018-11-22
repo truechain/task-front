@@ -35,16 +35,16 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <template v-if="scope.row.auditStatus <= 0">
+          <template v-if="scope.row.auditStatus === 1">
             <div style="margin: 10px 0;">
-              <el-button size="mini" @click="shDialog(scope.row)">审核</el-button>
+              <el-button size="mini" @click="shDialog(scope.row, '/TaskAudit')">审核</el-button>
             </div>
             <div style="margin: 10px 0;">
-              <el-button size="mini" @click="shDialog(scope.row, true)">取消任务</el-button>
+              <el-button size="mini" @click="onCancel(scope.row)">取消任务</el-button>
             </div>
           </template>
           <template v-else>
-            <el-button size="mini" @click="shDialog(scope.row)">查看</el-button>
+            <el-button size="mini" @click="shDialog(scope.row, '/LookTaskDetail')">查看</el-button>
           </template>
         </template>
       </el-table-column>
@@ -66,14 +66,12 @@
         <el-form-item label="用户钱包地址：">
           {{formTable.pushAddress || '暂无'}}
         </el-form-item>
-
         <el-form-item label="奖励数：">
           <el-input v-model.number="form.num" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="推荐人奖励数：">
           <el-input v-model.number="form.reNum" auto-complete="off"></el-input>
         </el-form-item>
-
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogAuditing = false">取 消</el-button>
@@ -87,7 +85,6 @@
   import {
     getEntryFormInfo,
     rewardEntryFromUser,
-    auditEntryFormUser,
     cancelEntryFormUser
   } from '@/api'
   import {
@@ -114,12 +111,14 @@
         personName: '', // 用户姓名
         pushAddress: '', // 用户钱包地址
         tableData: [],
+
         auditStatusObj: {
-          '-2': '已拉黑',
-          '-1': '未审核',
-          '0': '未完善',
-          '1': '已审核',
-          '2': '已奖励'
+          '0': '未提交',
+          '1': '待审核',
+          '-1': '取消',
+          '2': '审核通过',
+          '3': '未通过审核',
+          '4': '已发放'
         }
       }
     },
@@ -137,27 +136,18 @@
 
       //   this.dialogAuditing = true
       // },
-      async shDialog (scope, isCancel) {
-        if (isCancel) {
-          await cancelEntryFormUser(null, null, {
+      async shDialog (scope, to) {
+        this.$router.push({
+          path: to,
+          query: {
             taskUserId: scope.taskUserId
-          })
-        } else {
-          // http://localhost:8081/#/TaskDetails?taskId=127
-          // this.$router.push({
-          //   path: '/TaskDetails',
-          //   query: {
-          //     taskUserId: scope.taskUserId
-          //   }
-          // })
-          this.formTable = scope
-          this.taskUserId = scope.taskUserId
-          await auditEntryFormUser(null, null, {
-            taskUserId: this.taskUserId
-          })
-
-          this.dialogAuditing = true
-        }
+          }
+        })
+      },
+      async onCancel (scope) {
+        await cancelEntryFormUser(null, null, {
+          taskUserId: scope.taskUserId
+        })
       },
       goback () {
         this.$router.go(-1)

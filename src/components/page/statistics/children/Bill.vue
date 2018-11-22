@@ -84,7 +84,7 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" @click="sendReward(scope.row)">发放奖励</el-button>
+          <el-button size="mini" disabled="disabled" @click="sendReward(scope.row)">发放奖励</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -95,7 +95,10 @@
   </div>
 </template>
 <script>
-  import { getRewardList, rewardEntryFromUser, rewardUserAccountDetail } from '@/api'
+  import {
+    getRewardList,
+    rewardUserAccountDetail
+  } from '@/api'
   export default {
     data () {
       return {

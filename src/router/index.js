@@ -8,12 +8,16 @@ import RegistDetail from '@/components/page/RegistDetail'
 import TaskManage from '@/components/page/TaskManage'
 import DataStatisDetail from '@/components/page/DataStatisDetail'
 import DataStatics from '@/components/page/DataStatics'
+import LookTaskDetail from '@/components/page/LookTaskDetail'
 
 import DeployManage from '@/components/page/DeployManage'
+
 import TaskDetails from '@/components/page/TaskDetails'
 import TaskNew from '@/components/page/TaskNew'
 import TaskEdit from '@/components/page/TaskEdit'
 import TaskEntryForm from '@/components/page/TaskEntryForm'
+import TaskAudit from '@/components/page/TaskAudit'
+
 import Login from '@/components/page/Login'
 import DataDetailsTaskList from '@/components/page/DataDetailsTaskList'
 import DataDetailsRecommendList from '@/components/page/DataDetailsRecommendList'
@@ -152,7 +156,13 @@ export default new Router({
         path: '/DataStatisDetail',
         name: 'datastatisdetail',
         component: DataStatisDetail
-      }, {
+      },
+      {
+        path: '/LookTaskDetail',
+        name: 'looktaskdetail',
+        component: LookTaskDetail
+      },
+      {
         path: '/deploymanage',
         name: 'deploymanage',
         component: DeployManage
@@ -168,6 +178,11 @@ export default new Router({
         path: '/TaskEdit',
         name: 'taskedit',
         component: TaskEdit
+      },
+      {
+        path: '/TaskAudit',
+        name: 'taskaudit',
+        component: TaskAudit
       },
       {
         path: '/TaskEntryForm',
