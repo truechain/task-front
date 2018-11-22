@@ -84,7 +84,7 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" disabled="disabled" @click="sendReward(scope.row)">发放奖励</el-button>
+          <el-button size="mini" :disabled="scope.row.lssuingstate === '已发放'" @click="sendReward(scope.row)">发放奖励</el-button>
         </template>
       </el-table-column>
     </el-table>
