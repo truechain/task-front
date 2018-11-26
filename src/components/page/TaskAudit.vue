@@ -7,14 +7,14 @@
     <div class="details-content">
       <div class="title">任务完成详情</div>
       <ul>
-        <li>任务名称：<span> {{tableData.task.name}}</span></li>
+        <li style="width: 100%;">任务名称：<span> {{tableData.task.name}}</span></li>
         <li>岗位：<span> {{tableData.station || '暂无'}}</span></li>
         <li>微信昵称<span> {{tableData.wxNickName || '暂无'}}</span></li>
         <li>姓名：<span> {{tableData.personName}}</span></li>
         <li style="width: 100%;">钱包地址：<span> {{tableData.user.trueChainAddress || '暂无'}}</span></li>
         <li>文件上传类型：<span> {{commitTypeObj[tableData.task.commitType]}}</span></li>
         <li style="width: 100%;">提交地址：<span> {{tableData.pushAddress || '无'}}</span></li>
-        <li>提交说明：<span> {{tableData.task.description || '无'}}</span></li>
+        <li style="width: 100%;">提交说明：<pre style="margin-left: 20px;"> {{tableData.task.description || '无'}}</pre></li>
         <li>奖励类型：<span>{{ rewardTypeObj[tableData.task.rewardType] || '无'}}</span></li>
         <li>奖励数量：<span>{{tableData.task.rewardNum || '无'}}</span></li>
         <li>发放状态：<span>{{tableData.bsTaskUser.taskStatus === 4 ? '已发放' : '未发放' }}</span></li>
