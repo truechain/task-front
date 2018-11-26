@@ -23,11 +23,11 @@
       </el-table-column>
       <el-table-column prop="pushAddress" label="提交地址">
         <template slot-scope="scope">
-          <template v-if="commitType === 0">
+          <template v-if="commitType === 1">
             <span>{{scope.row.pushAddress}}</span>
           </template>
           <template v-else>
-            <el-button @click="downLoad(scope.row.pushAddress)">下载{{ commitType === 1 ? '图片' : '文件' }}</el-button>
+            <el-button @click="downLoad(scope.row.pushAddress)">下载{{ commitType === 2 ? '图片' : '文件' }}</el-button>
           </template>
         </template>
       </el-table-column>
