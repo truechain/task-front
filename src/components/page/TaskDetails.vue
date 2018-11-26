@@ -14,7 +14,7 @@
         <li style="width: 100%;">任务logo：<span>
             <div class="logo-img"><img :src="task.iconPath" /></div>
           </span></li>
-        <li>任务名称：<span>{{task.name}}</span></li>
+        <li style="width: 100%;">任务名称：<span>{{task.name}}</span></li>
         <li>任务等级：<span>{{task.level}}</span></li>
         <li>状态：<span>{{status[task.taskStatus]}}</span></li>
         <li>任务类别：<span>{{task.category === 0 ? '个人' : '团队' }}</span></li>
@@ -24,7 +24,7 @@
         <li>时间范围：<span>{{task.startDateTime}}至{{task.endDateTime}}</span></li>
         <li>奖励：<span>{{task.rewardNum}}</span></li>
         <li>任务上传方式：<span>{{commitTypeObj[task.commitType]}}</span></li>
-        <li>提交地址：<span>{{task.pushAddress}}</span></li>
+        <li style="width: 100%;">提交地址：<span>{{task.pushAddress}}</span></li>
         <li></li>
         <li></li>
         <li style="width: 100%;">任务描述：<div><pre>{{task.description}}</pre></div></li>
