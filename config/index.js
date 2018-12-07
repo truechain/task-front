@@ -31,7 +31,8 @@ module.exports = {
       '/api': {
         // target: 'http://39.104.229.106:8081',
         // target: 'http://test.phptrain.cn/admin',
-        target: 'http://www.phptrain.cn/admin',
+        target: 'http://sc.truescan.net/admin',
+        // target: 'http://www.phptrain.cn/admin',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''

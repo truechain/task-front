@@ -22,61 +22,11 @@
           <el-button @click="reset">重置</el-button>
         </el-form-item>
         <el-form-item class="btn-wrap fr" style="margin-right: 0;">
-          <el-button @click="exportDialog = true">导出</el-button>
+          <el-button @click="exportTable">导出</el-button>
           <el-button @click="goback">返回</el-button>
         </el-form-item>
       </el-form>
     </div>
-    <el-dialog title="导出" :visible.sync="exportDialog" label-width="80px">
-      <el-form :inline="true" :model="exportItem" :rules="rules" ref="exportItem" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="时间范围：">
-          <el-col :span="11">
-            <el-form-item prop="startDate">
-              <el-date-picker type="date" placeholder="选择日期" v-model="exportItem.startDate" style="width: 100%;"></el-date-picker>
-            </el-form-item>
-          </el-col>
-          <el-col class="line" :span="2">-</el-col>
-          <el-col :span="11">
-            <el-form-item prop="endDate">
-              <el-date-picker type="date" placeholder="选择日期" v-model="exportItem.endDate" style="width: 100%;"></el-date-picker>
-            </el-form-item>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="姓名:" prop="name">
-          <el-input v-model="exportItem.name" placeholder="请输入姓名"></el-input>
-        </el-form-item>
-        <el-form-item label="微信昵称:" prop="wxNickName">
-          <el-input v-model="exportItem.wxNickName" placeholder="请输入微信昵称"></el-input>
-        </el-form-item>
-        <el-form-item label="审核状态:" prop="auditStatus">
-          <el-select v-model="exportItem.auditStatus" placeholder="请选择审核状态">
-            <el-option label="已拉黑" value="-2"></el-option>
-            <el-option label="未审核" value="-1"></el-option>
-            <el-option label="未完善" value="0"></el-option>
-            <el-option label="已审核" value="1"></el-option>
-            <el-option label="已奖励" value="2"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="等级:" prop="level">
-          <el-select v-model="exportItem.level" placeholder="请选择等级">
-            <el-option label="A" value="A"></el-option>
-            <el-option label="B" value="B"></el-option>
-            <el-option label="C" value="C"></el-option>
-            <el-option label="D" value="D"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="pageSize:" prop="pageSize">
-          <el-input v-model="exportItem.pageSize" placeholder="请输入pageSize"></el-input>
-        </el-form-item>
-        <el-form-item label="pageIndex:" prop="pageIndex">
-          <el-input v-model="exportItem.pageIndex" placeholder="请输入pageIndex"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="exportDialog = false">取 消</el-button>
-        <el-button type="primary" @click="exportTable('exportItem')">确 定</el-button>
-      </div>
-    </el-dialog>
     <div class="data-table">
       <el-table :data="tableData" stripe style="width: 100%">
         <el-table-column prop="sysUser.personName" label="姓名" width="78"></el-table-column>
@@ -119,68 +69,6 @@
   export default {
     data () {
       return {
-        rules: {
-          name: [{
-            required: true,
-            message: '请输入活动名称',
-            trigger: 'blur'
-          }],
-          startDate: [{
-            type: 'date',
-            required: true,
-            message: '请选择开始时间',
-            trigger: 'blur'
-          }],
-          endDate: [{
-            type: 'date',
-            required: true,
-            message: '请选择结束时间',
-            trigger: 'blur'
-          }],
-          wxNickName: [{
-            required: true,
-            message: '请输入微信昵称',
-            trigger: 'blur'
-          }],
-          auditStatus: [{
-            required: true,
-            message: '请选择审核状态',
-            trigger: 'blur'
-          }],
-          level: [{
-            required: true,
-            message: '请选择等级',
-            trigger: 'blur'
-          }],
-          pageSize: [{
-            required: true,
-            message: '请输入页面大小',
-            trigger: 'blur'
-          }],
-          pageIndex: [{
-            required: true,
-            message: '请输入起始页',
-            trigger: 'blur'
-          }]
-        },
-        auditStatusObj: {
-          '-2': '已拉黑',
-          '-1': '未审核',
-          '0': '未完善',
-          '1': '已审核',
-          '2': '已奖励'
-        },
-        exportDialog: false,
-        exportItem: {
-          startDate: '',
-          endDate: '',
-          name: '',
-          wxNickName: '',
-          auditStatus: '',
-          level: '',
-          pageSize: '',
-          pageIndex: ''
-        },
         pageIndex: 1,
         pageSize: 20,
         total: 1,
@@ -228,23 +116,12 @@
       },
       // 导出
       async exportTable (formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.exportItem.startDate = this.$moment((+new Date(this.exportItem.startDate))).format(
-              'YYYY-MM-DD HH:mm:ss')
-            this.exportItem.endDate = this.$moment((+new Date(this.exportItem.endDate))).format(
-              'YYYY-MM-DD HH:mm:ss')
-            window.open(`
-              http://${
-                  process.env.NODE_ENV === 'production'
-                  ? 'www'
-                  : 'test'
-                }.phptrain.cn/admin/report/export?${qs.stringify(this.exportItem)}
-            `)
-          } else {
-            this.$message.error('必填项未填写')
-          }
-        })
+        if (process.env.NODE_ENV === 'production') {
+          window.open(`http://sc.truescan.net/admin/report/export?${qs.stringify(this.form)}`)
+        } else {
+          window.open(`http://sc.truescan.net/admin/report/export?${qs.stringify(this.form)}`)
+              // window.open(`http://test.phptrain.cn/admin/report/export?${qs.stringify(this.exportItem)} `)
+        }
       },
       async getProfile () {
         let param = {
