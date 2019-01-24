@@ -23,6 +23,9 @@ switch (process.env.NODE_ENV) {
     apiUrl = 'http://sc.truescan.net/admin'
     // apiUrl = 'http://test.phptrain.cn/admin'
     break
+  case 'test':
+    apiUrl = 'http://test.truescan.net/admin'
+    break
 }
 
 export {
